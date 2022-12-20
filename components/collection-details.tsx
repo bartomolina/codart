@@ -1,3 +1,5 @@
+
+
 export default function CollectionDetails(props: any) {
   return (
     <>
