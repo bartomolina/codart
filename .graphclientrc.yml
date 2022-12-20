@@ -1,0 +1,9 @@
+# .graphclientrc.yml
+sources:
+  - name: artblocks
+    handler:
+      graphql:
+        endpoint: https://api.thegraph.com/subgraphs/name/artblocks/art-blocks
+
+documents:
+  - ./artblocks.graphql

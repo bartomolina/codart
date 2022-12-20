@@ -1,0 +1,11 @@
+query ExampleQuery {
+  projects(first: 2, where: {curationStatus: "curated"}) {
+    name
+    updatedAt
+    id
+    curationStatus
+    artistName
+    scriptJSON
+    script
+  }
+}
