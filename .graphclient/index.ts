@@ -3,7 +3,18 @@ import { GraphQLResolveInfo, SelectionSetNode, FieldNode, GraphQLScalarType, Gra
 import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 import { gql } from '@graphql-mesh/utils';
 
-import { findAndParseConfig } from '@graphql-mesh/cli';
+import type { GetMeshOptions } from '@graphql-mesh/runtime';
+import type { YamlConfig } from '@graphql-mesh/types';
+import { PubSub } from '@graphql-mesh/utils';
+import { DefaultLogger } from '@graphql-mesh/utils';
+import MeshCache from "@graphql-mesh/cache-localforage";
+import { fetch as fetchFn } from '@whatwg-node/fetch';
+
+import { MeshResolvedSource } from '@graphql-mesh/runtime';
+import { MeshTransform, MeshPlugin } from '@graphql-mesh/types';
+import GraphqlHandler from "@graphql-mesh/graphql"
+import BareMerger from "@graphql-mesh/merger-bare";
+import { printWithCache } from '@graphql-mesh/utils';
 import { createMeshHTTPHandler, MeshHTTPHandler } from '@graphql-mesh/http';
 import { getMesh, ExecuteMeshFn, SubscribeMeshFn, MeshContext as BaseMeshContext, MeshInstance } from '@graphql-mesh/runtime';
 import { MeshStore, FsStoreStorageAdapter } from '@graphql-mesh/store';
@@ -4137,6 +4148,9 @@ const baseDir = pathModule.join(pathModule.dirname(fileURLToPath(import.meta.url
 const importFn: ImportFn = <T>(moduleId: string) => {
   const relativeModuleId = (pathModule.isAbsolute(moduleId) ? pathModule.relative(baseDir, moduleId) : moduleId).split('\\').join('/').replace(baseDir + '/', '');
   switch(relativeModuleId) {
+    case ".graphclient/sources/artblocks/introspectionSchema":
+      return import("./sources/artblocks/introspectionSchema") as T;
+    
     default:
       return Promise.reject(new Error(`Cannot find module '${relativeModuleId}'.`));
   }
@@ -4151,15 +4165,70 @@ const rootStore = new MeshStore('.graphclient', new FsStoreStorageAdapter({
   validate: false
 });
 
-export function getMeshOptions() {
-  console.warn('WARNING: These artifacts are built for development mode. Please run "graphclient build" to build production artifacts');
-  return findAndParseConfig({
-    dir: baseDir,
-    artifactsDir: ".graphclient",
-    configName: "graphclient",
-    additionalPackagePrefixes: ["@graphprotocol/client-"],
-    initialLoggerPrefix: "GraphClient",
-  });
+export const rawServeConfig: YamlConfig.Config['serve'] = undefined as any
+export async function getMeshOptions(): Promise<GetMeshOptions> {
+const pubsub = new PubSub();
+const sourcesStore = rootStore.child('sources');
+const logger = new DefaultLogger("GraphClient");
+const cache = new (MeshCache as any)({
+      ...({} as any),
+      importFn,
+      store: rootStore.child('cache'),
+      pubsub,
+      logger,
+    } as any)
+
+const sources: MeshResolvedSource[] = [];
+const transforms: MeshTransform[] = [];
+const additionalEnvelopPlugins: MeshPlugin<any>[] = [];
+const artblocksTransforms = [];
+const additionalTypeDefs = [] as any[];
+const artblocksHandler = new GraphqlHandler({
+              name: "artblocks",
+              config: {"endpoint":"https://api.thegraph.com/subgraphs/name/artblocks/art-blocks"},
+              baseDir,
+              cache,
+              pubsub,
+              store: sourcesStore.child("artblocks"),
+              logger: logger.child("artblocks"),
+              importFn,
+            });
+sources[0] = {
+          name: 'artblocks',
+          handler: artblocksHandler,
+          transforms: artblocksTransforms
+        }
+const additionalResolvers = [] as any[]
+const merger = new(BareMerger as any)({
+        cache,
+        pubsub,
+        logger: logger.child('bareMerger'),
+        store: rootStore.child('bareMerger')
+      })
+
+  return {
+    sources,
+    transforms,
+    additionalTypeDefs,
+    additionalResolvers,
+    cache,
+    pubsub,
+    merger,
+    logger,
+    additionalEnvelopPlugins,
+    get documents() {
+      return [
+      {
+        document: ArtblocksCuratedQueryDocument,
+        get rawSDL() {
+          return printWithCache(ArtblocksCuratedQueryDocument);
+        },
+        location: 'ArtblocksCuratedQueryDocument.graphql'
+      }
+    ];
+    },
+    fetchFn,
+  };
 }
 
 export function createBuiltMeshHTTPHandler(): MeshHTTPHandler<MeshContext> {
@@ -4169,6 +4238,7 @@ export function createBuiltMeshHTTPHandler(): MeshHTTPHandler<MeshContext> {
     rawServeConfig: undefined,
   })
 }
+
 
 let meshInstance$: Promise<MeshInstance> | undefined;
 
@@ -4192,15 +4262,15 @@ export function getBuiltGraphSDK<TGlobalContext = any, TOperationContext = any>(
   const sdkRequester$ = getBuiltGraphClient().then(({ sdkRequesterFactory }) => sdkRequesterFactory(globalContext));
   return getSdk<TOperationContext, TGlobalContext>((...args) => sdkRequester$.then(sdkRequester => sdkRequester(...args)));
 }
-export type ExampleQueryQueryVariables = Exact<{ [key: string]: never; }>;
+export type ArtblocksCuratedQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ExampleQueryQuery = { projects: Array<Pick<Project, 'name' | 'updatedAt' | 'id' | 'curationStatus' | 'artistName' | 'scriptJSON' | 'script'>> };
+export type ArtblocksCuratedQueryQuery = { projects: Array<Pick<Project, 'name' | 'updatedAt' | 'id' | 'curationStatus' | 'artistName' | 'scriptJSON' | 'script'>> };
 
 
-export const ExampleQueryDocument = gql`
-    query ExampleQuery {
-  projects(first: 2, where: {curationStatus: "curated"}) {
+export const ArtblocksCuratedQueryDocument = gql`
+    query ArtblocksCuratedQuery {
+  projects(where: {curationStatus: "curated"}) {
     name
     updatedAt
     id
@@ -4210,14 +4280,14 @@ export const ExampleQueryDocument = gql`
     script
   }
 }
-    ` as unknown as DocumentNode<ExampleQueryQuery, ExampleQueryQueryVariables>;
+    ` as unknown as DocumentNode<ArtblocksCuratedQueryQuery, ArtblocksCuratedQueryQueryVariables>;
 
 
 export type Requester<C = {}, E = unknown> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R> | AsyncIterable<R>
 export function getSdk<C, E>(requester: Requester<C, E>) {
   return {
-    ExampleQuery(variables?: ExampleQueryQueryVariables, options?: C): Promise<ExampleQueryQuery> {
-      return requester<ExampleQueryQuery, ExampleQueryQueryVariables>(ExampleQueryDocument, variables, options) as Promise<ExampleQueryQuery>;
+    ArtblocksCuratedQuery(variables?: ArtblocksCuratedQueryQueryVariables, options?: C): Promise<ArtblocksCuratedQueryQuery> {
+      return requester<ArtblocksCuratedQueryQuery, ArtblocksCuratedQueryQueryVariables>(ArtblocksCuratedQueryDocument, variables, options) as Promise<ArtblocksCuratedQueryQuery>;
     }
   };
 }

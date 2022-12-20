@@ -1,5 +1,5 @@
-query ExampleQuery {
-  projects(first: 2, where: {curationStatus: "curated"}) {
+query ArtblocksCuratedQuery {
+  projects(where: {curationStatus: "curated"}) {
     name
     updatedAt
     id
