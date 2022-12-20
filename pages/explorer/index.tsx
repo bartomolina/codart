@@ -7,9 +7,7 @@ export default function Explorer() {
     <>
       <Head>
         <title>Art Blocks x B.M. - Explorer</title>
-        <meta name="description" content="Web3" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        {/* <link rel="icon" href="/favicon.ico" /> */}
+        <meta name="description" content="Art Blocks Explorer" />
       </Head>
       <header>
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
