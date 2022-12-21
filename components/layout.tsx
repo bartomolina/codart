@@ -1,10 +1,7 @@
 import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useRouter } from 'next/router';
-
-type LayoutProps = {
-  children: React.ReactNode;
-};
+import { PropsWithChildren } from "react";
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -15,7 +12,7 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Layout({ children }: LayoutProps) {
+export default function Layout({ children }: PropsWithChildren) {
   const router = useRouter();
 
   return (
