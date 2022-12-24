@@ -8,7 +8,7 @@ type ActiveLinksProps = LinkProps & {
   inactiveClassName?: string;
 };
 
-const ActiveLink = ({ children, activeClassName, inactiveClassName = "", className, ...props }: PropsWithChildren<ActiveLinksProps>) => {
+const ActiveLink = ({ children, activeClassName, inactiveClassName, className, ...props }: PropsWithChildren<ActiveLinksProps>) => {
   const { asPath, isReady } = useRouter();
   const [computedClassName, setComputedClassName] = useState(className);
 
