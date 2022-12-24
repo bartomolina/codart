@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
+import { collapseTextChangeRangesAcrossMultipleVersions } from "typescript";
 import { ArtblocksCuratedQueryDocument, ArtblocksCuratedQueryQuery, execute } from "../.graphclient";
 
-export default function CollectionsList() {
+const CollectionsList = () => {
   const [data, setData] = useState<ArtblocksCuratedQueryQuery>();
 
   // useEffect(() => {
@@ -38,4 +39,6 @@ export default function CollectionsList() {
       </div>
     </>
   );
-}
+};
+
+export default CollectionsList;

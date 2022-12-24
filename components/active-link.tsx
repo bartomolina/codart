@@ -5,9 +5,10 @@ import React, { PropsWithChildren, useState, useEffect } from "react";
 type ActiveLinksProps = LinkProps & {
   className?: string;
   activeClassName: string;
+  inactiveClassName?: string;
 };
 
-const ActiveLink = ({ children, activeClassName, className, ...props }: PropsWithChildren<ActiveLinksProps>) => {
+const ActiveLink = ({ children, activeClassName, inactiveClassName, className, ...props }: PropsWithChildren<ActiveLinksProps>) => {
   const { asPath, isReady } = useRouter();
   const [computedClassName, setComputedClassName] = useState(className);
 
@@ -21,7 +22,7 @@ const ActiveLink = ({ children, activeClassName, className, ...props }: PropsWit
       // Using URL().pathname to get rid of query and hash
       const activePathname = new URL(asPath, location.href).pathname;
 
-      const newClassName = linkPathname === activePathname ? `${className} ${activeClassName}`.trim() : className;
+      const newClassName = linkPathname === activePathname ? `${activeClassName} ${className}`.trim() : `${inactiveClassName} ${className}`.trim();
 
       if (newClassName !== computedClassName) {
         setComputedClassName(newClassName);
