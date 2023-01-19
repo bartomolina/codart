@@ -1,21 +1,24 @@
 import { PropsWithChildren } from "react";
+import { Montserrat } from "@next/font/google";
 import Nav from "./nav";
-import { Montserrat } from '@next/font/google';
+import Footer from "./footer";
 
 const montserrat = Montserrat({
-  weight: ["400"],
   style: ["normal"],
   subsets: ["latin"],
-  variable: '--font-montserrat',
+  variable: "--font-montserrat",
 });
 
-const Layout = ({ children }: PropsWithChildren) => {
-  return (
+const Layout = ({ children }: PropsWithChildren) => (
+  <>
     <div className={`${montserrat.variable} font-sans min-h-full`}>
       <Nav />
-      <div className="py-10">{children}</div>
+      <div>{children}</div>
+      <div className="sticky top-[100vh]">
+        <Footer />
+      </div>
     </div>
-  );
-};
+  </>
+);
 
 export default Layout;

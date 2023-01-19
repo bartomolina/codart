@@ -8,7 +8,13 @@ type ActiveLinksProps = LinkProps & {
   inactiveClassName?: string;
 };
 
-const ActiveLink = ({ children, activeClassName, inactiveClassName, className, ...props }: PropsWithChildren<ActiveLinksProps>) => {
+const ActiveLink = ({
+  children,
+  activeClassName,
+  inactiveClassName,
+  className,
+  ...props
+}: PropsWithChildren<ActiveLinksProps>) => {
   const { asPath, isReady } = useRouter();
   const [computedClassName, setComputedClassName] = useState(className);
 
@@ -22,13 +28,16 @@ const ActiveLink = ({ children, activeClassName, inactiveClassName, className, .
       // Using URL().pathname to get rid of query and hash
       const activePathname = new URL(asPath, location.href).pathname;
 
-      const newClassName = linkPathname === activePathname ? `${activeClassName} ${className}`.trim() : `${inactiveClassName} ${className}`.trim();
+      const newClassName =
+        linkPathname === activePathname
+          ? `${activeClassName} ${className}`.trim()
+          : `${inactiveClassName} ${className}`.trim();
 
       if (newClassName !== computedClassName) {
         setComputedClassName(newClassName);
       }
     }
-  }, [asPath, isReady, props.as, props.href, activeClassName, className, computedClassName]);
+  }, [asPath, isReady, props.as, props.href, activeClassName, inactiveClassName, className, computedClassName]);
 
   return (
     <Link className={computedClassName} {...props}>
