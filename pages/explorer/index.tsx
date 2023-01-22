@@ -1,39 +1,42 @@
+import { useEffect, useState } from "react";
 import Head from "next/head";
-import CollectionDetails from "../../components/collection-details";
-import CollectionsList from "../../components/collections";
+import { ArtblocksCuratedQueryDocument, ArtblocksCuratedQueryQuery, execute, Project } from "../../.graphclient";
+import Card from "../../components/card";
 
 export default function Explorer() {
+  const [collections, setCollections] = useState<ArtblocksCuratedQueryQuery>();
+
+  useEffect(() => {
+    execute(ArtblocksCuratedQueryDocument, {}).then((result) => {
+      console.log("Data fetched: ", result);
+      setCollections(result?.data);
+    });
+  }, []);
+
   return (
     <>
       <Head>
-        <title>Art Blocks x B.M. - Explorer</title>
-        <meta name="description" content="Art Blocks Explorer" />
+        <title>CodArt</title>
+        <meta name="description" content="CodArt" />
       </Head>
-      <header>
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold leading-tight tracking-tight text-gray-900">Art Blocks Explorer</h1>
+      <div className="bg-gray-100 pb-24">
+        <div className="mx-auto max-w-6xl sm:px-6 lg:px-8 py-8">
+          <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+            {collections?.projects?.slice(8,19).map(
+              (
+                collection: Pick<
+                  Project,
+                  "script" | "id" | "name" | "updatedAt" | "curationStatus" | "artistName" | "scriptJSON"
+                >
+              ) => (
+                <li key={collection.id} className="flex space-x-5 overflow-hidden rounded-lg border border-gray-300 shadow">
+                  <Card collection={collection} />
+                </li>
+              )
+            )}
+          </ul>
         </div>
-      </header>
-      <main>
-        <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-          <div className="px-4 py-8 sm:px-0">
-            <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-3 lg:gap-8">
-              {/* Left column */}
-              <div className="grid grid-cols-1 gap-4">
-                <section aria-labelledby="section-1-title">
-                  <CollectionsList />
-                </section>
-              </div>
-              {/* Right column */}
-              <div className="grid grid-cols-1 gap-4 lg:col-span-2">
-                <section aria-labelledby="section-2-title">
-                  <CollectionDetails />
-                </section>
-              </div>
-            </div>
-          </div>
-        </div>
-      </main>
+      </div>
     </>
   );
 }

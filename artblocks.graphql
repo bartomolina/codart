@@ -1,7 +1,8 @@
 query ArtblocksCuratedQuery {
-  projects(where: {curationStatus: "curated"}) {
+  projects(orderBy: updatedAt, orderDirection: desc) {
     name
     updatedAt
+    projectId
     id
     curationStatus
     artistName

@@ -198,6 +198,10 @@ input Contract_filter {
   id_not_in: [ID!]
   admin: Bytes
   admin_not: Bytes
+  admin_gt: Bytes
+  admin_lt: Bytes
+  admin_gte: Bytes
+  admin_lte: Bytes
   admin_in: [Bytes!]
   admin_not_in: [Bytes!]
   admin_contains: Bytes
@@ -208,6 +212,10 @@ input Contract_filter {
   type_not_in: [CoreType!]
   renderProviderAddress: Bytes
   renderProviderAddress_not: Bytes
+  renderProviderAddress_gt: Bytes
+  renderProviderAddress_lt: Bytes
+  renderProviderAddress_gte: Bytes
+  renderProviderAddress_lte: Bytes
   renderProviderAddress_in: [Bytes!]
   renderProviderAddress_not_in: [Bytes!]
   renderProviderAddress_contains: Bytes
@@ -222,6 +230,10 @@ input Contract_filter {
   renderProviderPercentage_not_in: [BigInt!]
   renderProviderSecondarySalesAddress: Bytes
   renderProviderSecondarySalesAddress_not: Bytes
+  renderProviderSecondarySalesAddress_gt: Bytes
+  renderProviderSecondarySalesAddress_lt: Bytes
+  renderProviderSecondarySalesAddress_gte: Bytes
+  renderProviderSecondarySalesAddress_lte: Bytes
   renderProviderSecondarySalesAddress_in: [Bytes!]
   renderProviderSecondarySalesAddress_not_in: [Bytes!]
   renderProviderSecondarySalesAddress_contains: Bytes
@@ -242,18 +254,30 @@ input Contract_filter {
   mintWhitelisted_not_contains_nocase: [Bytes!]
   randomizerContract: Bytes
   randomizerContract_not: Bytes
+  randomizerContract_gt: Bytes
+  randomizerContract_lt: Bytes
+  randomizerContract_gte: Bytes
+  randomizerContract_lte: Bytes
   randomizerContract_in: [Bytes!]
   randomizerContract_not_in: [Bytes!]
   randomizerContract_contains: Bytes
   randomizerContract_not_contains: Bytes
   curationRegistry: Bytes
   curationRegistry_not: Bytes
+  curationRegistry_gt: Bytes
+  curationRegistry_lt: Bytes
+  curationRegistry_gte: Bytes
+  curationRegistry_lte: Bytes
   curationRegistry_in: [Bytes!]
   curationRegistry_not_in: [Bytes!]
   curationRegistry_contains: Bytes
   curationRegistry_not_contains: Bytes
   dependencyRegistry: Bytes
   dependencyRegistry_not: Bytes
+  dependencyRegistry_gt: Bytes
+  dependencyRegistry_lt: Bytes
+  dependencyRegistry_gte: Bytes
+  dependencyRegistry_lte: Bytes
   dependencyRegistry_in: [Bytes!]
   dependencyRegistry_not_in: [Bytes!]
   dependencyRegistry_contains: Bytes
@@ -690,6 +714,10 @@ input Payment_filter {
   paymentType_not_in: [PaymentType!]
   paymentToken: Bytes
   paymentToken_not: Bytes
+  paymentToken_gt: Bytes
+  paymentToken_lt: Bytes
+  paymentToken_gte: Bytes
+  paymentToken_lte: Bytes
   paymentToken_in: [Bytes!]
   paymentToken_not_in: [Bytes!]
   paymentToken_contains: Bytes
@@ -725,6 +753,10 @@ input Payment_filter {
   sale_: Sale_filter
   recipient: Bytes
   recipient_not: Bytes
+  recipient_gt: Bytes
+  recipient_lt: Bytes
+  recipient_gte: Bytes
+  recipient_lte: Bytes
   recipient_in: [Bytes!]
   recipient_not_in: [Bytes!]
   recipient_contains: Bytes
@@ -1053,6 +1085,10 @@ input ProjectMinterConfiguration_filter {
   currencySymbol_not_ends_with_nocase: String
   currencyAddress: Bytes
   currencyAddress_not: Bytes
+  currencyAddress_gt: Bytes
+  currencyAddress_lt: Bytes
+  currencyAddress_gte: Bytes
+  currencyAddress_lte: Bytes
   currencyAddress_in: [Bytes!]
   currencyAddress_not_in: [Bytes!]
   currencyAddress_contains: Bytes
@@ -1240,6 +1276,10 @@ input Project_filter {
   active_not_in: [Boolean!]
   additionalPayee: Bytes
   additionalPayee_not: Bytes
+  additionalPayee_gt: Bytes
+  additionalPayee_lt: Bytes
+  additionalPayee_gte: Bytes
+  additionalPayee_lte: Bytes
   additionalPayee_in: [Bytes!]
   additionalPayee_not_in: [Bytes!]
   additionalPayee_contains: Bytes
@@ -1254,6 +1294,10 @@ input Project_filter {
   additionalPayeePercentage_not_in: [BigInt!]
   additionalPayeeSecondarySalesAddress: Bytes
   additionalPayeeSecondarySalesAddress_not: Bytes
+  additionalPayeeSecondarySalesAddress_gt: Bytes
+  additionalPayeeSecondarySalesAddress_lt: Bytes
+  additionalPayeeSecondarySalesAddress_gte: Bytes
+  additionalPayeeSecondarySalesAddress_lte: Bytes
   additionalPayeeSecondarySalesAddress_in: [Bytes!]
   additionalPayeeSecondarySalesAddress_not_in: [Bytes!]
   additionalPayeeSecondarySalesAddress_contains: Bytes
@@ -1289,6 +1333,10 @@ input Project_filter {
   artist_: Account_filter
   artistAddress: Bytes
   artistAddress_not: Bytes
+  artistAddress_gt: Bytes
+  artistAddress_lt: Bytes
+  artistAddress_gte: Bytes
+  artistAddress_lte: Bytes
   artistAddress_in: [Bytes!]
   artistAddress_not_in: [Bytes!]
   artistAddress_contains: Bytes
@@ -1387,6 +1435,10 @@ input Project_filter {
   curationStatus_not_ends_with_nocase: String
   currencyAddress: Bytes
   currencyAddress_not: Bytes
+  currencyAddress_gt: Bytes
+  currencyAddress_lt: Bytes
+  currencyAddress_gte: Bytes
+  currencyAddress_lte: Bytes
   currencyAddress_in: [Bytes!]
   currencyAddress_not_in: [Bytes!]
   currencyAddress_contains: Bytes
@@ -1851,12 +1903,20 @@ input ProposedArtistAddressesAndSplit_filter {
   id_not_in: [ID!]
   artistAddress: Bytes
   artistAddress_not: Bytes
+  artistAddress_gt: Bytes
+  artistAddress_lt: Bytes
+  artistAddress_gte: Bytes
+  artistAddress_lte: Bytes
   artistAddress_in: [Bytes!]
   artistAddress_not_in: [Bytes!]
   artistAddress_contains: Bytes
   artistAddress_not_contains: Bytes
   additionalPayeePrimarySalesAddress: Bytes
   additionalPayeePrimarySalesAddress_not: Bytes
+  additionalPayeePrimarySalesAddress_gt: Bytes
+  additionalPayeePrimarySalesAddress_lt: Bytes
+  additionalPayeePrimarySalesAddress_gte: Bytes
+  additionalPayeePrimarySalesAddress_lte: Bytes
   additionalPayeePrimarySalesAddress_in: [Bytes!]
   additionalPayeePrimarySalesAddress_not_in: [Bytes!]
   additionalPayeePrimarySalesAddress_contains: Bytes
@@ -1871,6 +1931,10 @@ input ProposedArtistAddressesAndSplit_filter {
   additionalPayeePrimarySalesPercentage_not_in: [BigInt!]
   additionalPayeeSecondarySalesAddress: Bytes
   additionalPayeeSecondarySalesAddress_not: Bytes
+  additionalPayeeSecondarySalesAddress_gt: Bytes
+  additionalPayeeSecondarySalesAddress_lt: Bytes
+  additionalPayeeSecondarySalesAddress_gte: Bytes
+  additionalPayeeSecondarySalesAddress_lte: Bytes
   additionalPayeeSecondarySalesAddress_in: [Bytes!]
   additionalPayeeSecondarySalesAddress_not_in: [Bytes!]
   additionalPayeeSecondarySalesAddress_contains: Bytes
@@ -2665,6 +2729,10 @@ input Sale_filter {
   id_not_in: [ID!]
   txHash: Bytes
   txHash_not: Bytes
+  txHash_gt: Bytes
+  txHash_lt: Bytes
+  txHash_gte: Bytes
+  txHash_lte: Bytes
   txHash_in: [Bytes!]
   txHash_not_in: [Bytes!]
   txHash_contains: Bytes
@@ -2716,12 +2784,20 @@ input Sale_filter {
   saleLookupTables_: SaleLookupTable_filter
   seller: Bytes
   seller_not: Bytes
+  seller_gt: Bytes
+  seller_lt: Bytes
+  seller_gte: Bytes
+  seller_lte: Bytes
   seller_in: [Bytes!]
   seller_not_in: [Bytes!]
   seller_contains: Bytes
   seller_not_contains: Bytes
   buyer: Bytes
   buyer_not: Bytes
+  buyer_gt: Bytes
+  buyer_lt: Bytes
+  buyer_gte: Bytes
+  buyer_lte: Bytes
   buyer_in: [Bytes!]
   buyer_not_in: [Bytes!]
   buyer_contains: Bytes
@@ -3272,6 +3348,10 @@ input Token_filter {
   invocation_not_in: [BigInt!]
   hash: Bytes
   hash_not: Bytes
+  hash_gt: Bytes
+  hash_lt: Bytes
+  hash_gte: Bytes
+  hash_lte: Bytes
   hash_in: [Bytes!]
   hash_not_in: [Bytes!]
   hash_contains: Bytes
@@ -3356,6 +3436,10 @@ input Token_filter {
   updatedAt_not_in: [BigInt!]
   transactionHash: Bytes
   transactionHash_not: Bytes
+  transactionHash_gt: Bytes
+  transactionHash_lt: Bytes
+  transactionHash_gte: Bytes
+  transactionHash_lte: Bytes
   transactionHash_in: [Bytes!]
   transactionHash_not_in: [Bytes!]
   transactionHash_contains: Bytes
@@ -3411,6 +3495,10 @@ input Transfer_filter {
   id_not_in: [ID!]
   transactionHash: Bytes
   transactionHash_not: Bytes
+  transactionHash_gt: Bytes
+  transactionHash_lt: Bytes
+  transactionHash_gte: Bytes
+  transactionHash_lte: Bytes
   transactionHash_in: [Bytes!]
   transactionHash_not_in: [Bytes!]
   transactionHash_contains: Bytes
@@ -3446,12 +3534,20 @@ input Transfer_filter {
   createdAt_not_in: [BigInt!]
   to: Bytes
   to_not: Bytes
+  to_gt: Bytes
+  to_lt: Bytes
+  to_gte: Bytes
+  to_lte: Bytes
   to_in: [Bytes!]
   to_not_in: [Bytes!]
   to_contains: Bytes
   to_not_contains: Bytes
   from: Bytes
   from_not: Bytes
+  from_gt: Bytes
+  from_lt: Bytes
+  from_gte: Bytes
+  from_lte: Bytes
   from_in: [Bytes!]
   from_not_in: [Bytes!]
   from_contains: Bytes
