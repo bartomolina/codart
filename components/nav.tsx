@@ -6,7 +6,7 @@ import ActiveLink from "./active-link";
 
 const navigation = [
   { name: "Home", href: "/" },
-  { name: "Explorer", href: "/explorer" },
+  { name: "Collections", href: "/collections" },
 ];
 
 const Nav = () => {
@@ -21,7 +21,9 @@ const Nav = () => {
               <div className="flex">
                 {/* Home */}
                 <div className="text-2xl mr-5 font-semibold lg:mr-11 md:inline hidden">
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-indigo-600">CodArt.io</span>
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-indigo-600">
+                    CodArt.io
+                  </span>
                 </div>
                 {/* Menu items */}
                 <div className="hidden sm:flex sm:space-x-11">
