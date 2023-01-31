@@ -1,6 +1,4 @@
 import Head from "next/head";
-import CollectionDetails from "../components/collection-details";
-import CollectionsList from "../components/collections";
 
 const Home = () => (
   <>

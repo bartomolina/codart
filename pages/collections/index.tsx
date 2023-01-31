@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import Head from "next/head";
-import { ArtblocksCuratedQueryDocument, ArtblocksCuratedQueryQuery, execute, Project } from "../../.graphclient";
+import { ArtblocksCollectionsDocument, ArtblocksCollectionsQuery, execute, Project } from "../../.graphclient";
 import Card from "../../components/card";
 
 const Collections = () => {
-  const [collections, setCollections] = useState<ArtblocksCuratedQueryQuery>();
+  const [collections, setCollections] = useState<ArtblocksCollectionsQuery>();
 
   useEffect(() => {
-    execute(ArtblocksCuratedQueryDocument, {}).then((result) => {
-      console.log("Data fetched: ", result);
+    execute(ArtblocksCollectionsDocument, {}).then((result) => {
+      console.log("Collections: ", result);
       setCollections(result?.data);
     });
   }, []);
@@ -23,7 +23,7 @@ const Collections = () => {
         <div className="mx-auto max-w-6xl sm:px-6 lg:px-8 py-8">
           <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
             {collections?.projects
-              ?.slice(8, 19)
+              ?.slice(6, 19)
               .map(
                 (
                   collection: Pick<

@@ -1,4 +1,4 @@
-query ArtblocksCuratedQuery {
+query ArtblocksCollections {
   projects(orderBy: updatedAt, orderDirection: desc) {
     name
     updatedAt
@@ -8,5 +8,21 @@ query ArtblocksCuratedQuery {
     artistName
     scriptJSON
     script
+  }
+}
+
+query ArtblocksCollection ($id: ID!) {
+  project(id: $id) {
+    name
+    updatedAt
+    projectId
+    id
+    curationStatus
+    active
+    artistName
+    description
+    script
+    scriptJSON
+    website
   }
 }

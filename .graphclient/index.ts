@@ -4315,11 +4315,17 @@ const merger = new(BareMerger as any)({
     get documents() {
       return [
       {
-        document: ArtblocksCuratedQueryDocument,
+        document: ArtblocksCollectionsDocument,
         get rawSDL() {
-          return printWithCache(ArtblocksCuratedQueryDocument);
+          return printWithCache(ArtblocksCollectionsDocument);
         },
-        location: 'ArtblocksCuratedQueryDocument.graphql'
+        location: 'ArtblocksCollectionsDocument.graphql'
+      },{
+        document: ArtblocksCollectionDocument,
+        get rawSDL() {
+          return printWithCache(ArtblocksCollectionDocument);
+        },
+        location: 'ArtblocksCollectionDocument.graphql'
       }
     ];
     },
@@ -4358,14 +4364,21 @@ export function getBuiltGraphSDK<TGlobalContext = any, TOperationContext = any>(
   const sdkRequester$ = getBuiltGraphClient().then(({ sdkRequesterFactory }) => sdkRequesterFactory(globalContext));
   return getSdk<TOperationContext, TGlobalContext>((...args) => sdkRequester$.then(sdkRequester => sdkRequester(...args)));
 }
-export type ArtblocksCuratedQueryQueryVariables = Exact<{ [key: string]: never; }>;
+export type ArtblocksCollectionsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ArtblocksCuratedQueryQuery = { projects: Array<Pick<Project, 'name' | 'updatedAt' | 'projectId' | 'id' | 'curationStatus' | 'artistName' | 'scriptJSON' | 'script'>> };
+export type ArtblocksCollectionsQuery = { projects: Array<Pick<Project, 'name' | 'updatedAt' | 'projectId' | 'id' | 'curationStatus' | 'artistName' | 'scriptJSON' | 'script'>> };
+
+export type ArtblocksCollectionQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
 
 
-export const ArtblocksCuratedQueryDocument = gql`
-    query ArtblocksCuratedQuery {
+export type ArtblocksCollectionQuery = { project?: Maybe<Pick<Project, 'name' | 'updatedAt' | 'projectId' | 'id' | 'curationStatus' | 'active' | 'artistName' | 'description' | 'script' | 'scriptJSON' | 'website'>> };
+
+
+export const ArtblocksCollectionsDocument = gql`
+    query ArtblocksCollections {
   projects(orderBy: updatedAt, orderDirection: desc) {
     name
     updatedAt
@@ -4377,14 +4390,35 @@ export const ArtblocksCuratedQueryDocument = gql`
     script
   }
 }
-    ` as unknown as DocumentNode<ArtblocksCuratedQueryQuery, ArtblocksCuratedQueryQueryVariables>;
+    ` as unknown as DocumentNode<ArtblocksCollectionsQuery, ArtblocksCollectionsQueryVariables>;
+export const ArtblocksCollectionDocument = gql`
+    query ArtblocksCollection($id: ID!) {
+  project(id: $id) {
+    name
+    updatedAt
+    projectId
+    id
+    curationStatus
+    active
+    artistName
+    description
+    script
+    scriptJSON
+    website
+  }
+}
+    ` as unknown as DocumentNode<ArtblocksCollectionQuery, ArtblocksCollectionQueryVariables>;
+
 
 
 export type Requester<C = {}, E = unknown> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R> | AsyncIterable<R>
 export function getSdk<C, E>(requester: Requester<C, E>) {
   return {
-    ArtblocksCuratedQuery(variables?: ArtblocksCuratedQueryQueryVariables, options?: C): Promise<ArtblocksCuratedQueryQuery> {
-      return requester<ArtblocksCuratedQueryQuery, ArtblocksCuratedQueryQueryVariables>(ArtblocksCuratedQueryDocument, variables, options) as Promise<ArtblocksCuratedQueryQuery>;
+    ArtblocksCollections(variables?: ArtblocksCollectionsQueryVariables, options?: C): Promise<ArtblocksCollectionsQuery> {
+      return requester<ArtblocksCollectionsQuery, ArtblocksCollectionsQueryVariables>(ArtblocksCollectionsDocument, variables, options) as Promise<ArtblocksCollectionsQuery>;
+    },
+    ArtblocksCollection(variables: ArtblocksCollectionQueryVariables, options?: C): Promise<ArtblocksCollectionQuery> {
+      return requester<ArtblocksCollectionQuery, ArtblocksCollectionQueryVariables>(ArtblocksCollectionDocument, variables, options) as Promise<ArtblocksCollectionQuery>;
     }
   };
 }
