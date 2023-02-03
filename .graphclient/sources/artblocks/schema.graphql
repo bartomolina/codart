@@ -93,6 +93,8 @@ input AccountProject_filter {
   count_not_in: [Int!]
   """Filter for the block changed event."""
   _change_block: BlockChangedFilter
+  and: [AccountProject_filter]
+  or: [AccountProject_filter]
 }
 
 enum AccountProject_orderBy {
@@ -118,6 +120,8 @@ input Account_filter {
   whitelistedOn_: Whitelisting_filter
   """Filter for the block changed event."""
   _change_block: BlockChangedFilter
+  and: [Account_filter]
+  or: [Account_filter]
 }
 
 enum Account_orderBy {
@@ -146,6 +150,7 @@ input Block_height {
 scalar Bytes
 
 type Contract {
+  """Unique identifier made up of the contract address"""
   id: ID!
   admin: Bytes!
   """Core contract type"""
@@ -162,6 +167,22 @@ type Contract {
   Basis points of secondary sales allocated to the platform (null for pre-V3 contracts, check Royalty Registry)
   """
   renderProviderSecondarySalesBPS: BigInt
+  """
+  Address that receives primary sales platform fees, only for V3_Engine contracts
+  """
+  enginePlatformProviderAddress: Bytes
+  """
+  Percentage of primary sales allocated to the platform, only for V3_Engine contracts
+  """
+  enginePlatformProviderPercentage: BigInt
+  """
+  Address that receives secondary sales platform royalties, only for V3_Engine contracts
+  """
+  enginePlatformProviderSecondarySalesAddress: Bytes
+  """
+  Basis points of secondary sales allocated to the platform, only for V3_Engine contracts
+  """
+  enginePlatformProviderSecondarySalesBPS: BigInt
   """List of contracts that are allowed to mint"""
   mintWhitelisted: [Bytes!]!
   """Randomizer contract used to generate token hashes"""
@@ -169,7 +190,7 @@ type Contract {
   """Curation registry contract address"""
   curationRegistry: Bytes
   """Dependency registry contract address"""
-  dependencyRegistry: Bytes
+  dependencyRegistry: DependencyRegistry
   nextProjectId: BigInt!
   """List of projects on the contract"""
   projects(skip: Int = 0, first: Int = 100, orderBy: Project_orderBy, orderDirection: OrderDirection, where: Project_filter): [Project!]
@@ -179,12 +200,22 @@ type Contract {
   whitelisted(skip: Int = 0, first: Int = 100, orderBy: Whitelisting_orderBy, orderDirection: OrderDirection, where: Whitelisting_filter): [Whitelisting!]
   createdAt: BigInt!
   updatedAt: BigInt!
-  """Associated minter filter (if applicable)"""
+  """
+  Associated minter filter (if being indexed) - not always indexed for Engine contracts
+  """
   minterFilter: MinterFilter
   preferredIPFSGateway: String
   preferredArweaveGateway: String
   """New projects forbidden (can only be true on V3+ contracts)"""
   newProjectsForbidden: Boolean!
+  """
+  Automatically approve all artist split proposals (used on V3 Engine contracts)
+  """
+  autoApproveArtistSplitProposals: Boolean
+  """
+  Latest engine registry that this contract is registered with, if any (used for indexing purposes)
+  """
+  registeredOn: EngineRegistry
 }
 
 input Contract_filter {
@@ -246,6 +277,42 @@ input Contract_filter {
   renderProviderSecondarySalesBPS_lte: BigInt
   renderProviderSecondarySalesBPS_in: [BigInt!]
   renderProviderSecondarySalesBPS_not_in: [BigInt!]
+  enginePlatformProviderAddress: Bytes
+  enginePlatformProviderAddress_not: Bytes
+  enginePlatformProviderAddress_gt: Bytes
+  enginePlatformProviderAddress_lt: Bytes
+  enginePlatformProviderAddress_gte: Bytes
+  enginePlatformProviderAddress_lte: Bytes
+  enginePlatformProviderAddress_in: [Bytes!]
+  enginePlatformProviderAddress_not_in: [Bytes!]
+  enginePlatformProviderAddress_contains: Bytes
+  enginePlatformProviderAddress_not_contains: Bytes
+  enginePlatformProviderPercentage: BigInt
+  enginePlatformProviderPercentage_not: BigInt
+  enginePlatformProviderPercentage_gt: BigInt
+  enginePlatformProviderPercentage_lt: BigInt
+  enginePlatformProviderPercentage_gte: BigInt
+  enginePlatformProviderPercentage_lte: BigInt
+  enginePlatformProviderPercentage_in: [BigInt!]
+  enginePlatformProviderPercentage_not_in: [BigInt!]
+  enginePlatformProviderSecondarySalesAddress: Bytes
+  enginePlatformProviderSecondarySalesAddress_not: Bytes
+  enginePlatformProviderSecondarySalesAddress_gt: Bytes
+  enginePlatformProviderSecondarySalesAddress_lt: Bytes
+  enginePlatformProviderSecondarySalesAddress_gte: Bytes
+  enginePlatformProviderSecondarySalesAddress_lte: Bytes
+  enginePlatformProviderSecondarySalesAddress_in: [Bytes!]
+  enginePlatformProviderSecondarySalesAddress_not_in: [Bytes!]
+  enginePlatformProviderSecondarySalesAddress_contains: Bytes
+  enginePlatformProviderSecondarySalesAddress_not_contains: Bytes
+  enginePlatformProviderSecondarySalesBPS: BigInt
+  enginePlatformProviderSecondarySalesBPS_not: BigInt
+  enginePlatformProviderSecondarySalesBPS_gt: BigInt
+  enginePlatformProviderSecondarySalesBPS_lt: BigInt
+  enginePlatformProviderSecondarySalesBPS_gte: BigInt
+  enginePlatformProviderSecondarySalesBPS_lte: BigInt
+  enginePlatformProviderSecondarySalesBPS_in: [BigInt!]
+  enginePlatformProviderSecondarySalesBPS_not_in: [BigInt!]
   mintWhitelisted: [Bytes!]
   mintWhitelisted_not: [Bytes!]
   mintWhitelisted_contains: [Bytes!]
@@ -272,16 +339,27 @@ input Contract_filter {
   curationRegistry_not_in: [Bytes!]
   curationRegistry_contains: Bytes
   curationRegistry_not_contains: Bytes
-  dependencyRegistry: Bytes
-  dependencyRegistry_not: Bytes
-  dependencyRegistry_gt: Bytes
-  dependencyRegistry_lt: Bytes
-  dependencyRegistry_gte: Bytes
-  dependencyRegistry_lte: Bytes
-  dependencyRegistry_in: [Bytes!]
-  dependencyRegistry_not_in: [Bytes!]
-  dependencyRegistry_contains: Bytes
-  dependencyRegistry_not_contains: Bytes
+  dependencyRegistry: String
+  dependencyRegistry_not: String
+  dependencyRegistry_gt: String
+  dependencyRegistry_lt: String
+  dependencyRegistry_gte: String
+  dependencyRegistry_lte: String
+  dependencyRegistry_in: [String!]
+  dependencyRegistry_not_in: [String!]
+  dependencyRegistry_contains: String
+  dependencyRegistry_contains_nocase: String
+  dependencyRegistry_not_contains: String
+  dependencyRegistry_not_contains_nocase: String
+  dependencyRegistry_starts_with: String
+  dependencyRegistry_starts_with_nocase: String
+  dependencyRegistry_not_starts_with: String
+  dependencyRegistry_not_starts_with_nocase: String
+  dependencyRegistry_ends_with: String
+  dependencyRegistry_ends_with_nocase: String
+  dependencyRegistry_not_ends_with: String
+  dependencyRegistry_not_ends_with_nocase: String
+  dependencyRegistry_: DependencyRegistry_filter
   nextProjectId: BigInt
   nextProjectId_not: BigInt
   nextProjectId_gt: BigInt
@@ -374,8 +452,35 @@ input Contract_filter {
   newProjectsForbidden_not: Boolean
   newProjectsForbidden_in: [Boolean!]
   newProjectsForbidden_not_in: [Boolean!]
+  autoApproveArtistSplitProposals: Boolean
+  autoApproveArtistSplitProposals_not: Boolean
+  autoApproveArtistSplitProposals_in: [Boolean!]
+  autoApproveArtistSplitProposals_not_in: [Boolean!]
+  registeredOn: String
+  registeredOn_not: String
+  registeredOn_gt: String
+  registeredOn_lt: String
+  registeredOn_gte: String
+  registeredOn_lte: String
+  registeredOn_in: [String!]
+  registeredOn_not_in: [String!]
+  registeredOn_contains: String
+  registeredOn_contains_nocase: String
+  registeredOn_not_contains: String
+  registeredOn_not_contains_nocase: String
+  registeredOn_starts_with: String
+  registeredOn_starts_with_nocase: String
+  registeredOn_not_starts_with: String
+  registeredOn_not_starts_with_nocase: String
+  registeredOn_ends_with: String
+  registeredOn_ends_with_nocase: String
+  registeredOn_not_ends_with: String
+  registeredOn_not_ends_with_nocase: String
+  registeredOn_: EngineRegistry_filter
   """Filter for the block changed event."""
   _change_block: BlockChangedFilter
+  and: [Contract_filter]
+  or: [Contract_filter]
 }
 
 enum Contract_orderBy {
@@ -386,6 +491,10 @@ enum Contract_orderBy {
   renderProviderPercentage
   renderProviderSecondarySalesAddress
   renderProviderSecondarySalesBPS
+  enginePlatformProviderAddress
+  enginePlatformProviderPercentage
+  enginePlatformProviderSecondarySalesAddress
+  enginePlatformProviderSecondarySalesBPS
   mintWhitelisted
   randomizerContract
   curationRegistry
@@ -400,6 +509,8 @@ enum Contract_orderBy {
   preferredIPFSGateway
   preferredArweaveGateway
   newProjectsForbidden
+  autoApproveArtistSplitProposals
+  registeredOn
 }
 
 enum CoreType {
@@ -411,6 +522,553 @@ enum CoreType {
   GenArt721CoreV2
   """Third Art Blocks flagship core"""
   GenArt721CoreV3
+  """V3 Derivative - Art Blocks Engine core"""
+  GenArt721CoreV3_Engine
+}
+
+type Dependency {
+  """
+  Unique identifier made up of dependency name and version separated by an @ symbol (e.g. p5js@1.0.0)
+  """
+  id: ID!
+  """Preffered CDN for this dependency"""
+  preferredCDN: String!
+  """Additional CDNs for this dependency"""
+  additionalCDNs(skip: Int = 0, first: Int = 100, orderBy: DependencyAdditionalCDN_orderBy, orderDirection: OrderDirection, where: DependencyAdditionalCDN_filter): [DependencyAdditionalCDN!]!
+  """Number of additional CDNs for this dependency"""
+  additionalCDNCount: BigInt!
+  """Preffered repository for this dependency"""
+  preferredRepository: String!
+  """Additional repositories for this dependency"""
+  additionalRepositoryCount: BigInt!
+  """Number of additional repositories for this dependency"""
+  additionalRepositories(skip: Int = 0, first: Int = 100, orderBy: DependencyAdditionalRepository_orderBy, orderDirection: OrderDirection, where: DependencyAdditionalRepository_filter): [DependencyAdditionalRepository!]!
+  """List of on-chain scripts that for this dependency"""
+  scripts(skip: Int = 0, first: Int = 100, orderBy: DependencyScript_orderBy, orderDirection: OrderDirection, where: DependencyScript_filter): [DependencyScript!]!
+  """Number of on-chain scripts for this dependency"""
+  scriptCount: BigInt!
+  """Concatenated string of all scripts for this dependency"""
+  script: String
+  """Reference website for this dependency (e.g. https://p5js.org)"""
+  referenceWebsite: String!
+  """Depenency registry contract that this dependency is registered on"""
+  dependencyRegistry: DependencyRegistry!
+  """Timestamp of last update"""
+  updatedAt: BigInt!
+}
+
+type DependencyAdditionalCDN {
+  """Unique identifier made up of dependency id and index"""
+  id: ID!
+  """Dependency this additional CDN belongs to"""
+  dependency: Dependency!
+  """URL of the CDN"""
+  cdn: String!
+  """Index of this additional CDN"""
+  index: BigInt!
+}
+
+input DependencyAdditionalCDN_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  dependency: String
+  dependency_not: String
+  dependency_gt: String
+  dependency_lt: String
+  dependency_gte: String
+  dependency_lte: String
+  dependency_in: [String!]
+  dependency_not_in: [String!]
+  dependency_contains: String
+  dependency_contains_nocase: String
+  dependency_not_contains: String
+  dependency_not_contains_nocase: String
+  dependency_starts_with: String
+  dependency_starts_with_nocase: String
+  dependency_not_starts_with: String
+  dependency_not_starts_with_nocase: String
+  dependency_ends_with: String
+  dependency_ends_with_nocase: String
+  dependency_not_ends_with: String
+  dependency_not_ends_with_nocase: String
+  dependency_: Dependency_filter
+  cdn: String
+  cdn_not: String
+  cdn_gt: String
+  cdn_lt: String
+  cdn_gte: String
+  cdn_lte: String
+  cdn_in: [String!]
+  cdn_not_in: [String!]
+  cdn_contains: String
+  cdn_contains_nocase: String
+  cdn_not_contains: String
+  cdn_not_contains_nocase: String
+  cdn_starts_with: String
+  cdn_starts_with_nocase: String
+  cdn_not_starts_with: String
+  cdn_not_starts_with_nocase: String
+  cdn_ends_with: String
+  cdn_ends_with_nocase: String
+  cdn_not_ends_with: String
+  cdn_not_ends_with_nocase: String
+  index: BigInt
+  index_not: BigInt
+  index_gt: BigInt
+  index_lt: BigInt
+  index_gte: BigInt
+  index_lte: BigInt
+  index_in: [BigInt!]
+  index_not_in: [BigInt!]
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
+  and: [DependencyAdditionalCDN_filter]
+  or: [DependencyAdditionalCDN_filter]
+}
+
+enum DependencyAdditionalCDN_orderBy {
+  id
+  dependency
+  cdn
+  index
+}
+
+type DependencyAdditionalRepository {
+  """Unique identifier made up of dependency id and index"""
+  id: ID!
+  """Dependency this additional repository belongs to"""
+  dependency: Dependency!
+  """URL of the repository"""
+  repository: String!
+  """Index of this additional repository"""
+  index: BigInt!
+}
+
+input DependencyAdditionalRepository_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  dependency: String
+  dependency_not: String
+  dependency_gt: String
+  dependency_lt: String
+  dependency_gte: String
+  dependency_lte: String
+  dependency_in: [String!]
+  dependency_not_in: [String!]
+  dependency_contains: String
+  dependency_contains_nocase: String
+  dependency_not_contains: String
+  dependency_not_contains_nocase: String
+  dependency_starts_with: String
+  dependency_starts_with_nocase: String
+  dependency_not_starts_with: String
+  dependency_not_starts_with_nocase: String
+  dependency_ends_with: String
+  dependency_ends_with_nocase: String
+  dependency_not_ends_with: String
+  dependency_not_ends_with_nocase: String
+  dependency_: Dependency_filter
+  repository: String
+  repository_not: String
+  repository_gt: String
+  repository_lt: String
+  repository_gte: String
+  repository_lte: String
+  repository_in: [String!]
+  repository_not_in: [String!]
+  repository_contains: String
+  repository_contains_nocase: String
+  repository_not_contains: String
+  repository_not_contains_nocase: String
+  repository_starts_with: String
+  repository_starts_with_nocase: String
+  repository_not_starts_with: String
+  repository_not_starts_with_nocase: String
+  repository_ends_with: String
+  repository_ends_with_nocase: String
+  repository_not_ends_with: String
+  repository_not_ends_with_nocase: String
+  index: BigInt
+  index_not: BigInt
+  index_gt: BigInt
+  index_lt: BigInt
+  index_gte: BigInt
+  index_lte: BigInt
+  index_in: [BigInt!]
+  index_not_in: [BigInt!]
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
+  and: [DependencyAdditionalRepository_filter]
+  or: [DependencyAdditionalRepository_filter]
+}
+
+enum DependencyAdditionalRepository_orderBy {
+  id
+  dependency
+  repository
+  index
+}
+
+type DependencyRegistry {
+  """Unique identifier made up of dependency registry contract address"""
+  id: Bytes!
+  """Core contracts that this registry can provide dependeny overrides for"""
+  supportedCoreContracts(skip: Int = 0, first: Int = 100, orderBy: Contract_orderBy, orderDirection: OrderDirection, where: Contract_filter): [Contract!]!
+  """List of dependencies that are registered on this registry contract"""
+  dependencies(skip: Int = 0, first: Int = 100, orderBy: Dependency_orderBy, orderDirection: OrderDirection, where: Dependency_filter): [Dependency!]
+  """Current owner of this contract"""
+  owner: Bytes!
+  """Timestamp of last update"""
+  updatedAt: BigInt!
+}
+
+input DependencyRegistry_filter {
+  id: Bytes
+  id_not: Bytes
+  id_gt: Bytes
+  id_lt: Bytes
+  id_gte: Bytes
+  id_lte: Bytes
+  id_in: [Bytes!]
+  id_not_in: [Bytes!]
+  id_contains: Bytes
+  id_not_contains: Bytes
+  supportedCoreContracts_: Contract_filter
+  dependencies_: Dependency_filter
+  owner: Bytes
+  owner_not: Bytes
+  owner_gt: Bytes
+  owner_lt: Bytes
+  owner_gte: Bytes
+  owner_lte: Bytes
+  owner_in: [Bytes!]
+  owner_not_in: [Bytes!]
+  owner_contains: Bytes
+  owner_not_contains: Bytes
+  updatedAt: BigInt
+  updatedAt_not: BigInt
+  updatedAt_gt: BigInt
+  updatedAt_lt: BigInt
+  updatedAt_gte: BigInt
+  updatedAt_lte: BigInt
+  updatedAt_in: [BigInt!]
+  updatedAt_not_in: [BigInt!]
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
+  and: [DependencyRegistry_filter]
+  or: [DependencyRegistry_filter]
+}
+
+enum DependencyRegistry_orderBy {
+  id
+  supportedCoreContracts
+  dependencies
+  owner
+  updatedAt
+}
+
+type DependencyScript {
+  """Unique identifier made up of dependency id and index"""
+  id: ID!
+  """Dependency this script belongs to"""
+  dependency: Dependency!
+  """Index of this script"""
+  index: BigInt!
+  """Contents of script"""
+  script: String!
+  """Address of the bytecode storage contract for this script"""
+  address: Bytes!
+}
+
+input DependencyScript_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  dependency: String
+  dependency_not: String
+  dependency_gt: String
+  dependency_lt: String
+  dependency_gte: String
+  dependency_lte: String
+  dependency_in: [String!]
+  dependency_not_in: [String!]
+  dependency_contains: String
+  dependency_contains_nocase: String
+  dependency_not_contains: String
+  dependency_not_contains_nocase: String
+  dependency_starts_with: String
+  dependency_starts_with_nocase: String
+  dependency_not_starts_with: String
+  dependency_not_starts_with_nocase: String
+  dependency_ends_with: String
+  dependency_ends_with_nocase: String
+  dependency_not_ends_with: String
+  dependency_not_ends_with_nocase: String
+  dependency_: Dependency_filter
+  index: BigInt
+  index_not: BigInt
+  index_gt: BigInt
+  index_lt: BigInt
+  index_gte: BigInt
+  index_lte: BigInt
+  index_in: [BigInt!]
+  index_not_in: [BigInt!]
+  script: String
+  script_not: String
+  script_gt: String
+  script_lt: String
+  script_gte: String
+  script_lte: String
+  script_in: [String!]
+  script_not_in: [String!]
+  script_contains: String
+  script_contains_nocase: String
+  script_not_contains: String
+  script_not_contains_nocase: String
+  script_starts_with: String
+  script_starts_with_nocase: String
+  script_not_starts_with: String
+  script_not_starts_with_nocase: String
+  script_ends_with: String
+  script_ends_with_nocase: String
+  script_not_ends_with: String
+  script_not_ends_with_nocase: String
+  address: Bytes
+  address_not: Bytes
+  address_gt: Bytes
+  address_lt: Bytes
+  address_gte: Bytes
+  address_lte: Bytes
+  address_in: [Bytes!]
+  address_not_in: [Bytes!]
+  address_contains: Bytes
+  address_not_contains: Bytes
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
+  and: [DependencyScript_filter]
+  or: [DependencyScript_filter]
+}
+
+enum DependencyScript_orderBy {
+  id
+  dependency
+  index
+  script
+  address
+}
+
+input Dependency_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  preferredCDN: String
+  preferredCDN_not: String
+  preferredCDN_gt: String
+  preferredCDN_lt: String
+  preferredCDN_gte: String
+  preferredCDN_lte: String
+  preferredCDN_in: [String!]
+  preferredCDN_not_in: [String!]
+  preferredCDN_contains: String
+  preferredCDN_contains_nocase: String
+  preferredCDN_not_contains: String
+  preferredCDN_not_contains_nocase: String
+  preferredCDN_starts_with: String
+  preferredCDN_starts_with_nocase: String
+  preferredCDN_not_starts_with: String
+  preferredCDN_not_starts_with_nocase: String
+  preferredCDN_ends_with: String
+  preferredCDN_ends_with_nocase: String
+  preferredCDN_not_ends_with: String
+  preferredCDN_not_ends_with_nocase: String
+  additionalCDNs_: DependencyAdditionalCDN_filter
+  additionalCDNCount: BigInt
+  additionalCDNCount_not: BigInt
+  additionalCDNCount_gt: BigInt
+  additionalCDNCount_lt: BigInt
+  additionalCDNCount_gte: BigInt
+  additionalCDNCount_lte: BigInt
+  additionalCDNCount_in: [BigInt!]
+  additionalCDNCount_not_in: [BigInt!]
+  preferredRepository: String
+  preferredRepository_not: String
+  preferredRepository_gt: String
+  preferredRepository_lt: String
+  preferredRepository_gte: String
+  preferredRepository_lte: String
+  preferredRepository_in: [String!]
+  preferredRepository_not_in: [String!]
+  preferredRepository_contains: String
+  preferredRepository_contains_nocase: String
+  preferredRepository_not_contains: String
+  preferredRepository_not_contains_nocase: String
+  preferredRepository_starts_with: String
+  preferredRepository_starts_with_nocase: String
+  preferredRepository_not_starts_with: String
+  preferredRepository_not_starts_with_nocase: String
+  preferredRepository_ends_with: String
+  preferredRepository_ends_with_nocase: String
+  preferredRepository_not_ends_with: String
+  preferredRepository_not_ends_with_nocase: String
+  additionalRepositoryCount: BigInt
+  additionalRepositoryCount_not: BigInt
+  additionalRepositoryCount_gt: BigInt
+  additionalRepositoryCount_lt: BigInt
+  additionalRepositoryCount_gte: BigInt
+  additionalRepositoryCount_lte: BigInt
+  additionalRepositoryCount_in: [BigInt!]
+  additionalRepositoryCount_not_in: [BigInt!]
+  additionalRepositories_: DependencyAdditionalRepository_filter
+  scripts_: DependencyScript_filter
+  scriptCount: BigInt
+  scriptCount_not: BigInt
+  scriptCount_gt: BigInt
+  scriptCount_lt: BigInt
+  scriptCount_gte: BigInt
+  scriptCount_lte: BigInt
+  scriptCount_in: [BigInt!]
+  scriptCount_not_in: [BigInt!]
+  script: String
+  script_not: String
+  script_gt: String
+  script_lt: String
+  script_gte: String
+  script_lte: String
+  script_in: [String!]
+  script_not_in: [String!]
+  script_contains: String
+  script_contains_nocase: String
+  script_not_contains: String
+  script_not_contains_nocase: String
+  script_starts_with: String
+  script_starts_with_nocase: String
+  script_not_starts_with: String
+  script_not_starts_with_nocase: String
+  script_ends_with: String
+  script_ends_with_nocase: String
+  script_not_ends_with: String
+  script_not_ends_with_nocase: String
+  referenceWebsite: String
+  referenceWebsite_not: String
+  referenceWebsite_gt: String
+  referenceWebsite_lt: String
+  referenceWebsite_gte: String
+  referenceWebsite_lte: String
+  referenceWebsite_in: [String!]
+  referenceWebsite_not_in: [String!]
+  referenceWebsite_contains: String
+  referenceWebsite_contains_nocase: String
+  referenceWebsite_not_contains: String
+  referenceWebsite_not_contains_nocase: String
+  referenceWebsite_starts_with: String
+  referenceWebsite_starts_with_nocase: String
+  referenceWebsite_not_starts_with: String
+  referenceWebsite_not_starts_with_nocase: String
+  referenceWebsite_ends_with: String
+  referenceWebsite_ends_with_nocase: String
+  referenceWebsite_not_ends_with: String
+  referenceWebsite_not_ends_with_nocase: String
+  dependencyRegistry: String
+  dependencyRegistry_not: String
+  dependencyRegistry_gt: String
+  dependencyRegistry_lt: String
+  dependencyRegistry_gte: String
+  dependencyRegistry_lte: String
+  dependencyRegistry_in: [String!]
+  dependencyRegistry_not_in: [String!]
+  dependencyRegistry_contains: String
+  dependencyRegistry_contains_nocase: String
+  dependencyRegistry_not_contains: String
+  dependencyRegistry_not_contains_nocase: String
+  dependencyRegistry_starts_with: String
+  dependencyRegistry_starts_with_nocase: String
+  dependencyRegistry_not_starts_with: String
+  dependencyRegistry_not_starts_with_nocase: String
+  dependencyRegistry_ends_with: String
+  dependencyRegistry_ends_with_nocase: String
+  dependencyRegistry_not_ends_with: String
+  dependencyRegistry_not_ends_with_nocase: String
+  dependencyRegistry_: DependencyRegistry_filter
+  updatedAt: BigInt
+  updatedAt_not: BigInt
+  updatedAt_gt: BigInt
+  updatedAt_lt: BigInt
+  updatedAt_gte: BigInt
+  updatedAt_lte: BigInt
+  updatedAt_in: [BigInt!]
+  updatedAt_not_in: [BigInt!]
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
+  and: [Dependency_filter]
+  or: [Dependency_filter]
+}
+
+enum Dependency_orderBy {
+  id
+  preferredCDN
+  additionalCDNs
+  additionalCDNCount
+  preferredRepository
+  additionalRepositoryCount
+  additionalRepositories
+  scripts
+  scriptCount
+  script
+  referenceWebsite
+  dependencyRegistry
+  updatedAt
+}
+
+type EngineRegistry {
+  """Unique identifier made up of the Engine Registry's contract address"""
+  id: ID!
+  """
+  Core contracts that are registered on this Engine Registry, when this is most recent Engine Registry to add the contract
+  """
+  registeredContracts(skip: Int = 0, first: Int = 100, orderBy: Contract_orderBy, orderDirection: OrderDirection, where: Contract_filter): [Contract!]
+}
+
+input EngineRegistry_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  registeredContracts_: Contract_filter
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
+  and: [EngineRegistry_filter]
+  or: [EngineRegistry_filter]
+}
+
+enum EngineRegistry_orderBy {
+  id
+  registeredContracts
 }
 
 enum Exchange {
@@ -427,8 +1085,10 @@ enum Exchange {
 type Minter {
   """Unique identifier made up of minter contract address"""
   id: ID!
-  """Minter type"""
-  type: MinterType!
+  """
+  Minter type - String if minter returns it's type, empty string otherwise
+  """
+  type: String!
   """Associated Minter Filter"""
   minterFilter: MinterFilter!
   """
@@ -511,6 +1171,8 @@ input MinterFilter_filter {
   updatedAt_not_in: [BigInt!]
   """Filter for the block changed event."""
   _change_block: BlockChangedFilter
+  and: [MinterFilter_filter]
+  or: [MinterFilter_filter]
 }
 
 enum MinterFilter_orderBy {
@@ -519,29 +1181,6 @@ enum MinterFilter_orderBy {
   minterAllowlist
   associatedMinters
   updatedAt
-}
-
-enum MinterType {
-  MinterSetPriceV0
-  MinterSetPriceERC20V0
-  MinterDALinV0
-  MinterDAExpV0
-  MinterSetPriceV1
-  MinterSetPriceERC20V1
-  MinterDALinV1
-  MinterDAExpV1
-  MinterHolderV0
-  MinterMerkleV0
-  MinterSetPriceV2
-  MinterSetPriceERC20V2
-  MinterDALinV2
-  MinterDAExpV2
-  MinterHolderV1
-  MinterHolderV2
-  MinterMerkleV1
-  MinterMerkleV2
-  MinterDAExpSettlementV0
-  MinterMerkleV3
 }
 
 input Minter_filter {
@@ -553,10 +1192,26 @@ input Minter_filter {
   id_lte: ID
   id_in: [ID!]
   id_not_in: [ID!]
-  type: MinterType
-  type_not: MinterType
-  type_in: [MinterType!]
-  type_not_in: [MinterType!]
+  type: String
+  type_not: String
+  type_gt: String
+  type_lt: String
+  type_gte: String
+  type_lte: String
+  type_in: [String!]
+  type_not_in: [String!]
+  type_contains: String
+  type_contains_nocase: String
+  type_not_contains: String
+  type_not_contains_nocase: String
+  type_starts_with: String
+  type_starts_with_nocase: String
+  type_not_starts_with: String
+  type_not_starts_with_nocase: String
+  type_ends_with: String
+  type_ends_with_nocase: String
+  type_not_ends_with: String
+  type_not_ends_with_nocase: String
   minterFilter: String
   minterFilter_not: String
   minterFilter_gt: String
@@ -654,6 +1309,8 @@ input Minter_filter {
   updatedAt_not_in: [BigInt!]
   """Filter for the block changed event."""
   _change_block: BlockChangedFilter
+  and: [Minter_filter]
+  or: [Minter_filter]
 }
 
 enum Minter_orderBy {
@@ -763,6 +1420,8 @@ input Payment_filter {
   recipient_not_contains: Bytes
   """Filter for the block changed event."""
   _change_block: BlockChangedFilter
+  and: [Payment_filter]
+  or: [Payment_filter]
 }
 
 enum Payment_orderBy {
@@ -828,7 +1487,9 @@ type Project {
   For V3 and-on, this field is null, and projects lock 4 weeks after `completedAt`. Once the project is locked its script may never be updated again.
   """
   locked: Boolean
-  """Maximum number of invocations allowed for the project"""
+  """
+  Maximum number of invocations allowed for the project. Note that minter contracts may additionally limit a project's maxInvocations on a specific minter.
+  """
   maxInvocations: BigInt!
   """Project name"""
   name: String
@@ -967,6 +1628,8 @@ input ProjectExternalAssetDependency_filter {
   index_not_in: [BigInt!]
   """Filter for the block changed event."""
   _change_block: BlockChangedFilter
+  and: [ProjectExternalAssetDependency_filter]
+  or: [ProjectExternalAssetDependency_filter]
 }
 
 enum ProjectExternalAssetDependency_orderBy {
@@ -1006,6 +1669,10 @@ type ProjectMinterConfiguration {
   Configuration details used by specific minter project configurations (json string)
   """
   extraMinterDetails: String!
+  """
+  Maximum number of invocations allowed for the project (on the minter). If less than than a project's maximum invocations defined on a core contract, the minter contract will limit this project's maximum invocations
+  """
+  maxInvocations: BigInt
 }
 
 input ProjectMinterConfiguration_filter {
@@ -1157,8 +1824,18 @@ input ProjectMinterConfiguration_filter {
   extraMinterDetails_ends_with_nocase: String
   extraMinterDetails_not_ends_with: String
   extraMinterDetails_not_ends_with_nocase: String
+  maxInvocations: BigInt
+  maxInvocations_not: BigInt
+  maxInvocations_gt: BigInt
+  maxInvocations_lt: BigInt
+  maxInvocations_gte: BigInt
+  maxInvocations_lte: BigInt
+  maxInvocations_in: [BigInt!]
+  maxInvocations_not_in: [BigInt!]
   """Filter for the block changed event."""
   _change_block: BlockChangedFilter
+  and: [ProjectMinterConfiguration_filter]
+  or: [ProjectMinterConfiguration_filter]
 }
 
 enum ProjectMinterConfiguration_orderBy {
@@ -1175,6 +1852,7 @@ enum ProjectMinterConfiguration_orderBy {
   startTime
   endTime
   extraMinterDetails
+  maxInvocations
 }
 
 type ProjectScript {
@@ -1244,6 +1922,8 @@ input ProjectScript_filter {
   script_not_ends_with_nocase: String
   """Filter for the block changed event."""
   _change_block: BlockChangedFilter
+  and: [ProjectScript_filter]
+  or: [ProjectScript_filter]
 }
 
 enum ProjectScript_orderBy {
@@ -1818,6 +2498,8 @@ input Project_filter {
   externalAssetDependencies_: ProjectExternalAssetDependency_filter
   """Filter for the block changed event."""
   _change_block: BlockChangedFilter
+  and: [Project_filter]
+  or: [Project_filter]
 }
 
 enum Project_orderBy {
@@ -1978,6 +2660,8 @@ input ProposedArtistAddressesAndSplit_filter {
   createdAt_not_in: [BigInt!]
   """Filter for the block changed event."""
   _change_block: BlockChangedFilter
+  and: [ProposedArtistAddressesAndSplit_filter]
+  or: [ProposedArtistAddressesAndSplit_filter]
 }
 
 enum ProposedArtistAddressesAndSplit_orderBy {
@@ -2070,6 +2754,32 @@ type Query {
     """
     subgraphError: _SubgraphErrorPolicy_! = deny
   ): [ProposedArtistAddressesAndSplit!]!
+  engineRegistry(
+    id: ID!
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): EngineRegistry
+  engineRegistries(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: EngineRegistry_orderBy
+    orderDirection: OrderDirection
+    where: EngineRegistry_filter
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [EngineRegistry!]!
   contract(
     id: ID!
     """
@@ -2408,6 +3118,136 @@ type Query {
     """
     subgraphError: _SubgraphErrorPolicy_! = deny
   ): [Transfer!]!
+  dependency(
+    id: ID!
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): Dependency
+  dependencies(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: Dependency_orderBy
+    orderDirection: OrderDirection
+    where: Dependency_filter
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [Dependency!]!
+  dependencyRegistry(
+    id: ID!
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): DependencyRegistry
+  dependencyRegistries(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: DependencyRegistry_orderBy
+    orderDirection: OrderDirection
+    where: DependencyRegistry_filter
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [DependencyRegistry!]!
+  dependencyAdditionalCDN(
+    id: ID!
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): DependencyAdditionalCDN
+  dependencyAdditionalCDNs(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: DependencyAdditionalCDN_orderBy
+    orderDirection: OrderDirection
+    where: DependencyAdditionalCDN_filter
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [DependencyAdditionalCDN!]!
+  dependencyAdditionalRepository(
+    id: ID!
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): DependencyAdditionalRepository
+  dependencyAdditionalRepositories(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: DependencyAdditionalRepository_orderBy
+    orderDirection: OrderDirection
+    where: DependencyAdditionalRepository_filter
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [DependencyAdditionalRepository!]!
+  dependencyScript(
+    id: ID!
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): DependencyScript
+  dependencyScripts(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: DependencyScript_orderBy
+    orderDirection: OrderDirection
+    where: DependencyScript_filter
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [DependencyScript!]!
   projectExternalAssetDependency(
     id: ID!
     """
@@ -2554,6 +3394,8 @@ input Receipt_filter {
   updatedAt_not_in: [BigInt!]
   """Filter for the block changed event."""
   _change_block: BlockChangedFilter
+  and: [Receipt_filter]
+  or: [Receipt_filter]
 }
 
 enum Receipt_orderBy {
@@ -2702,6 +3544,8 @@ input SaleLookupTable_filter {
   sale_: Sale_filter
   """Filter for the block changed event."""
   _change_block: BlockChangedFilter
+  and: [SaleLookupTable_filter]
+  or: [SaleLookupTable_filter]
 }
 
 enum SaleLookupTable_orderBy {
@@ -2809,6 +3653,8 @@ input Sale_filter {
   isPrivate_not_in: [Boolean!]
   """Filter for the block changed event."""
   _change_block: BlockChangedFilter
+  and: [Sale_filter]
+  or: [Sale_filter]
 }
 
 enum Sale_orderBy {
@@ -2905,6 +3751,32 @@ type Subscription {
     """
     subgraphError: _SubgraphErrorPolicy_! = deny
   ): [ProposedArtistAddressesAndSplit!]!
+  engineRegistry(
+    id: ID!
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): EngineRegistry
+  engineRegistries(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: EngineRegistry_orderBy
+    orderDirection: OrderDirection
+    where: EngineRegistry_filter
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [EngineRegistry!]!
   contract(
     id: ID!
     """
@@ -3243,6 +4115,136 @@ type Subscription {
     """
     subgraphError: _SubgraphErrorPolicy_! = deny
   ): [Transfer!]!
+  dependency(
+    id: ID!
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): Dependency
+  dependencies(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: Dependency_orderBy
+    orderDirection: OrderDirection
+    where: Dependency_filter
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [Dependency!]!
+  dependencyRegistry(
+    id: ID!
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): DependencyRegistry
+  dependencyRegistries(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: DependencyRegistry_orderBy
+    orderDirection: OrderDirection
+    where: DependencyRegistry_filter
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [DependencyRegistry!]!
+  dependencyAdditionalCDN(
+    id: ID!
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): DependencyAdditionalCDN
+  dependencyAdditionalCDNs(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: DependencyAdditionalCDN_orderBy
+    orderDirection: OrderDirection
+    where: DependencyAdditionalCDN_filter
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [DependencyAdditionalCDN!]!
+  dependencyAdditionalRepository(
+    id: ID!
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): DependencyAdditionalRepository
+  dependencyAdditionalRepositories(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: DependencyAdditionalRepository_orderBy
+    orderDirection: OrderDirection
+    where: DependencyAdditionalRepository_filter
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [DependencyAdditionalRepository!]!
+  dependencyScript(
+    id: ID!
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): DependencyScript
+  dependencyScripts(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: DependencyScript_orderBy
+    orderDirection: OrderDirection
+    where: DependencyScript_filter
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [DependencyScript!]!
   projectExternalAssetDependency(
     id: ID!
     """
@@ -3456,6 +4458,8 @@ input Token_filter {
   nextSaleId_not_in: [BigInt!]
   """Filter for the block changed event."""
   _change_block: BlockChangedFilter
+  and: [Token_filter]
+  or: [Token_filter]
 }
 
 enum Token_orderBy {
@@ -3477,11 +4481,13 @@ enum Token_orderBy {
 
 type Transfer {
   id: ID!
-  transactionHash: Bytes!
   token: Token!
-  createdAt: BigInt!
   to: Bytes!
   from: Bytes!
+  transactionHash: Bytes!
+  blockHash: Bytes!
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
 }
 
 input Transfer_filter {
@@ -3493,16 +4499,6 @@ input Transfer_filter {
   id_lte: ID
   id_in: [ID!]
   id_not_in: [ID!]
-  transactionHash: Bytes
-  transactionHash_not: Bytes
-  transactionHash_gt: Bytes
-  transactionHash_lt: Bytes
-  transactionHash_gte: Bytes
-  transactionHash_lte: Bytes
-  transactionHash_in: [Bytes!]
-  transactionHash_not_in: [Bytes!]
-  transactionHash_contains: Bytes
-  transactionHash_not_contains: Bytes
   token: String
   token_not: String
   token_gt: String
@@ -3524,14 +4520,6 @@ input Transfer_filter {
   token_not_ends_with: String
   token_not_ends_with_nocase: String
   token_: Token_filter
-  createdAt: BigInt
-  createdAt_not: BigInt
-  createdAt_gt: BigInt
-  createdAt_lt: BigInt
-  createdAt_gte: BigInt
-  createdAt_lte: BigInt
-  createdAt_in: [BigInt!]
-  createdAt_not_in: [BigInt!]
   to: Bytes
   to_not: Bytes
   to_gt: Bytes
@@ -3552,17 +4540,57 @@ input Transfer_filter {
   from_not_in: [Bytes!]
   from_contains: Bytes
   from_not_contains: Bytes
+  transactionHash: Bytes
+  transactionHash_not: Bytes
+  transactionHash_gt: Bytes
+  transactionHash_lt: Bytes
+  transactionHash_gte: Bytes
+  transactionHash_lte: Bytes
+  transactionHash_in: [Bytes!]
+  transactionHash_not_in: [Bytes!]
+  transactionHash_contains: Bytes
+  transactionHash_not_contains: Bytes
+  blockHash: Bytes
+  blockHash_not: Bytes
+  blockHash_gt: Bytes
+  blockHash_lt: Bytes
+  blockHash_gte: Bytes
+  blockHash_lte: Bytes
+  blockHash_in: [Bytes!]
+  blockHash_not_in: [Bytes!]
+  blockHash_contains: Bytes
+  blockHash_not_contains: Bytes
+  blockNumber: BigInt
+  blockNumber_not: BigInt
+  blockNumber_gt: BigInt
+  blockNumber_lt: BigInt
+  blockNumber_gte: BigInt
+  blockNumber_lte: BigInt
+  blockNumber_in: [BigInt!]
+  blockNumber_not_in: [BigInt!]
+  blockTimestamp: BigInt
+  blockTimestamp_not: BigInt
+  blockTimestamp_gt: BigInt
+  blockTimestamp_lt: BigInt
+  blockTimestamp_gte: BigInt
+  blockTimestamp_lte: BigInt
+  blockTimestamp_in: [BigInt!]
+  blockTimestamp_not_in: [BigInt!]
   """Filter for the block changed event."""
   _change_block: BlockChangedFilter
+  and: [Transfer_filter]
+  or: [Transfer_filter]
 }
 
 enum Transfer_orderBy {
   id
-  transactionHash
   token
-  createdAt
   to
   from
+  transactionHash
+  blockHash
+  blockNumber
+  blockTimestamp
 }
 
 type Whitelisting {
@@ -3624,6 +4652,8 @@ input Whitelisting_filter {
   contract_: Contract_filter
   """Filter for the block changed event."""
   _change_block: BlockChangedFilter
+  and: [Whitelisting_filter]
+  or: [Whitelisting_filter]
 }
 
 enum Whitelisting_orderBy {

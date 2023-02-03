@@ -27,6 +27,8 @@ const Card = ({ collection }: Props) => {
           <div className="mx-0.5 mt-3">
             <div className="font-semibold text-lg text-gray-900">{collection.name}</div>
             <div className="-mt-1 text-sm text-gray-500">{collection.artistName}</div>
+            <div className="-mt-1 text-sm text-gray-500">#{collection.projectId}</div>
+            <div className="-mt-1 text-sm text-gray-500">{collection.complete ? "Completed" : "Upcoming"}</div>
           </div>
         </div>
       </div>

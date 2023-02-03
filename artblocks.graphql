@@ -1,28 +1,37 @@
 query ArtblocksCollections {
   projects(orderBy: updatedAt, orderDirection: desc) {
-    name
-    updatedAt
-    projectId
-    id
-    curationStatus
+    active
     artistName
-    scriptJSON
-    script
+    complete
+    curationStatus
+    id
+    name
+    projectId
+    updatedAt
   }
 }
 
 query ArtblocksCollection ($id: ID!) {
   project(id: $id) {
-    name
-    updatedAt
-    projectId
-    id
-    curationStatus
     active
     artistName
+    complete
+    completedAt
+    createdAt
+    curationStatus
     description
+    id
+    invocations
+    license
+    maxInvocations
+    name
+    projectId
+    royaltyPercentage
     script
-    scriptJSON
+    scriptTypeAndVersion
+    updatedAt
     website
   }
 }
+
+    

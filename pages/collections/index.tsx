@@ -8,7 +8,7 @@ const Collections = () => {
 
   useEffect(() => {
     execute(ArtblocksCollectionsDocument, {}).then((result) => {
-      console.log("Collections: ", result);
+      console.log("Collections: ", result.data.projects.filter(collection => collection.active));
       setCollections(result?.data);
     });
   }, []);
@@ -22,9 +22,7 @@ const Collections = () => {
       <div className="bg-gray-100 pb-24">
         <div className="mx-auto max-w-6xl sm:px-6 lg:px-8 py-8">
           <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
-            {collections?.projects
-              ?.slice(6, 19)
-              .map(
+            {collections?.projects.filter(collection => collection.active).map(
                 (
                   collection: Pick<
                     Project,
