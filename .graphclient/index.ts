@@ -5476,7 +5476,7 @@ export type ArtblocksCollectionsQueryVariables = Exact<{ [key: string]: never; }
 
 
 export type ArtblocksCollectionsQuery = { projects: Array<(
-    Pick<Project, 'active' | 'artistName' | 'complete' | 'completedAt' | 'curationStatus' | 'id' | 'name' | 'projectId' | 'updatedAt'>
+    Pick<Project, 'name' | 'projectId' | 'id' | 'active' | 'artistName' | 'complete' | 'completedAt' | 'curationStatus' | 'updatedAt'>
     & { minterConfiguration?: Maybe<(
       Pick<ProjectMinterConfiguration, 'startTime'>
       & { minter: Pick<Minter, 'id'> }
@@ -5488,7 +5488,7 @@ export type ArtblocksCollectionQueryVariables = Exact<{
 }>;
 
 
-export type ArtblocksCollectionQuery = { project?: Maybe<Pick<Project, 'active' | 'artistName' | 'complete' | 'completedAt' | 'createdAt' | 'curationStatus' | 'description' | 'id' | 'invocations' | 'license' | 'maxInvocations' | 'name' | 'projectId' | 'royaltyPercentage' | 'script' | 'scriptTypeAndVersion' | 'updatedAt' | 'website'>> };
+export type ArtblocksCollectionQuery = { project?: Maybe<Pick<Project, 'name' | 'projectId' | 'id' | 'active' | 'artistName' | 'complete' | 'completedAt' | 'createdAt' | 'curationStatus' | 'description' | 'invocations' | 'license' | 'maxInvocations' | 'royaltyPercentage' | 'script' | 'scriptTypeAndVersion' | 'updatedAt' | 'website'>> };
 
 
 export const ArtblocksCollectionsDocument = gql`
@@ -5498,20 +5498,20 @@ export const ArtblocksCollectionsDocument = gql`
     orderDirection: desc
     where: {contract: "0x99a9b7c1116f9ceeb1652de04d5969cce509b069"}
   ) {
+    name
+    projectId
+    id
     active
     artistName
     complete
     completedAt
     curationStatus
-    id
     minterConfiguration {
       startTime
       minter {
         id
       }
     }
-    name
-    projectId
     updatedAt
   }
 }
@@ -5519,6 +5519,9 @@ export const ArtblocksCollectionsDocument = gql`
 export const ArtblocksCollectionDocument = gql`
     query ArtblocksCollection($id: ID!) {
   project(id: $id) {
+    name
+    projectId
+    id
     active
     artistName
     complete
@@ -5526,12 +5529,9 @@ export const ArtblocksCollectionDocument = gql`
     createdAt
     curationStatus
     description
-    id
     invocations
     license
     maxInvocations
-    name
-    projectId
     royaltyPercentage
     script
     scriptTypeAndVersion

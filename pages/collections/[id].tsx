@@ -42,7 +42,7 @@ const CollectionItem = () => {
         <meta name="description" content="CodArt" />
       </Head>
       <div className="bg-gray-100 pb-24">
-        <div className="mx-auto max-w-6xl sm:px-6 lg:px-8 py-8">
+        <div className="mx-auto max-w-6xl sm:px-6 lg:px-8 py-6">
           <div className="grid grid-cols-4">
             <div>
               {collection && (

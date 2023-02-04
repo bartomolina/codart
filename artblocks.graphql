@@ -1,25 +1,28 @@
 query ArtblocksCollections {
   projects(orderBy: completedAt, orderDirection: desc, where: {contract: "0x99a9b7c1116f9ceeb1652de04d5969cce509b069"}) {
+    name
+    projectId
+    id
     active
     artistName
     complete
     completedAt
     curationStatus
-    id
     minterConfiguration {
       startTime
       minter {
         id
       }
     }
-    name
-    projectId
     updatedAt
   }
 }
 
 query ArtblocksCollection ($id: ID!) {
   project(id: $id) {
+    name
+    projectId
+    id
     active
     artistName
     complete
@@ -27,12 +30,9 @@ query ArtblocksCollection ($id: ID!) {
     createdAt
     curationStatus
     description
-    id
     invocations
     license
     maxInvocations
-    name
-    projectId
     royaltyPercentage
     script
     scriptTypeAndVersion

@@ -29,7 +29,7 @@ const Card = ({ collection }: Props) => {
             <div className="-mt-1 text-sm text-gray-500">{collection.artistName}</div>
             <div className="-mt-1 text-sm text-gray-500">#{collection.projectId}</div>
             <div className="-mt-1 text-sm text-gray-500">{collection.complete ? "Completed" : "Upcoming"}</div>
-            <div className="-mt-1 text-sm text-gray-500">{collection.minterConfiguration.minter.id}</div>
+            <div className="-mt-1 text-sm text-gray-500">{collection.minterConfiguration?.minter?.id}</div>
           </div>
         </div>
       </div>
