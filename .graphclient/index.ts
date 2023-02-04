@@ -5475,7 +5475,13 @@ export function getBuiltGraphSDK<TGlobalContext = any, TOperationContext = any>(
 export type ArtblocksCollectionsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ArtblocksCollectionsQuery = { projects: Array<Pick<Project, 'active' | 'artistName' | 'complete' | 'curationStatus' | 'id' | 'name' | 'projectId' | 'updatedAt'>> };
+export type ArtblocksCollectionsQuery = { projects: Array<(
+    Pick<Project, 'active' | 'artistName' | 'complete' | 'completedAt' | 'curationStatus' | 'id' | 'name' | 'projectId' | 'updatedAt'>
+    & { minterConfiguration?: Maybe<(
+      Pick<ProjectMinterConfiguration, 'startTime'>
+      & { minter: Pick<Minter, 'id'> }
+    )> }
+  )> };
 
 export type ArtblocksCollectionQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -5487,12 +5493,23 @@ export type ArtblocksCollectionQuery = { project?: Maybe<Pick<Project, 'active' 
 
 export const ArtblocksCollectionsDocument = gql`
     query ArtblocksCollections {
-  projects(orderBy: updatedAt, orderDirection: desc) {
+  projects(
+    orderBy: completedAt
+    orderDirection: desc
+    where: {contract: "0x99a9b7c1116f9ceeb1652de04d5969cce509b069"}
+  ) {
     active
     artistName
     complete
+    completedAt
     curationStatus
     id
+    minterConfiguration {
+      startTime
+      minter {
+        id
+      }
+    }
     name
     projectId
     updatedAt

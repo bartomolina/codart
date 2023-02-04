@@ -1,10 +1,17 @@
 query ArtblocksCollections {
-  projects(orderBy: updatedAt, orderDirection: desc) {
+  projects(orderBy: completedAt, orderDirection: desc, where: {contract: "0x99a9b7c1116f9ceeb1652de04d5969cce509b069"}) {
     active
     artistName
     complete
+    completedAt
     curationStatus
     id
+    minterConfiguration {
+      startTime
+      minter {
+        id
+      }
+    }
     name
     projectId
     updatedAt
