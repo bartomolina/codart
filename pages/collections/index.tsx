@@ -8,8 +8,6 @@ const Collections = () => {
   const [collectionStatus, setCollectionStatus] = useState("Completed");
 
   useEffect(() => {
-    console.log("Test");
-
     execute(ArtblocksCollectionsDocument, {}).then((result) => {
       let filteredCollections = result?.data.projects.filter((collection) => collection.complete);
       if (collectionStatus === "Completed") {

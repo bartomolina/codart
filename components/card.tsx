@@ -12,24 +12,36 @@ const Card = ({ collection }: Props) => {
 
   return (
     <div className="bg-white w-full">
-      <div className="pt-10 pb-5 px-5 mb-3">
-        <div className="w-64 mx-auto">
+      <div className="pt-8 pb-5 mb-3">
+        <div className="mx-auto divide-y">
           <Link href={`/collections/${collection.id}`}>
             <Image
-              width={255}
-              height={255}
+              width={285}
+              height={285}
               className="mx-auto"
               src={src}
               alt={collection.name as string}
               onError={() => setSrc("/preview-error.png")}
             />
           </Link>
-          <div className="mx-0.5 mt-3">
-            <div className="font-semibold text-lg text-gray-900">{collection.name}</div>
-            <div className="-mt-1 text-sm text-gray-500">{collection.artistName}</div>
-            <div className="-mt-1 text-sm text-gray-500">#{collection.projectId}</div>
-            <div className="-mt-1 text-sm text-gray-500">{collection.complete ? "Completed" : "Upcoming"}</div>
-            <div className="-mt-1 text-sm text-gray-500">{collection.minterConfiguration?.minter?.id}</div>
+          <div className="mt-5 pt-3 px-8">
+            <div className="flex justify-between items-baseline space-x-2">
+              <div className="font-semibold text-xl text-gray-900 leading-5">{collection.name}</div>
+              <div className="text-xl text-gray-700">#{collection.projectId}</div>
+            </div>
+            <div className="text-gray-700 text-lg">{collection.artistName}</div>
+            <div className="mt-4 flex justify-between items-baseline text-gray-500 text-sm">
+              <div>
+                {collection.invocations}
+                {collection.invocations != collection.maxInvocations && ` / ${collection.maxInvocations}`}
+                {" minted"}
+              </div>
+              {collection.minterConfiguration?.startTime && (
+                <div>
+                  {new Date(collection.minterConfiguration.startTime * 1000).toDateString()}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
