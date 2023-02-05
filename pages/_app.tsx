@@ -10,6 +10,7 @@ import Layout from "../components/layout";
 
 const App = ({ Component, pageProps }: AppProps) => (
   <>
+    <Script src="https://cdn.jsdelivr.net/npm/p5@1.5.0/lib/p5.js" strategy="beforeInteractive" />
     <Script src="https://unpkg.com/prettier@2.8.3/esm/standalone.mjs" />
     <Script src="https://unpkg.com/prettier@2.8.3/esm/parser-babel.mjs" />
     <Head>
