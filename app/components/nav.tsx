@@ -5,9 +5,10 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import ActiveLink from "./active-link";
 
 const navigation = [
-  { name: "Home", href: "/" },
-  { name: "Collections", href: "/collections" },
+  { name: "Collections", href: "/" },
   { name: "Learn", href: { pathname: "/learn", query: { minChars: "0",  maxChars: "2000" } } },
+  { name: "Create", href: "/create" },
+  { name: "About", href: "/about" },
 ];
 
 const Nav = () => {
