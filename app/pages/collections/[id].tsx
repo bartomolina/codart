@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -70,9 +70,7 @@ const CollectionItem = () => {
                       {collection?.invocations != collection?.maxInvocations && ` / ${collection?.maxInvocations}`}
                       {" minted"}
                     </div>
-                    {collection?.updatedAt && (
-                      <div>{new Date(collection?.updatedAt * 1000).toUTCString()}</div>
-                    )}
+                    {collection?.updatedAt && <div>{new Date(collection?.updatedAt * 1000).toUTCString()}</div>}
                   </div>
                   <div className="mt-3 text-gray-500">
                     <div>{collection?.scriptTypeAndVersion}</div>
@@ -81,7 +79,7 @@ const CollectionItem = () => {
                   <div className="mt-4 flex justify-center">
                     <Link
                       href={`/editor/${collection?.id}`}
-                      className="rounded-lg bg-indigo-600 px-3 py-2 text-white shadow-md hover:bg-indigo-500 active:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:ring-offset-2">
+                      className="w-full text-center rounded-lg bg-indigo-600 px-3 py-2 text-white shadow-md hover:bg-indigo-500 active:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:ring-offset-2">
                       Open in editor
                     </Link>
                   </div>
