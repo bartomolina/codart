@@ -1,35 +1,43 @@
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import Head from "next/head";
-import { ArtblocksCollectionsDocument, ArtblocksCollectionsQuery, execute, Project } from "../../.graphclient";
+import { useArtBlocks } from "../../components/collections-context";
 import Card from "../../components/card";
 
 const Collections = () => {
-  const [collections, setCollections] = useState([]);
-  const [collectionStatus, setCollectionStatus] = useState("Completed");
+  const [collectionStatusFilter, setCollectionStatusFilter] = useState("Completed");
+  const [scriptFilter, setScriptFilter] = useState("");
+  const { collections } = useArtBlocks();
 
-  useEffect(() => {
-    execute(ArtblocksCollectionsDocument, {}).then((result) => {
-      let filteredCollections = result?.data.projects.filter((collection) => collection.complete);
-      if (collectionStatus === "Completed") {
-      } else {
-        filteredCollections = result?.data.projects.filter((collection) => !collection.complete && collection.active);
-        filteredCollections = filteredCollections.sort(
-          (a, b) => b.minterConfiguration?.startTime - a.minterConfiguration?.startTime
+  let scriptTypes;
+
+  const filteredCollections = useMemo(() => {
+    let filteredCollections;
+    if (collectionStatusFilter === "Completed") {
+      filteredCollections = collections.filter((collection) => collection.complete);
+    } else {
+      filteredCollections = collections.filter((collection) => !collection.complete && collection.active);
+      filteredCollections = filteredCollections.sort((a, b) => b.updatedAt - a.updatedAt);
+      if (collectionStatusFilter === "Upcoming") {
+        filteredCollections = filteredCollections.filter(
+          (collection) => !collection.updatedAt || collection.updatedAt * 1000 > Date.now()
         );
-        if (collectionStatus === "Upcoming") {
-          filteredCollections = filteredCollections.filter(
-            (collection) => !collection.minterConfiguration?.startTime || collection.minterConfiguration?.startTime * 1000 > Date.now()
-          );
-        } else if (collectionStatus === "Open") {
-          filteredCollections = filteredCollections.filter(
-            (collection) => collection.minterConfiguration?.startTime && collection.minterConfiguration?.startTime * 1000 <= Date.now()
-          );
-        }
+      } else if (collectionStatusFilter === "Open") {
+        filteredCollections = filteredCollections.filter(
+          (collection) => collection.updatedAt && collection.updatedAt * 1000 <= Date.now()
+        );
       }
-      setCollections(filteredCollections);
-      console.log(filteredCollections);
-    });
-  }, [collectionStatus]);
+    }
+
+    scriptTypes = new Set(filteredCollections.map((c) => c.scriptTypeAndVersion));
+
+    if (scriptFilter) {
+      filteredCollections = filteredCollections.filter(
+        (collection) => collection.scriptTypeAndVersion === scriptFilter
+      );
+    }
+
+    return filteredCollections;
+  }, [collections, collectionStatusFilter, scriptFilter]);
 
   return (
     <>
@@ -46,17 +54,33 @@ const Collections = () => {
             <select
               id="status"
               name="status"
-              className="mt-1 block rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-              onChange={(event) => setCollectionStatus(event.target.value)}
-              value={collectionStatus}
+              className="mt-1 rounded-md border border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-base"
+              onChange={(event) => setCollectionStatusFilter(event.target.value)}
+              value={collectionStatusFilter}
             >
               <option>Completed</option>
               <option>Open</option>
               <option>Upcoming</option>
             </select>
+            <label htmlFor="script" className="sr-only">
+              Status
+            </label>
+            <select
+              id="script"
+              name="script"
+              className="mt-1 ml-5 rounded-md border border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-base"
+              onChange={(event) => setScriptFilter(event.target.value)}
+              value={scriptFilter}
+            >
+              <option value="">script</option>
+              {[...scriptTypes].map((scriptType) => (
+                <option key={scriptType}>{scriptType}</option>
+              ))}
+            </select>
+            <em className="ml-5 text-lg">{filteredCollections.length} Collections</em>
           </div>
           <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
-            {collections.map(
+            {filteredCollections.map(
               (
                 collection: Pick<Project, "id" | "name" | "updatedAt" | "curationStatus" | "artistName" | "scriptJSON">
               ) => (

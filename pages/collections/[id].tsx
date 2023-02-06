@@ -70,8 +70,8 @@ const CollectionItem = () => {
                       {collection?.invocations != collection?.maxInvocations && ` / ${collection?.maxInvocations}`}
                       {" minted"}
                     </div>
-                    {collection?.minterConfiguration?.startTime && (
-                      <div>{new Date(collection?.minterConfiguration.startTime * 1000).toUTCString()}</div>
+                    {collection?.updatedAt && (
+                      <div>{new Date(collection?.updatedAt * 1000).toUTCString()}</div>
                     )}
                   </div>
                   <div className="mt-3 text-gray-500">

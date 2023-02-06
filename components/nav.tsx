@@ -7,6 +7,7 @@ import ActiveLink from "./active-link";
 const navigation = [
   { name: "Home", href: "/" },
   { name: "Collections", href: "/collections" },
+  { name: "Learn", href: { pathname: "/learn", query: { minChars: "0",  maxChars: "2000" } } },
 ];
 
 const Nav = () => {
@@ -20,7 +21,7 @@ const Nav = () => {
             <div className="flex h-9 justify-between">
               <div className="flex">
                 {/* Home */}
-                <div className="text-2xl mr-5 font-semibold lg:mr-11 md:inline hidden">
+                <div className="text-2xl mr-5 font-semibold lg:mr-12 md:inline hidden">
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-indigo-600">
                     CodArt.io
                   </span>
@@ -32,7 +33,7 @@ const Nav = () => {
                       key={item.href}
                       activeClassName="text-gray-900 border-indigo-500"
                       inactiveClassName="text-gray-500 hover:text-gray-700 border-transparent hover:border-gray-200"
-                      className="px-1 pt-1 border-b-2 text-sm font-semibold"
+                      className="px-1 pt-1 border-b-2"
                       href={item.href}
                     >
                       {item.name}

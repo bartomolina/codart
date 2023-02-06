@@ -36,9 +36,9 @@ const Card = ({ collection }: Props) => {
                 {collection.invocations != collection.maxInvocations && ` / ${collection.maxInvocations}`}
                 {" minted"}
               </div>
-              {collection.minterConfiguration?.startTime && (
+              {collection.updatedAt && (
                 <div>
-                  {new Date(collection.minterConfiguration.startTime * 1000).toDateString()}
+                  {new Date(collection.updatedAt * 1000).toDateString()}
                 </div>
               )}
             </div>

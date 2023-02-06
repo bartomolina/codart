@@ -23,7 +23,12 @@ const ActiveLink = ({
     if (isReady) {
       // Dynamic route will be matched via props.as
       // Static route will be matched via props.href
-      const linkPathname = new URL((props.as || props.href) as string, location.href).pathname;
+      let linkPathname;
+      if (props.href.pathname) {
+        linkPathname = new URL((props.as || props.href.pathname) as string, location.href).pathname;
+      } else {
+        linkPathname = new URL((props.as || props.href) as string, location.href).pathname;
+      }
 
       // Using URL().pathname to get rid of query and hash
       const activePathname = new URL(asPath, location.href).pathname;

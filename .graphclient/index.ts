@@ -5476,11 +5476,8 @@ export type ArtblocksCollectionsQueryVariables = Exact<{ [key: string]: never; }
 
 
 export type ArtblocksCollectionsQuery = { projects: Array<(
-    Pick<Project, 'name' | 'projectId' | 'id' | 'active' | 'artistName' | 'complete' | 'completedAt' | 'curationStatus' | 'invocations' | 'maxInvocations' | 'updatedAt'>
-    & { minterConfiguration?: Maybe<(
-      Pick<ProjectMinterConfiguration, 'startTime'>
-      & { minter: Pick<Minter, 'id'> }
-    )> }
+    Pick<Project, 'name' | 'projectId' | 'id' | 'active' | 'artistName' | 'complete' | 'completedAt' | 'curationStatus' | 'invocations' | 'maxInvocations' | 'script' | 'scriptJSON' | 'scriptTypeAndVersion' | 'updatedAt'>
+    & { minterConfiguration?: Maybe<Pick<ProjectMinterConfiguration, 'startTime'>> }
   )> };
 
 export type ArtblocksCollectionQueryVariables = Exact<{
@@ -5488,21 +5485,16 @@ export type ArtblocksCollectionQueryVariables = Exact<{
 }>;
 
 
-export type ArtblocksCollectionQuery = { project?: Maybe<(
-    Pick<Project, 'name' | 'projectId' | 'id' | 'active' | 'artistName' | 'complete' | 'completedAt' | 'createdAt' | 'curationStatus' | 'description' | 'invocations' | 'license' | 'maxInvocations' | 'royaltyPercentage' | 'script' | 'scriptTypeAndVersion' | 'updatedAt' | 'website'>
-    & { minterConfiguration?: Maybe<(
-      Pick<ProjectMinterConfiguration, 'startTime'>
-      & { minter: Pick<Minter, 'id'> }
-    )> }
-  )> };
+export type ArtblocksCollectionQuery = { project?: Maybe<Pick<Project, 'name' | 'projectId' | 'id' | 'active' | 'artistName' | 'complete' | 'completedAt' | 'createdAt' | 'curationStatus' | 'description' | 'invocations' | 'license' | 'maxInvocations' | 'royaltyPercentage' | 'script' | 'scriptJSON' | 'scriptTypeAndVersion' | 'updatedAt' | 'website'>> };
 
 
 export const ArtblocksCollectionsDocument = gql`
     query ArtblocksCollections {
   projects(
+    first: 1000
     orderBy: completedAt
     orderDirection: desc
-    where: {contract: "0x99a9b7c1116f9ceeb1652de04d5969cce509b069"}
+    where: {contract_in: ["0x059edd72cd353df5106d2b9cc5ab83a52287ac3a", "0xa7d8d9ef8d8ce8992df33d8b8cf4aebabd5bd270", "0x99a9b7c1116f9ceeb1652de04d5969cce509b069"]}
   ) {
     name
     projectId
@@ -5512,14 +5504,14 @@ export const ArtblocksCollectionsDocument = gql`
     complete
     completedAt
     curationStatus
-    minterConfiguration {
-      startTime
-      minter {
-        id
-      }
-    }
     invocations
     maxInvocations
+    minterConfiguration {
+      startTime
+    }
+    script
+    scriptJSON
+    scriptTypeAndVersion
     updatedAt
   }
 }
@@ -5536,18 +5528,13 @@ export const ArtblocksCollectionDocument = gql`
     completedAt
     createdAt
     curationStatus
-    minterConfiguration {
-      startTime
-      minter {
-        id
-      }
-    }
     description
     invocations
     license
     maxInvocations
     royaltyPercentage
     script
+    scriptJSON
     scriptTypeAndVersion
     updatedAt
     website
