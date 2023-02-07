@@ -1,17 +1,26 @@
-import { ChangeEventHandler, FormEvent, useState } from "react";
+import { ChangeEventHandler, FormEvent, useEffect, useState } from "react";
 import Head from "next/head";
+import { useAccount } from "wagmi";
+import { writeContract, waitForTransaction } from "@wagmi/core";
 import { ethers } from "ethers";
+import LocalCodArtFactoryJSON from "../lib/localhost-codart-learn-factory-contract.json";
+import { useNotifications } from "../components/notifications-context";
 
 const Create = () => {
+  const [hasMounted, setHasMounted] = useState(false);
   const [formData, setFormData] = useState({
-    name: "",
-    symbol: "",
+    type: "Learn",
+    name: "GenArt0",
+    symbol: "GA0",
     supply: 0,
-    price: 0.0001,
-    library: "",
-    code: "",
-    type: "p5",
+    price: 0,
+    library: "p5",
+    code: "code",
   });
+  const { showNotification, showError } = useNotifications();
+  const { isConnected } = useAccount();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isWaitingTx, setIsWaitingTx] = useState(false);
 
   const handleFormChange = (event: FormEvent<HTMLInputElement>) => {
     setFormData({
@@ -20,39 +29,64 @@ const Create = () => {
     });
   };
 
-  const handleSubmit = (event: FormEvent) => {
-    // setIsLoading(true);
-    // event.preventDefault();
-
-    // writeContract({
-    //   mode: "recklesslyUnprepared",
-    //   address: EscrowFactoryJSON.address,
-    //   // @ts-ignore
-    //   abi: EscrowFactoryJSON.abi,
-    //   functionName: "createEscrow",
-    //   args: [formData.goal, formData.arbiter, formData.beneficiary, Math.floor(formData.dueDate / 1000)],
-    //   overrides: {
-    //     value: formData.depositAmount,
-    //   },
-    // })
-    //   // @ts-ignore
-    //   .then((hash, wait) => {
-    //     setIsWaitingTx(true);
-    //     return waitForTransaction(hash);
-    //   })
-    //   .then((tx) => {
-    //     setIsLoading(false);
-    //     setIsWaitingTx(false);
-    //     fetchGoals();
-    //     clearForm();
-    //     // @ts-ignore
-    //     showNotification("Goal created", tx.transactionHash);
-    //   })
-    //   .catch((error) => {
-    //     setIsLoading(false);
-    //     showError("Error creating goal", error.message);
-    //   });
+  const clearForm = () => {
+    setFormData({
+      type: "Learn",
+      name: "",
+      symbol: "",
+      supply: 0,
+      price: 0,
+      library: "p5",
+      code: "",
+    });
   };
+
+  const handleSubmit = (event: FormEvent) => {
+    setIsLoading(true);
+    event.preventDefault();
+    writeContract({
+      mode: "recklesslyUnprepared",
+      address: LocalCodArtFactoryJSON.address,
+      // @ts-ignore
+      abi: LocalCodArtFactoryJSON.abi,
+      functionName: "createCodArtLearn",
+      args: [
+        formData.name,
+        formData.symbol,
+        formData.supply,
+        ethers.utils.parseEther(formData.price.toString()),
+        formData.library,
+        formData.code,
+      ],
+    })
+      // @ts-ignore
+      .then((hash, wait) => {
+        setIsWaitingTx(true);
+        return waitForTransaction(hash);
+      })
+      .then((tx) => {
+        setIsLoading(false);
+        setIsWaitingTx(false);
+        clearForm();
+        // @ts-ignore
+        console.log("Done!");
+        showNotification("Collection created", tx.transactionHash);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        showError("Error creating collection", error.message);
+      });
+  };
+
+  // To prevent hydration errors:
+  // https://codingwithmanny.medium.com/understanding-hydration-errors-in-nextjs-13-with-a-web3-wallet-connection-8155c340fbd5
+  // https://www.joshwcomeau.com/react/the-perils-of-rehydration/#the-solution
+  useEffect(() => {
+    if (!hasMounted) {
+      setHasMounted(true);
+    }
+  }, [hasMounted]);
+  if (!hasMounted) return null;
 
   return (
     <>
@@ -170,6 +204,7 @@ const Create = () => {
                         className="block w-full max-w-fit rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       >
                         <option>p5</option>
+                        <option>p6</option>
                       </select>
                     </div>
                   </div>
@@ -194,10 +229,15 @@ const Create = () => {
             <div className="flex pt-5 justify-end">
               <button
                 type="button"
+                disabled={!isConnected || isLoading}
                 onClick={handleSubmit}
-                className="rounded-lg bg-indigo-600 px-3 py-2 text-white shadow-md hover:bg-indigo-500 active:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:ring-offset-2"
+                className={
+                  isConnected && !isLoading
+                    ? "rounded-lg bg-indigo-600 px-3 py-2 text-white shadow-md hover:bg-indigo-500 active:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:ring-offset-2"
+                    : "rounded-lg bg-indigo-200 px-3 py-2 text-white shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:ring-offset-2"
+                }
               >
-                Create collection
+                {isConnected ? (isWaitingTx ? "Processing..." : "Create collection") : "Connect wallet"}
               </button>
             </div>
           </form>
