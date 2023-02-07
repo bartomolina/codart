@@ -45,7 +45,10 @@ const Home = () => {
         <title>CodArt.io</title>
         <meta name="description" content="CodArt" />
       </Head>
-      <div className="mx-auto max-w-6xl sm:px-6 lg:px-8 py-8">
+      <header className="mx-auto max-w-6xl sm:px-6 lg:px-8 pt-4 pb-8">
+        <h1 className="text-5xl font-thin leading-tight tracking-tight text-gray-900">Art Blocks</h1>
+      </header>
+      <div className="mx-auto max-w-6xl sm:px-6 lg:px-8 pb-8">
         <label htmlFor="status" className="sr-only">
           Status
         </label>
@@ -84,7 +87,7 @@ const Home = () => {
               ) => (
                 <li
                   key={collection.id}
-                  className="flex space-x-5 overflow-hidden rounded-lg border border-gray-300 shadow"
+                  className="flex space-x-5 overflow-hidden rounded-lg border border-gray-300 shadow hover:-translate-y-1 transform transition"
                 >
                   <Card collection={collection} />
                 </li>
