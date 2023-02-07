@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import Image from "next/image";
 import { ConnectKitButton } from "connectkit";
 import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
@@ -22,10 +23,8 @@ const Nav = () => {
             <div className="flex h-9 justify-between">
               <div className="flex">
                 {/* Home */}
-                <div className="text-2xl mr-5 font-semibold lg:mr-12 md:inline hidden">
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-indigo-600">
-                    CodArt.io
-                  </span>
+                <div className="text-2xl mr-5 font-semibold lg:mr-11 md:inline-flex hidden justify-center items-center align-middle">
+                  <Image src={"/codart.png"} alt="CodArt" width={156} height={36} quality={100} />
                 </div>
                 {/* Menu items */}
                 <div className="hidden sm:flex sm:space-x-11">

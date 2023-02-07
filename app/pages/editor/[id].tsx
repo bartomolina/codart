@@ -45,7 +45,7 @@ const CollectionItem = () => {
   return (
     <>
       <Head>
-        <title>CodArt</title>
+        <title>CodArt.io</title>
         <meta name="description" content="CodArt" />
       </Head>
       <div className="bg-gray-100 pb-24">

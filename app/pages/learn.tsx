@@ -20,7 +20,7 @@ const Learn = () => {
   return (
     <>
       <Head>
-        <title>Learn - CodArt</title>
+        <title>Learn - CodArt.io</title>
         <meta name="description" content="CodArt" />
       </Head>
       <div className="mx-auto max-w-6xl sm:px-6 lg:px-8 py-8 text-center">

@@ -3,7 +3,7 @@ import Head from "next/head";
 const About = () => (
   <>
     <Head>
-      <title>About - CodArt</title>
+      <title>About - CodArt.io</title>
       <meta name="description" content="CodArt" />
     </Head>
     <header className="mx-auto max-w-6xl sm:px-6 lg:px-8 py-8">

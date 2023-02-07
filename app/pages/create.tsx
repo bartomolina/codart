@@ -5,12 +5,12 @@ import { ethers } from "ethers";
 const Create = () => {
   const [formData, setFormData] = useState({
     name: "",
-    description: "",
-    supply: "",
+    symbol: "",
+    supply: 0,
     price: 0.0001,
     library: "",
     code: "",
-    type: "",
+    type: "p5",
   });
 
   const handleFormChange = (event: FormEvent<HTMLInputElement>) => {
@@ -20,10 +20,44 @@ const Create = () => {
     });
   };
 
+  const handleSubmit = (event: FormEvent) => {
+    // setIsLoading(true);
+    // event.preventDefault();
+
+    // writeContract({
+    //   mode: "recklesslyUnprepared",
+    //   address: EscrowFactoryJSON.address,
+    //   // @ts-ignore
+    //   abi: EscrowFactoryJSON.abi,
+    //   functionName: "createEscrow",
+    //   args: [formData.goal, formData.arbiter, formData.beneficiary, Math.floor(formData.dueDate / 1000)],
+    //   overrides: {
+    //     value: formData.depositAmount,
+    //   },
+    // })
+    //   // @ts-ignore
+    //   .then((hash, wait) => {
+    //     setIsWaitingTx(true);
+    //     return waitForTransaction(hash);
+    //   })
+    //   .then((tx) => {
+    //     setIsLoading(false);
+    //     setIsWaitingTx(false);
+    //     fetchGoals();
+    //     clearForm();
+    //     // @ts-ignore
+    //     showNotification("Goal created", tx.transactionHash);
+    //   })
+    //   .catch((error) => {
+    //     setIsLoading(false);
+    //     showError("Error creating goal", error.message);
+    //   });
+  };
+
   return (
     <>
       <Head>
-        <title>Create - CodArt</title>
+        <title>Create - CodArt.io</title>
         <meta name="description" content="CodArt" />
       </Head>
       <header className="mx-auto max-w-6xl sm:px-6 lg:px-8 py-8">
@@ -31,16 +65,30 @@ const Create = () => {
       </header>
       <div className="bg-gray-100">
         <div className="mx-auto max-w-6xl sm:px-6 lg:px-8 pb-44 pt-5">
-          <form className="space-y-8 divide-y divide-gray-200">
-            <div className="space-y-8 divide-y divide-gray-200">
+          <form className="space-y-8 divide-y divide-gray-200 w-fit">
+            <div className="flex flex-row space-x-20">
               <div>
                 <div>
                   <h3 className="text-2xl font-medium leading-6 text-gray-900">Collection</h3>
-                  <p className="mt-1 text-gray-500">
-                    Generic information about your collection. Set Max. Supply to 0 for unlimited supply.
-                  </p>
                 </div>
                 <div className="mt-6 grid grid-cols-1 gap-y-6">
+                  <div>
+                    <label htmlFor="type" className="block text-sm font-medium text-gray-700">
+                      Type
+                    </label>
+                    <div className="mt-1">
+                      <select
+                        id="type"
+                        name="type"
+                        value={formData.type}
+                        onChange={handleFormChange}
+                        className="block w-full max-w-fit rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      >
+                        <option>Learn</option>
+                        <option>Certification</option>
+                      </select>
+                    </div>
+                  </div>
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-gray-700">
                       Name
@@ -52,22 +100,22 @@ const Create = () => {
                         name="name"
                         value={formData.name}
                         onChange={handleFormChange}
-                        className="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="block w-full max-w-fit rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
                     </div>
                   </div>
                   <div>
-                    <label htmlFor="description" className="block text-sm font-medium text-gray-700">
-                      Description
+                    <label htmlFor="symbol" className="block text-sm font-medium text-gray-700">
+                      Symbol
                     </label>
                     <div className="mt-1">
-                      <textarea
-                        id="description"
-                        name="description"
-                        rows={4}
-                        value={formData.description}
+                      <input
+                        type="text"
+                        id="symbol"
+                        name="symbol"
+                        value={formData.symbol}
                         onChange={handleFormChange}
-                        className="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="block w-full max-w-fit rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
                     </div>
                   </div>
@@ -106,8 +154,7 @@ const Create = () => {
               </div>
               <div>
                 <div>
-                  <h3 className="pt-3 text-2xl font-medium leading-6 text-gray-900">Code</h3>
-                  <p className="mt-1 text-gray-500">Currently supporting p5.js based projects.</p>
+                  <h3 className="text-2xl font-medium leading-6 text-gray-900">Code</h3>
                 </div>
                 <div className="mt-6 grid grid-cols-1 gap-y-6">
                   <div>
@@ -122,7 +169,7 @@ const Create = () => {
                         onChange={handleFormChange}
                         className="block w-full max-w-fit rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       >
-                        <option>p5.js</option>
+                        <option>p5</option>
                       </select>
                     </div>
                   </div>
@@ -134,40 +181,24 @@ const Create = () => {
                       <textarea
                         id="code"
                         name="code"
-                        rows={4}
+                        rows={14}
                         value={formData.code}
                         onChange={handleFormChange}
-                        className="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="block w-96 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
                     </div>
                   </div>
                 </div>
               </div>
-              <div>
-                <div>
-                  <h3 className="pt-3 text-2xl font-medium leading-6 text-gray-900">Contract</h3>
-                  <p className="mt-1 text-gray-500">Contract Type: Learn / Certification.</p>
-                </div>
-                <div className="mt-6 grid grid-cols-1 gap-y-6">
-                  <div>
-                    <label htmlFor="type" className="block text-sm font-medium text-gray-700">
-                      Type
-                    </label>
-                    <div className="mt-1">
-                      <select
-                        id="type"
-                        name="type"
-                        value={formData.type}
-                        onChange={handleFormChange}
-                        className="block w-full max-w-fit rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                      >
-                        <option>Learn</option>
-                        <option>Certification</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            </div>
+            <div className="flex pt-5 justify-end">
+              <button
+                type="button"
+                onClick={handleSubmit}
+                className="rounded-lg bg-indigo-600 px-3 py-2 text-white shadow-md hover:bg-indigo-500 active:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:ring-offset-2"
+              >
+                Create collection
+              </button>
             </div>
           </form>
         </div>
