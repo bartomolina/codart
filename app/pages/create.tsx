@@ -6,8 +6,14 @@ import { ethers } from "ethers";
 import LocalCodArtFactoryJSON from "../lib/localhost-codart-learn-factory-contract.json";
 import GoerliCodArtFactoryJSON from "../lib/goerli-codart-learn-factory-contract.json";
 import { useNotifications } from "../components/notifications-context";
+import { useRouter } from "next/router";
+
+const codeStart = '<html><head><script src="https://cdn.jsdelivr.net/npm/p5@1.5.0/lib/p5.js"></script><script>tokenData={hash: "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"};';
+const codeEnd = '</script></head><body><main></main></body></html>';
 
 const Create = () => {
+  const router = useRouter();
+  const script = router.query.script as string;
   const [hasMounted, setHasMounted] = useState(false);
   const [formData, setFormData] = useState({
     type: "Learn",
@@ -16,7 +22,7 @@ const Create = () => {
     supply: 0,
     price: 0,
     library: "p5",
-    code: '<html><head><script src="https://cdn.jsdelivr.net/npm/p5@1.5.0/lib/p5.js"></script><script>function setup(){createCanvas(100, 100);background(220);}</script></head><body><main></main></body></html>',
+    code: script ? script : '<html><head><script src="https://cdn.jsdelivr.net/npm/p5@1.5.0/lib/p5.js"></script><script>function setup(){createCanvas(100, 100);background(220);}</script></head><body><main></main></body></html>',
   });
   const { showNotification, showError } = useNotifications();
   const { isConnected } = useAccount();
@@ -62,7 +68,7 @@ const Create = () => {
         formData.supply,
         ethers.utils.parseEther(formData.price.toString()),
         formData.library,
-        formData.code,
+        `${codeStart}${formData.code}${codeEnd}`,
       ],
     })
       // @ts-ignore
