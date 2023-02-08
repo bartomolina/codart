@@ -2,6 +2,10 @@ import { ethers, artifacts } from "hardhat";
 const hre = require("hardhat");
 const fs = require("fs");
 
+const delay = (ms) => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};
+
 async function main() {
   const CodArtLearnFactory = await ethers.getContractFactory("CodArtLearnFactory");
   const CodArtLearn = await ethers.getContractFactory("CodArtLearn");
@@ -22,8 +26,18 @@ async function main() {
 
   const networkName = hre.network.name;
 
-  fs.writeFileSync(`./app/lib/${networkName}-codart-learn-factory-contract.json`, JSON.stringify(CodArtLearnFactoryData));
+  fs.writeFileSync(
+    `./app/lib/${networkName}-codart-learn-factory-contract.json`,
+    JSON.stringify(CodArtLearnFactoryData)
+  );
   fs.writeFileSync("./app/lib/codart-learn-contract.json", JSON.stringify(CodArtLearnData));
+
+  console.log("Waiting to verify on Etherscan");
+  await delay(30000);
+
+  await hre.run("verify:verify", {
+    address: codArtLearnFactory.address,
+  });
 }
 
 main().catch((error) => {

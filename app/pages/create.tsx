@@ -4,6 +4,7 @@ import { useAccount } from "wagmi";
 import { writeContract, waitForTransaction } from "@wagmi/core";
 import { ethers } from "ethers";
 import LocalCodArtFactoryJSON from "../lib/localhost-codart-learn-factory-contract.json";
+import GoerliCodArtFactoryJSON from "../lib/goerli-codart-learn-factory-contract.json";
 import { useNotifications } from "../components/notifications-context";
 
 const Create = () => {
@@ -15,7 +16,7 @@ const Create = () => {
     supply: 0,
     price: 0,
     library: "p5",
-    code: "code",
+    code: '<html><head><script src="https://cdn.jsdelivr.net/npm/p5@1.5.0/lib/p5.js"></script><script>function setup(){createCanvas(100, 100);background(220);}</script></head><body><main></main></body></html>',
   });
   const { showNotification, showError } = useNotifications();
   const { isConnected } = useAccount();
@@ -28,6 +29,11 @@ const Create = () => {
       [event.currentTarget.id]: event.currentTarget.value,
     });
   };
+
+  let CodArtFactoryJSON = LocalCodArtFactoryJSON;
+  if (process.env.NEXT_PUBLIC_NETWORK?.toLowerCase() == "goerli") {
+    CodArtFactoryJSON = GoerliCodArtFactoryJSON;
+  }
 
   const clearForm = () => {
     setFormData({
@@ -46,9 +52,9 @@ const Create = () => {
     event.preventDefault();
     writeContract({
       mode: "recklesslyUnprepared",
-      address: LocalCodArtFactoryJSON.address,
+      address: CodArtFactoryJSON.address,
       // @ts-ignore
-      abi: LocalCodArtFactoryJSON.abi,
+      abi: CodArtFactoryJSON.abi,
       functionName: "createCodArtLearn",
       args: [
         formData.name,

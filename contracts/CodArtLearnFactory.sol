@@ -24,7 +24,7 @@ contract CodArtLearnFactory is Ownable {
         uint256 maxSupply;
         uint256 price;
         string _library;
-        string script;
+        string code;
     }
     CodArtLearnStruct[] public codArtLearnInstances;
 
@@ -40,7 +40,7 @@ contract CodArtLearnFactory is Ownable {
         uint256 maxSupply,
         uint256 price,
         string calldata _library,
-        string calldata script
+        string calldata code
     ) public payable returns (address clone) {
         clone = Clones.clone(codArtLearnAddress);
 
@@ -52,7 +52,7 @@ contract CodArtLearnFactory is Ownable {
             maxSupply,
             price,
             _library,
-            script
+            code
         );
         codArtLearnInstances.push(newCodArtLearn);
         CodArtLearn(clone).initialize(
@@ -62,7 +62,7 @@ contract CodArtLearnFactory is Ownable {
             maxSupply,
             price,
             _library,
-            script
+            code
         );
         emit NewCodArtLearnInstance(clone);
     }

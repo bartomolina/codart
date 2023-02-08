@@ -7,6 +7,7 @@ import "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721URISto
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/CountersUpgradeable.sol";
+import "@openzeppelin/contracts/utils/Base64.sol";
 
 //  _                _                        _ _                   _   _
 // | |              | |                      | (_)                 | | | |
@@ -21,7 +22,7 @@ contract CodArtLearn is Initializable, ERC721Upgradeable, ERC721EnumerableUpgrad
     uint256 maxSupply;
     uint256 price;
     string _library;
-    string script;
+    string code;
 
     CountersUpgradeable.Counter private _tokenIdCounter;
 
@@ -37,21 +38,24 @@ contract CodArtLearn is Initializable, ERC721Upgradeable, ERC721EnumerableUpgrad
       uint256 _maxSupply,
       uint256 _price,
       string calldata _lib,
-      string calldata _script
+      string calldata _code
     ) initializer public {
         maxSupply = _maxSupply;
         price = _price;
         _library = _lib;
-        script = _script;
+        code = _code;
         __ERC721_init(_name, _symbol);
         __ERC721Enumerable_init();
         __ERC721URIStorage_init();
         __Ownable_init();
         transferOwnership(_owner);
+        safeMint(_owner, "test");
     }
 
-    function safeMint(address to, string memory uri) public onlyOwner {
-        require (totalSupply() < maxSupply);
+    function safeMint(address to, string memory uri) public {
+        if (maxSupply > 0) {
+            require (totalSupply() < maxSupply);
+        }
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
         _safeMint(to, tokenId);
@@ -80,7 +84,17 @@ contract CodArtLearn is Initializable, ERC721Upgradeable, ERC721EnumerableUpgrad
         override(ERC721Upgradeable, ERC721URIStorageUpgradeable)
         returns (string memory)
     {
-        return super.tokenURI(tokenId);
+        bytes memory metadata = abi.encodePacked(
+            '{"name":"CodArt", "description":"CodArt test","animation_url":"data:text/html;base64,',
+            Base64.encode(abi.encodePacked(code)),
+            '"}'
+        );
+        return string(
+            abi.encodePacked(
+                "data:application/json;base64,",
+                Base64.encode(metadata)
+            )
+        );
     }
 
     function supportsInterface(bytes4 interfaceId)
