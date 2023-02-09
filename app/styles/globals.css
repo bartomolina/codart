@@ -12,11 +12,11 @@ body,
   @apply list-disc list-inside space-y-2;
 }
 
-.markdown ul>li>ul {
+.markdown ul > li > ul {
   @apply ml-5;
 }
 
-.markdown ul>li>ul>li>ul {
+.markdown ul > li > ul > li > ul {
   @apply ml-10;
 }
 
@@ -24,10 +24,20 @@ body,
   @apply underline text-gray-900;
 }
 
-.markdown h1, h2, h3, h4, h5, h6 {
+.markdown h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   @apply mt-4 mb-2 text-xl font-semibold;
 }
 
 .markdown p {
   @apply mb-4;
+}
+
+.cm-editor {
+  font-family: Arial, monospace;
+  font-size: 16px;
 }
