@@ -16,6 +16,7 @@ const CollectionItem = () => {
   const [collection, setCollection] = useState<ArtblocksCollectionQuery>();
   const [code, setCode] = useState("");
   const [tokenId, setTokenId] = useState("370000131");
+  const [autoRefresh, setAutoRefresh] = useState(true);
   const [hash, setHash] = useState("0xdd22acb08068ae31347cc3669e0cbbf76fc6cf868592245ecc4783f5f83a098b");
 
   const tokenData = useMemo(() => {
@@ -24,10 +25,13 @@ const CollectionItem = () => {
   const p5url = "https://cdn.jsdelivr.net/npm/p5@1.5.0/lib/p5.js";
   const p5script = `<script src="${p5url}"></script>`;
 
-  const handleRun = (event: FormEvent) => {
-    event.preventDefault();
+  const generateOutput = () => {
     const wrappedCode = `${p5script}<script>${tokenData}${code}</script>`;
     document.getElementById("canvasIframe").srcdoc = wrappedCode;
+  }
+  const handleRun = (event: FormEvent) => {
+    event.preventDefault();
+    generateOutput();
   };
 
   const handleCreate = (event: FormEvent) => {
@@ -60,6 +64,12 @@ const CollectionItem = () => {
     }
   }, [projectId]);
 
+  useEffect(() => {
+    if (autoRefresh) {
+      generateOutput();
+    }
+  }, [tokenId, hash]);
+
   return (
     <>
       <Head>
@@ -73,7 +83,7 @@ const CollectionItem = () => {
         <div className="mx-auto 2xl:max-w-7xl 2xl:px-0 lg:px-8 pb-44 pt-5">
           <div>
             <EditorCommands
-              {...{ collection, hash, setHash, tokenId, setTokenId, handleRun, handleCreate }}
+              {...{ collection, hash, setHash, tokenId, setTokenId, handleRun, autoRefresh, setAutoRefresh, handleCreate }}
             />
           </div>
           <div className="grid grid-cols-8 gap-8 mt-4">

@@ -34,6 +34,9 @@ const CollectionItem = () => {
         <title>CodArt.io</title>
         <meta name="description" content="CodArt" />
       </Head>
+      <header className="mx-auto max-w-6xl sm:px-6 lg:px-8 pt-4 pb-8">
+        <h1 className="text-5xl font-thin leading-tight tracking-tight text-gray-900">{collection?.name}</h1>
+      </header>
       <div className="bg-gray-100 pb-24">
         <div className="mx-auto max-w-6xl sm:px-6 lg:px-8 py-6">
           <div className="grid grid-cols-3 space-x-4">
@@ -50,10 +53,9 @@ const CollectionItem = () => {
               <div className="mx-0.5 mt-3 divide-y-2">
                 <div className="mb-4">
                   <div className="flex justify-between items-baseline space-x-2 font-semibold text-2xl text-gray-900 mr-4">
-                    <div>{collection?.name}</div>
+                    <div>by {collection?.artistName}</div>
                     <div>#{collection?.projectId}</div>
                   </div>
-                  <div className="-mt-0.5 text-xl text-gray-700">{collection?.artistName}</div>
                   <a
                     href={collection?.website}
                     target="_blank"
