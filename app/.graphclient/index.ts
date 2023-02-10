@@ -5477,7 +5477,7 @@ export type ArtblocksCollectionsQueryVariables = Exact<{ [key: string]: never; }
 
 export type ArtblocksCollectionsQuery = { projects: Array<(
     Pick<Project, 'name' | 'projectId' | 'id' | 'active' | 'artistName' | 'complete' | 'completedAt' | 'curationStatus' | 'invocations' | 'maxInvocations' | 'script' | 'scriptJSON' | 'scriptTypeAndVersion' | 'updatedAt'>
-    & { minterConfiguration?: Maybe<Pick<ProjectMinterConfiguration, 'startTime'>> }
+    & { contract: Pick<Contract, 'id'>, minterConfiguration?: Maybe<Pick<ProjectMinterConfiguration, 'startTime'>> }
   )> };
 
 export type ArtblocksCollectionQueryVariables = Exact<{
@@ -5485,7 +5485,10 @@ export type ArtblocksCollectionQueryVariables = Exact<{
 }>;
 
 
-export type ArtblocksCollectionQuery = { project?: Maybe<Pick<Project, 'name' | 'projectId' | 'id' | 'active' | 'artistName' | 'complete' | 'completedAt' | 'createdAt' | 'curationStatus' | 'description' | 'invocations' | 'license' | 'maxInvocations' | 'royaltyPercentage' | 'script' | 'scriptJSON' | 'scriptTypeAndVersion' | 'updatedAt' | 'website'>> };
+export type ArtblocksCollectionQuery = { project?: Maybe<(
+    Pick<Project, 'name' | 'projectId' | 'id' | 'active' | 'artistName' | 'complete' | 'completedAt' | 'createdAt' | 'curationStatus' | 'description' | 'invocations' | 'license' | 'maxInvocations' | 'royaltyPercentage' | 'script' | 'scriptJSON' | 'scriptTypeAndVersion' | 'updatedAt' | 'website'>
+    & { contract: Pick<Contract, 'id'> }
+  )> };
 
 
 export const ArtblocksCollectionsDocument = gql`
@@ -5501,6 +5504,9 @@ export const ArtblocksCollectionsDocument = gql`
     id
     active
     artistName
+    contract {
+      id
+    }
     complete
     completedAt
     curationStatus
@@ -5524,6 +5530,9 @@ export const ArtblocksCollectionDocument = gql`
     id
     active
     artistName
+    contract {
+      id
+    }
     complete
     completedAt
     createdAt

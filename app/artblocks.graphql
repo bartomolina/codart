@@ -5,6 +5,9 @@ query ArtblocksCollections {
     id
     active
     artistName
+    contract {
+      id
+    }
     complete
     completedAt
     curationStatus
@@ -27,6 +30,9 @@ query ArtblocksCollection ($id: ID!) {
     id
     active
     artistName
+    contract {
+      id
+    }
     complete
     completedAt
     createdAt

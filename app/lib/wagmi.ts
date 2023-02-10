@@ -1,5 +1,5 @@
 import { createClient, configureChains } from "wagmi";
-import { goerli, hardhat } from "wagmi/chains";
+import { goerli, hardhat, mainnet } from "wagmi/chains";
 import { getDefaultClient } from "connectkit";
 
 let currentChain = hardhat;
@@ -12,7 +12,7 @@ const client = createClient(
   getDefaultClient({
     appName: "WAGMI",
     alchemyId:  process.env.NEXT_PUBLIC_ALCHEMY_GOERLI_API,
-    chains: [currentChain],
+    chains: [currentChain, mainnet],
   })
 );
 

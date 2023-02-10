@@ -1,12 +1,29 @@
-const EditorCommands = ({
-  collection,
-  hash,
-  setHash,
-  tokenId,
-  setTokenId,
-  handleRun,
-  handleCreate,
-}: Props) => {
+import { readContract } from "@wagmi/core";
+import { ethers } from "ethers";
+import { PlayCircleIcon } from "@heroicons/react/20/solid";
+import { useNotifications } from "../components/notifications-context";
+import ArtblocksJSON from "../lib/artblocks-contract.json";
+
+const EditorCommands = ({ collection, hash, setHash, tokenId, setTokenId, handleRun, handleCreate }: Props) => {
+  const { showError } = useNotifications();
+
+  const handleFetchHashFromToken = (event: FormEvent) => {
+    readContract({
+      chainId: 1,
+      address: collection.contract.id,
+      abi: ArtblocksJSON.abi as any,
+      functionName: "tokenIdToHash",
+      args: [tokenId],
+    })
+      .then((hash: any) => {
+        setHash(hash);
+      })
+      .catch((error) => {
+        console.log(error);
+        showError("Error fetching Hash from Token ID", error.message);
+      });
+  };
+
   return (
     <>
       <div className="grid grid-cols-8 gap-8">
@@ -27,6 +44,27 @@ const EditorCommands = ({
                     className="block w-32 h-7 text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                   />
                 </div>
+                <button
+                  type="button"
+                  onClick={handleFetchHashFromToken}
+                  className="h-7 text-sm ml-3 rounded-lg bg-indigo-600 px-3 text-white shadow-md hover:bg-indigo-500 active:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:ring-offset-2"
+                >
+                  Fetch hash from Token ID
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setHash(ethers.utils.hexlify(ethers.utils.randomBytes(32)))}
+                  className="h-7 text-sm ml-3 rounded-lg bg-indigo-600 px-3 text-white shadow-md hover:bg-indigo-500 active:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:ring-offset-2"
+                >
+                  Random hash
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleCreate()}
+                  className="h-7 text-sm ml-3 rounded-lg bg-indigo-600 px-3 text-white shadow-md hover:bg-indigo-500 active:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:ring-offset-2"
+                >
+                  Create collection
+                </button>
               </div>
               <div className="flex text-sm mt-3">
                 <label htmlFor="hash" className="flex font-medium text-gray-700 items-center">
@@ -44,9 +82,10 @@ const EditorCommands = ({
                 </div>
               </div>
             </div>
-            <div className="flex-row">
-              <div>Run</div>
-              <div>Create collection</div>
+            <div className="flex justify-end">
+              <button type="button" onClick={handleRun}>
+                <PlayCircleIcon className="h-16 w-16 text-green-400" aria-hidden="true" />
+              </button>
             </div>
           </div>
         </div>

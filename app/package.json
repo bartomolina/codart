@@ -20,7 +20,6 @@
     "@types/react-dom": "18.0.9",
     "@uiw/codemirror-theme-dracula": "^4.19.8",
     "@uiw/react-codemirror": "^4.19.7",
-    "alchemy-sdk": "^2.4.1",
     "connectkit": "^1.1.1",
     "eslint": "8.29.0",
     "eslint-config-next": "13.0.7",
