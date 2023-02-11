@@ -1,3 +1,4 @@
+import { IABCollection } from "../global";
 import { useMemo, useState } from "react";
 import Head from "next/head";
 import { useArtBlocks } from "../components/collections-context";
@@ -11,7 +12,7 @@ const Home = () => {
   let scriptTypes;
 
   const filteredCollections = useMemo(() => {
-    let filteredCollections;
+    let filteredCollections = [] as IABCollection[];
     if (collectionStatusFilter === "Completed") {
       filteredCollections = aBCollections.filter((collection) => collection.complete);
     } else {
@@ -81,18 +82,14 @@ const Home = () => {
       <div className="bg-gray-100 pb-24">
         <div className="mx-auto max-w-6xl sm:px-6 lg:px-8 py-6">
           <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
-            {filteredCollections.map(
-              (
-                collection: Pick<Project, "id" | "name" | "updatedAt" | "curationStatus" | "artistName" | "scriptJSON">
-              ) => (
-                <li
-                  key={collection.id}
-                  className="flex space-x-5 overflow-hidden rounded-lg border border-gray-300 shadow hover:-translate-y-1 transform transition"
-                >
-                  <Card collection={collection} />
-                </li>
-              )
-            )}
+            {filteredCollections.map((collection) => (
+              <li
+                key={collection.id}
+                className="flex space-x-5 overflow-hidden rounded-lg border border-gray-300 shadow hover:-translate-y-1 transform transition"
+              >
+                <Card collection={collection} />
+              </li>
+            ))}
           </ul>
         </div>
       </div>

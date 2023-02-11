@@ -1,16 +1,14 @@
 import { ChangeEventHandler, FormEvent, useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import Head from "next/head";
+import { ethers } from "ethers";
 import { useAccount } from "wagmi";
 import { writeContract, waitForTransaction } from "@wagmi/core";
-import { ethers } from "ethers";
-import LocalCodArtFactoryJSON from "../lib/localhost-codart-learn-factory-contract.json";
-import GoerliCodArtFactoryJSON from "../lib/goerli-codart-learn-factory-contract.json";
-import { useNotifications } from "../components/notifications-context";
-import { useRouter } from "next/router";
-
-const codeStart =
-  '<html><head><script src="https://cdn.jsdelivr.net/npm/p5@1.5.0/lib/p5.js"></script><script>tokenData={hash: "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"};';
-const codeEnd = "</script></head><body><main></main></body></html>";
+import libraries from "../../lib/utils";
+import LocalCodArtFactoryJSON from "../../lib/localhost-codart-learn-factory-contract.json";
+import GoerliCodArtFactoryJSON from "../../lib/goerli-codart-learn-factory-contract.json";
+import { useNotifications } from "../../components/notifications-context";
+import { useArtBlocks } from "../../components/collections-context";
 
 const Create = () => {
   const router = useRouter();
@@ -26,9 +24,10 @@ const Create = () => {
     _library: "p5",
     code: script
       ? script
-      : '<html><head><script src="https://cdn.jsdelivr.net/npm/p5@1.5.0/lib/p5.js"></script><script>function setup(){createCanvas(100, 100);background(220);}</script></head><body><main></main></body></html>',
+      : 'function setup(){createCanvas(400,400)}function draw(){background(220)}',
   });
   const { showNotification, showError } = useNotifications();
+  const { fetchCACollections } = useArtBlocks();
   const { isConnected } = useAccount();
   const [isLoading, setIsLoading] = useState(false);
   const [isWaitingTx, setIsWaitingTx] = useState(false);
@@ -76,7 +75,8 @@ const Create = () => {
           maxSupply: formData.maxSupply,
           price: ethers.utils.parseEther(formData.price.toString()),
           _library: formData._library,
-          code: `${codeStart}${formData.code}${codeEnd}`,
+          libraryURL: libraries[formData._library as keyof typeof libraries],
+          code: formData.code,
         },
       ],
     })
@@ -91,6 +91,8 @@ const Create = () => {
         clearForm();
         // @ts-ignore
         console.log("Done!");
+        fetchCACollections();
+        // @ts-ignore
         showNotification("Collection created", tx.transactionHash);
       })
       .catch((error) => {
@@ -175,6 +177,7 @@ const Create = () => {
                           name="description"
                           rows={4}
                           value={formData.description}
+                          // @ts-ignore
                           onChange={handleFormChange}
                           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
@@ -230,6 +233,7 @@ const Create = () => {
                           id="library"
                           name="library"
                           value={formData._library}
+                          // @ts-ignore
                           onChange={handleFormChange}
                           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         >
@@ -245,6 +249,7 @@ const Create = () => {
                           name="code"
                           rows={7}
                           value={formData.code}
+                          // @ts-ignore
                           onChange={handleFormChange}
                           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />

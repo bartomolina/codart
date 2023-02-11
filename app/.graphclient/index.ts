@@ -5428,12 +5428,6 @@ const merger = new(BareMerger as any)({
           return printWithCache(ArtblocksCollectionsDocument);
         },
         location: 'ArtblocksCollectionsDocument.graphql'
-      },{
-        document: ArtblocksCollectionDocument,
-        get rawSDL() {
-          return printWithCache(ArtblocksCollectionDocument);
-        },
-        location: 'ArtblocksCollectionDocument.graphql'
       }
     ];
     },
@@ -5476,18 +5470,8 @@ export type ArtblocksCollectionsQueryVariables = Exact<{ [key: string]: never; }
 
 
 export type ArtblocksCollectionsQuery = { projects: Array<(
-    Pick<Project, 'name' | 'projectId' | 'id' | 'active' | 'artistName' | 'complete' | 'completedAt' | 'curationStatus' | 'invocations' | 'maxInvocations' | 'script' | 'scriptJSON' | 'scriptTypeAndVersion' | 'updatedAt'>
+    Pick<Project, 'name' | 'projectId' | 'id' | 'active' | 'artistName' | 'complete' | 'completedAt' | 'createdAt' | 'curationStatus' | 'description' | 'invocations' | 'license' | 'maxInvocations' | 'script' | 'scriptJSON' | 'scriptTypeAndVersion' | 'updatedAt' | 'website'>
     & { contract: Pick<Contract, 'id'>, minterConfiguration?: Maybe<Pick<ProjectMinterConfiguration, 'startTime'>> }
-  )> };
-
-export type ArtblocksCollectionQueryVariables = Exact<{
-  id: Scalars['ID'];
-}>;
-
-
-export type ArtblocksCollectionQuery = { project?: Maybe<(
-    Pick<Project, 'name' | 'projectId' | 'id' | 'active' | 'artistName' | 'complete' | 'completedAt' | 'createdAt' | 'curationStatus' | 'description' | 'invocations' | 'license' | 'maxInvocations' | 'royaltyPercentage' | 'script' | 'scriptJSON' | 'scriptTypeAndVersion' | 'updatedAt' | 'website'>
-    & { contract: Pick<Contract, 'id'> }
   )> };
 
 
@@ -5509,8 +5493,11 @@ export const ArtblocksCollectionsDocument = gql`
     }
     complete
     completedAt
+    createdAt
     curationStatus
+    description
     invocations
+    license
     maxInvocations
     minterConfiguration {
       startTime
@@ -5519,38 +5506,10 @@ export const ArtblocksCollectionsDocument = gql`
     scriptJSON
     scriptTypeAndVersion
     updatedAt
-  }
-}
-    ` as unknown as DocumentNode<ArtblocksCollectionsQuery, ArtblocksCollectionsQueryVariables>;
-export const ArtblocksCollectionDocument = gql`
-    query ArtblocksCollection($id: ID!) {
-  project(id: $id) {
-    name
-    projectId
-    id
-    active
-    artistName
-    contract {
-      id
-    }
-    complete
-    completedAt
-    createdAt
-    curationStatus
-    description
-    invocations
-    license
-    maxInvocations
-    royaltyPercentage
-    script
-    scriptJSON
-    scriptTypeAndVersion
-    updatedAt
     website
   }
 }
-    ` as unknown as DocumentNode<ArtblocksCollectionQuery, ArtblocksCollectionQueryVariables>;
-
+    ` as unknown as DocumentNode<ArtblocksCollectionsQuery, ArtblocksCollectionsQueryVariables>;
 
 
 export type Requester<C = {}, E = unknown> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R> | AsyncIterable<R>
@@ -5558,9 +5517,6 @@ export function getSdk<C, E>(requester: Requester<C, E>) {
   return {
     ArtblocksCollections(variables?: ArtblocksCollectionsQueryVariables, options?: C): Promise<ArtblocksCollectionsQuery> {
       return requester<ArtblocksCollectionsQuery, ArtblocksCollectionsQueryVariables>(ArtblocksCollectionsDocument, variables, options) as Promise<ArtblocksCollectionsQuery>;
-    },
-    ArtblocksCollection(variables: ArtblocksCollectionQueryVariables, options?: C): Promise<ArtblocksCollectionQuery> {
-      return requester<ArtblocksCollectionQuery, ArtblocksCollectionQueryVariables>(ArtblocksCollectionDocument, variables, options) as Promise<ArtblocksCollectionQuery>;
     }
   };
 }

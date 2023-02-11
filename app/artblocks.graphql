@@ -10,8 +10,11 @@ query ArtblocksCollections {
     }
     complete
     completedAt
+    createdAt
     curationStatus
+    description
     invocations
+    license
     maxInvocations
     minterConfiguration {
       startTime
@@ -20,34 +23,6 @@ query ArtblocksCollections {
     scriptJSON
     scriptTypeAndVersion
     updatedAt
-  }
-}
-
-query ArtblocksCollection ($id: ID!) {
-  project(id: $id) {
-    name
-    projectId
-    id
-    active
-    artistName
-    contract {
-      id
-    }
-    complete
-    completedAt
-    createdAt
-    curationStatus
-    description
-    invocations
-    license
-    maxInvocations
-    royaltyPercentage
-    script
-    scriptJSON
-    scriptTypeAndVersion
-    updatedAt
     website
   }
-}
-
-    
+}    

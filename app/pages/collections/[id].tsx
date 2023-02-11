@@ -1,3 +1,4 @@
+import { IABCollection } from "../../global";
 import { FormEvent, useEffect, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -5,28 +6,29 @@ import Link from "next/link";
 import Image from "next/image";
 import { remark } from "remark";
 import html from "remark-html";
-import { ArtblocksCollectionDocument, ArtblocksCollectionQuery, execute } from "../../.graphclient";
+import { useArtBlocks } from "../../components/collections-context";
 
 const CollectionItem = () => {
   const router = useRouter();
+  const { aBCollections } = useArtBlocks();
   const projectId = router.query.id as string;
-  const [collection, setCollection] = useState<ArtblocksCollectionQuery>();
+  const [collection, setCollection] = useState<IABCollection>();
   const [src, setSrc] = useState("/preview-error.png");
   const [description, setDescription] = useState("");
 
   useEffect(() => {
     if (projectId) {
-      execute(ArtblocksCollectionDocument, { id: projectId })
-        .then((result) => {
-          setCollection(result?.data.project);
-          setSrc(`https://media.artblocks.io/thumb/${result?.data.project.projectId}000000.png`);
-          return remark().use(html).process(result?.data.project.description);
-        })
-        .then((result) => {
-          setDescription(result.toString());
-        });
+      const collection = aBCollections.find((c) => c.id === projectId);
+      if (collection) {
+        setCollection(collection);
+        setSrc(`https://media.artblocks.io/thumb/${collection.projectId}000000.png`);
+        remark()
+          .use(html)
+          .process(collection.description)
+          .then((markdown) => setDescription(markdown.toString()));
+      }
     }
-  }, [projectId]);
+  }, [aBCollections, projectId]);
 
   return (
     <>
@@ -80,8 +82,9 @@ const CollectionItem = () => {
                   </div>
                   <div className="mt-4 flex justify-center">
                     <Link
-                      href={`/editor/${collection?.id}`}
-                      className="w-full text-center rounded-lg bg-indigo-600 px-3 py-2 text-white shadow-md hover:bg-indigo-500 active:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:ring-offset-2">
+                      href={`/create/${collection?.id}`}
+                      className="w-full text-center rounded-lg bg-indigo-600 px-3 py-2 text-white shadow-md hover:bg-indigo-500 active:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:ring-offset-2"
+                    >
                       Open in editor
                     </Link>
                   </div>

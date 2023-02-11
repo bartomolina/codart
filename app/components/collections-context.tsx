@@ -1,3 +1,4 @@
+import { IABCollection, ICACollection } from "../global";
 import { createContext, useContext, useEffect, useState } from "react";
 import { readContract } from "@wagmi/core";
 import LocalCodArtFactoryJSON from "../lib/localhost-codart-learn-factory-contract.json";
@@ -5,15 +6,16 @@ import GoerliCodArtFactoryJSON from "../lib/goerli-codart-learn-factory-contract
 import { ArtblocksCollectionsDocument, ArtblocksCollectionsQuery, execute, Project } from "../.graphclient";
 
 const ArtBlocksContext = createContext({
-  aBCollections: [],
-  cACollections: [],
+  aBCollections: [] as IABCollection[],
+  cACollections: [] as ICACollection[],
+  fetchCACollections: () => {},
 });
 
 export const useArtBlocks = () => useContext(ArtBlocksContext);
 
 export const ArtblocksProvider = ({ children }: React.PropsWithChildren) => {
-  const [aBCollections, setABCollections] = useState([] as any);
-  const [cACollections, setCACollections] = useState([] as any);
+  const [aBCollections, setABCollections] = useState([] as IABCollection[]);
+  const [cACollections, setCACollections] = useState([] as ICACollection[]);
 
   let CodArtFactoryJSON = LocalCodArtFactoryJSON;
   if (process.env.NEXT_PUBLIC_NETWORK?.toLowerCase() == "goerli") {
@@ -21,7 +23,7 @@ export const ArtblocksProvider = ({ children }: React.PropsWithChildren) => {
   }
 
   const fetchCACollections = () => {
-    let _CACollections = [];
+    let _CACollections = [] as ICACollection[];
 
     readContract({
       chainId: 5,
@@ -46,7 +48,9 @@ export const ArtblocksProvider = ({ children }: React.PropsWithChildren) => {
   useEffect(() => {
     fetchCACollections();
     execute(ArtblocksCollectionsDocument, {}).then((result) => {
-      result?.data.projects.map((collection) => {
+
+      const projects = result?.data.projects as IABCollection[];
+      projects.map((collection) => {
         if (collection?.minterConfiguration?.startTime) {
           collection.updatedAt = collection.minterConfiguration.startTime;
         }
@@ -64,7 +68,7 @@ export const ArtblocksProvider = ({ children }: React.PropsWithChildren) => {
               collection.scriptTypeAndVersion.indexOf("@")
             );
           }
-          collection.script = collection.script?.length;
+          collection.scriptLength = collection.script?.length;
         }
       });
 
@@ -73,5 +77,5 @@ export const ArtblocksProvider = ({ children }: React.PropsWithChildren) => {
     });
   }, []);
 
-  return <ArtBlocksContext.Provider value={{ cACollections, aBCollections }}>{children}</ArtBlocksContext.Provider>;
+  return <ArtBlocksContext.Provider value={{ cACollections, aBCollections, fetchCACollections }}>{children}</ArtBlocksContext.Provider>;
 };

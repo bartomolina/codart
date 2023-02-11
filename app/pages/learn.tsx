@@ -9,14 +9,14 @@ import LearnCodArtCollections from "../components/learn-ca-collections";
 
 const Learn = () => {
   const router = useRouter();
-  const minChars = router.query.minChars;
-  const maxChars = router.query.maxChars;
+  const minChars = router.query.minChars || 0;
+  const maxChars = router.query.maxChars || 0;
   const cACollection = router.query.codart;
   const { aBCollections, cACollections } = useArtBlocks();
 
   const filteredCollections = useMemo(() => {
     return aBCollections.filter((collection) => {
-      return collection.script > minChars && collection.script <= maxChars && collection.scriptTypeAndVersion === "p5";
+      return collection.scriptLength > minChars && collection.scriptLength <= maxChars && collection.scriptTypeAndVersion === "p5";
     });
   }, [aBCollections, minChars, maxChars]);
 

@@ -24,7 +24,9 @@ const ActiveLink = ({
       // Dynamic route will be matched via props.as
       // Static route will be matched via props.href
       let linkPathname;
-      if (props.href.pathname) {
+      // @ts-ignore
+      if (props.href[pathname]) {
+        // @ts-ignore
         linkPathname = new URL((props.as || props.href.pathname) as string, location.href).pathname;
       } else {
         linkPathname = new URL((props.as || props.href) as string, location.href).pathname;
@@ -34,7 +36,7 @@ const ActiveLink = ({
       const activePathname = new URL(asPath, location.href).pathname;
 
       const newClassName =
-        linkPathname === activePathname
+        linkPathname === activePathname || (linkPathname != "/" && activePathname.includes(linkPathname))
           ? `${activeClassName} ${className}`.trim()
           : `${inactiveClassName} ${className}`.trim();
 

@@ -1,11 +1,10 @@
+import { IABCollection } from "../global";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Project } from "../.graphclient";
-import { classicNameResolver } from "typescript";
 
 type Props = {
-  collection: Pick<Project, "script" | "id" | "name" | "updatedAt" | "curationStatus" | "artistName" | "scriptJSON">;
+  collection: IABCollection,
 };
 
 const Card = ({ collection }: Props) => {

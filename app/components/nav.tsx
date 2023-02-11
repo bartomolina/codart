@@ -7,7 +7,7 @@ import ActiveLink from "./active-link";
 
 const navigation = [
   { name: "Collections", href: "/" },
-  { name: "Learn", href: { pathname: "/learn", query: { minChars: "0",  maxChars: "2000" } } },
+  { name: "Learn", href: { pathname: "/learn", query: { minChars: "0", maxChars: "2000" } } },
   { name: "Create", href: "/create" },
   { name: "About", href: "/about" },
 ];
@@ -30,6 +30,7 @@ const Nav = () => {
                 <div className="hidden sm:flex sm:space-x-11">
                   {navigation.map((item) => (
                     <ActiveLink
+                      // @ts-ignore
                       key={item.href}
                       activeClassName="text-gray-900 border-indigo-500"
                       inactiveClassName="text-gray-500 hover:text-gray-700 border-transparent hover:border-gray-200"
@@ -66,6 +67,7 @@ const Nav = () => {
             <div className="space-y-1 pt-2 pb-3">
               {navigation.map((item) => (
                 <ActiveLink
+                  // @ts-ignore
                   key={item.href}
                   activeClassName="text-indigo-700 border-indigo-500"
                   inactiveClassName="hover:bg-gray-50 text-gray-500 hover:text-gray-700 border-transparent hover:border-gray-300"
