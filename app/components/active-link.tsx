@@ -25,7 +25,7 @@ const ActiveLink = ({
       // Static route will be matched via props.href
       let linkPathname;
       // @ts-ignore
-      if (props.href[pathname]) {
+      if (props.href.pathname) {
         // @ts-ignore
         linkPathname = new URL((props.as || props.href.pathname) as string, location.href).pathname;
       } else {
