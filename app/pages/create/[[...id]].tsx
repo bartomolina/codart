@@ -73,6 +73,7 @@ const CollectionItem = () => {
         if (_collection) {
           formattedCode = _collection.script;
         }
+        console.log(formattedCode.length)
       } else if (!isAB && cACollections.length) {
         const _cACollection = cACollections.find((c) => c._address === projectId);
         if (_cACollection && _cACollection.info) {
@@ -80,7 +81,7 @@ const CollectionItem = () => {
           formattedCode = _collection.code;
         }
       }
-      if (_collection && cACollections.length) {
+      if (_collection) {
         setCollection(_collection);
         console.log(_collection);
 
