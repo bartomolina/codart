@@ -17,13 +17,26 @@ import "@openzeppelin/contracts/utils/Base64.sol";
 // |_.__/ \__,_|_|   \__\___/|_| |_| |_|\___/|_|_|_| |_|\__,_(_)___|\__|_| |_|
 //
 
-contract CodArtLearn is Initializable, ERC721Upgradeable, ERC721EnumerableUpgradeable, ERC721URIStorageUpgradeable, OwnableUpgradeable {
-    using CountersUpgradeable for CountersUpgradeable.Counter;
+struct CodArtLearInfo {
+    string name;
+    string symbol;
+    string artist;
+    string description;
     uint256 maxSupply;
     uint256 price;
     string _library;
     string code;
+}
 
+struct CodArtLearnInstance {
+    address _address;
+    CodArtLearInfo info;
+}
+
+contract CodArtLearn is Initializable, ERC721Upgradeable, ERC721EnumerableUpgradeable, ERC721URIStorageUpgradeable, OwnableUpgradeable {
+    using CountersUpgradeable for CountersUpgradeable.Counter;
+    
+    CodArtLearInfo contractInfo;
     CountersUpgradeable.Counter private _tokenIdCounter;
 
     /// @custom:oz-upgrades-unsafe-allow constructor
@@ -33,18 +46,10 @@ contract CodArtLearn is Initializable, ERC721Upgradeable, ERC721EnumerableUpgrad
 
     function initialize(
       address _owner,
-      string calldata _name,
-      string calldata _symbol,
-      uint256 _maxSupply,
-      uint256 _price,
-      string calldata _lib,
-      string calldata _code
+      CodArtLearInfo calldata _contractInfo
     ) initializer public {
-        maxSupply = _maxSupply;
-        price = _price;
-        _library = _lib;
-        code = _code;
-        __ERC721_init(_name, _symbol);
+        contractInfo = _contractInfo;
+        __ERC721_init(contractInfo.name, contractInfo.symbol);
         __ERC721Enumerable_init();
         __ERC721URIStorage_init();
         __Ownable_init();
@@ -53,8 +58,8 @@ contract CodArtLearn is Initializable, ERC721Upgradeable, ERC721EnumerableUpgrad
     }
 
     function safeMint(address to, string memory uri) public {
-        if (maxSupply > 0) {
-            require (totalSupply() < maxSupply);
+        if (contractInfo.maxSupply > 0) {
+            require (totalSupply() < contractInfo.maxSupply);
         }
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
@@ -86,7 +91,7 @@ contract CodArtLearn is Initializable, ERC721Upgradeable, ERC721EnumerableUpgrad
     {
         bytes memory metadata = abi.encodePacked(
             '{"name":"CodArt", "description":"CodArt test","animation_url":"data:text/html;base64,',
-            Base64.encode(abi.encodePacked(code)),
+            Base64.encode(abi.encodePacked(contractInfo.code)),
             '"}'
         );
         return string(

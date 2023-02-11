@@ -32,12 +32,14 @@ async function main() {
   );
   fs.writeFileSync("./app/lib/codart-learn-contract.json", JSON.stringify(CodArtLearnData));
 
-  console.log("Waiting to verify on Etherscan");
-  await delay(30000);
+  if (networkName === "goerli") {
+    console.log("Waiting to verify on Etherscan");
+    await delay(30000);
 
-  await hre.run("verify:verify", {
-    address: codArtLearnFactory.address,
-  });
+    await hre.run("verify:verify", {
+      address: codArtLearnFactory.address,
+    });
+  }
 }
 
 main().catch((error) => {

@@ -6,16 +6,16 @@ import Card from "../components/card";
 const Home = () => {
   const [collectionStatusFilter, setCollectionStatusFilter] = useState("Completed");
   const [scriptFilter, setScriptFilter] = useState("");
-  const { collections } = useArtBlocks();
+  const { aBCollections } = useArtBlocks();
 
   let scriptTypes;
 
   const filteredCollections = useMemo(() => {
     let filteredCollections;
     if (collectionStatusFilter === "Completed") {
-      filteredCollections = collections.filter((collection) => collection.complete);
+      filteredCollections = aBCollections.filter((collection) => collection.complete);
     } else {
-      filteredCollections = collections.filter((collection) => !collection.complete && collection.active);
+      filteredCollections = aBCollections.filter((collection) => !collection.complete && collection.active);
       filteredCollections = filteredCollections.sort((a, b) => b.updatedAt - a.updatedAt);
       if (collectionStatusFilter === "Upcoming") {
         filteredCollections = filteredCollections.filter(
@@ -37,7 +37,7 @@ const Home = () => {
     }
 
     return filteredCollections;
-  }, [collections, collectionStatusFilter, scriptFilter]);
+  }, [aBCollections, collectionStatusFilter, scriptFilter]);
 
   return (
     <>

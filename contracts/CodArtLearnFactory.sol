@@ -15,18 +15,7 @@ import "./CodArtLearn.sol";
 
 contract CodArtLearnFactory is Ownable {
     address codArtLearnAddress;
-
-    struct CodArtLearnStruct {
-        address addr;
-        address owner;
-        string name;
-        string symbol;
-        uint256 maxSupply;
-        uint256 price;
-        string _library;
-        string code;
-    }
-    CodArtLearnStruct[] public codArtLearnInstances;
+    CodArtLearnInstance[] public codArtLearnInstances;
 
     constructor() {
         codArtLearnAddress = address(new CodArtLearn());
@@ -35,39 +24,20 @@ contract CodArtLearnFactory is Ownable {
     event NewCodArtLearnInstance(address indexed _instance);
 
     function createCodArtLearn(
-        string calldata name,
-        string calldata symbol,
-        uint256 maxSupply,
-        uint256 price,
-        string calldata _library,
-        string calldata code
-    ) public payable returns (address clone) {
+        CodArtLearInfo calldata contractInfo
+    ) public returns (address clone) {
         clone = Clones.clone(codArtLearnAddress);
 
-        CodArtLearnStruct memory newCodArtLearn = CodArtLearnStruct(
+        CodArtLearnInstance memory newCodArtLearn = CodArtLearnInstance(
             clone,
-            msg.sender,
-            name,
-            symbol,
-            maxSupply,
-            price,
-            _library,
-            code
+            contractInfo
         );
         codArtLearnInstances.push(newCodArtLearn);
-        CodArtLearn(clone).initialize(
-            msg.sender,
-            name,
-            symbol,
-            maxSupply,
-            price,
-            _library,
-            code
-        );
+        CodArtLearn(clone).initialize(msg.sender, contractInfo);
         emit NewCodArtLearnInstance(clone);
     }
 
-    function getInstances() external view returns (CodArtLearnStruct[] memory) {
+    function getInstances() external view returns (CodArtLearnInstance[] memory) {
         return codArtLearnInstances;
     }
 }

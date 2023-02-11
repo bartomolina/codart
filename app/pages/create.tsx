@@ -8,21 +8,25 @@ import GoerliCodArtFactoryJSON from "../lib/goerli-codart-learn-factory-contract
 import { useNotifications } from "../components/notifications-context";
 import { useRouter } from "next/router";
 
-const codeStart = '<html><head><script src="https://cdn.jsdelivr.net/npm/p5@1.5.0/lib/p5.js"></script><script>tokenData={hash: "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"};';
-const codeEnd = '</script></head><body><main></main></body></html>';
+const codeStart =
+  '<html><head><script src="https://cdn.jsdelivr.net/npm/p5@1.5.0/lib/p5.js"></script><script>tokenData={hash: "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"};';
+const codeEnd = "</script></head><body><main></main></body></html>";
 
 const Create = () => {
   const router = useRouter();
   const script = router.query.script as string;
   const [hasMounted, setHasMounted] = useState(false);
   const [formData, setFormData] = useState({
-    type: "Learn",
     name: "GenArt0",
     symbol: "GA0",
-    supply: 0,
+    description: "Basic shapes",
+    artist: "bartomolina.eth",
+    maxSupply: 0,
     price: 0,
-    library: "p5",
-    code: script ? script : '<html><head><script src="https://cdn.jsdelivr.net/npm/p5@1.5.0/lib/p5.js"></script><script>function setup(){createCanvas(100, 100);background(220);}</script></head><body><main></main></body></html>',
+    _library: "p5",
+    code: script
+      ? script
+      : '<html><head><script src="https://cdn.jsdelivr.net/npm/p5@1.5.0/lib/p5.js"></script><script>function setup(){createCanvas(100, 100);background(220);}</script></head><body><main></main></body></html>',
   });
   const { showNotification, showError } = useNotifications();
   const { isConnected } = useAccount();
@@ -43,12 +47,13 @@ const Create = () => {
 
   const clearForm = () => {
     setFormData({
-      type: "Learn",
       name: "",
       symbol: "",
-      supply: 0,
+      description: "",
+      artist: "",
+      maxSupply: 0,
       price: 0,
-      library: "p5",
+      _library: "p5",
       code: "",
     });
   };
@@ -63,12 +68,16 @@ const Create = () => {
       abi: CodArtFactoryJSON.abi,
       functionName: "createCodArtLearn",
       args: [
-        formData.name,
-        formData.symbol,
-        formData.supply,
-        ethers.utils.parseEther(formData.price.toString()),
-        formData.library,
-        `${codeStart}${formData.code}${codeEnd}`,
+        {
+          name: formData.name,
+          symbol: formData.symbol,
+          description: formData.description,
+          artist: formData.artist,
+          maxSupply: formData.maxSupply,
+          price: ethers.utils.parseEther(formData.price.toString()),
+          _library: formData._library,
+          code: `${codeStart}${formData.code}${codeEnd}`,
+        },
       ],
     })
       // @ts-ignore
@@ -110,135 +119,147 @@ const Create = () => {
         <h1 className="text-5xl font-thin leading-tight tracking-tight text-gray-900">Create</h1>
       </header>
       <div className="bg-gray-100">
-        <div className="mx-auto max-w-6xl sm:px-6 lg:px-8 pb-44 pt-5">
-          <form className="space-y-8 divide-y divide-gray-200 w-fit">
-            <div className="flex flex-row space-x-20">
-              <div>
-                <div>
-                  <h3 className="text-2xl font-medium leading-6 text-gray-900">Collection</h3>
-                </div>
-                <div className="mt-6 grid grid-cols-1 gap-y-6">
-                  <div>
-                    <label htmlFor="type" className="block text-sm font-medium text-gray-700">
-                      Type
-                    </label>
-                    <div className="mt-1">
-                      <select
-                        id="type"
-                        name="type"
-                        value={formData.type}
-                        onChange={handleFormChange}
-                        className="block w-full max-w-fit rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                      >
-                        <option>Learn</option>
-                        <option>Certification</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                      Name
-                    </label>
-                    <div className="mt-1">
-                      <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleFormChange}
-                        className="block w-full max-w-fit rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label htmlFor="symbol" className="block text-sm font-medium text-gray-700">
-                      Symbol
-                    </label>
-                    <div className="mt-1">
-                      <input
-                        type="text"
-                        id="symbol"
-                        name="symbol"
-                        value={formData.symbol}
-                        onChange={handleFormChange}
-                        className="block w-full max-w-fit rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label htmlFor="supply" className="block text-sm font-medium text-gray-700">
-                      Max. Supply
-                    </label>
-                    <div className="mt-1">
-                      <input
-                        type="number"
-                        id="supply"
-                        name="supply"
-                        value={formData.supply}
-                        onChange={handleFormChange}
-                        className="block w-full max-w-fit rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label htmlFor="price" className="block text-sm font-medium text-gray-700">
-                      Price
-                    </label>
-                    <div className="mt-1">
-                      <input
-                        type="number"
-                        id="price"
-                        name="price"
-                        step="0.0001"
-                        value={formData.price}
-                        onChange={handleFormChange}
-                        className="block w-full max-w-fit rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div>
-                  <h3 className="text-2xl font-medium leading-6 text-gray-900">Code</h3>
-                </div>
-                <div className="mt-6 grid grid-cols-1 gap-y-6">
-                  <div>
-                    <label htmlFor="library" className="block text-sm font-medium text-gray-700">
-                      Library
-                    </label>
-                    <div className="mt-1">
-                      <select
-                        id="library"
-                        name="library"
-                        value={formData.library}
-                        onChange={handleFormChange}
-                        className="block w-full max-w-fit rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                      >
-                        <option>p5</option>
-                        <option>p6</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div>
-                    <label htmlFor="code" className="block text-sm font-medium text-gray-700">
-                      Code
-                    </label>
-                    <div className="mt-1">
-                      <textarea
-                        id="code"
-                        name="code"
-                        rows={14}
-                        value={formData.code}
-                        onChange={handleFormChange}
-                        className="block w-96 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                      />
+        <div className="mx-auto max-w-6xl sm:px-6 lg:px-8 pb-12 pt-5">
+          <form action="#" method="POST">
+            <div className="grid grid-cols-3 ">
+              <div>Collection information</div>
+              <div className="col-span-2">
+                <div className="overflow-hidden shadow rounded-md">
+                  <div className="bg-white px-4 p-6">
+                    <div className="grid grid-cols-6 gap-6">
+                      <div className="col-span-3">
+                        <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                          Name
+                        </label>
+                        <input
+                          type="text"
+                          id="name"
+                          name="name"
+                          value={formData.name}
+                          onChange={handleFormChange}
+                          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        />
+                      </div>
+                      <div className="col-span-3">
+                        <label htmlFor="symbol" className="block text-sm font-medium text-gray-700">
+                          Symbol
+                        </label>
+                        <input
+                          type="text"
+                          id="symbol"
+                          name="symbol"
+                          value={formData.symbol}
+                          onChange={handleFormChange}
+                          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        />
+                      </div>
+                      <div className="col-span-6">
+                        <label htmlFor="artist" className="block text-sm font-medium text-gray-700">
+                          Artist
+                        </label>
+                        <input
+                          type="text"
+                          id="artist"
+                          name="artist"
+                          value={formData.artist}
+                          onChange={handleFormChange}
+                          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        />
+                      </div>
+                      <div className="col-span-6">
+                        <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+                          Description
+                        </label>
+                        <textarea
+                          id="description"
+                          name="description"
+                          rows={4}
+                          value={formData.description}
+                          onChange={handleFormChange}
+                          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        />
+                      </div>
+                      <div className="col-span-3">
+                        <label htmlFor="supply" className="block text-sm font-medium text-gray-700">
+                          Max. Supply
+                        </label>
+                        <input
+                          type="number"
+                          id="supply"
+                          name="supply"
+                          value={formData.maxSupply}
+                          onChange={handleFormChange}
+                          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        />
+                      </div>
+                      <div className="col-span-3">
+                        <label htmlFor="price" className="block text-sm font-medium text-gray-700">
+                          Price (ETH)
+                        </label>
+                        <input
+                          type="number"
+                          id="price"
+                          name="price"
+                          value={formData.price}
+                          step="0.0001"
+                          onChange={handleFormChange}
+                          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="flex pt-5 justify-end">
+            <div className="hidden sm:block" aria-hidden="true">
+              <div className="py-5">
+                <div className="border-t border-gray-200" />
+              </div>
+            </div>
+            <div className="grid grid-cols-3 ">
+              <div>Code</div>
+              <div className="col-span-2">
+                <div className="overflow-hidden shadow rounded-md">
+                  <div className="bg-white px-4 p-6">
+                    <div className="grid grid-cols-6 gap-6">
+                      <div className="col-span-3">
+                        <label htmlFor="library" className="block text-sm font-medium text-gray-700">
+                          Library
+                        </label>
+                        <select
+                          id="library"
+                          name="library"
+                          value={formData._library}
+                          onChange={handleFormChange}
+                          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        >
+                          <option>p5</option>
+                        </select>
+                      </div>
+                      <div className="col-span-6">
+                        <label htmlFor="code" className="block text-sm font-medium text-gray-700">
+                          Code
+                        </label>
+                        <textarea
+                          id="code"
+                          name="code"
+                          rows={7}
+                          value={formData.code}
+                          onChange={handleFormChange}
+                          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="hidden sm:block" aria-hidden="true">
+              <div className="py-5">
+                <div className="border-t border-gray-200" />
+              </div>
+            </div>
+            <div className="flex justify-end">
               <button
                 type="button"
                 disabled={!isConnected || isLoading}
