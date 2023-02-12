@@ -50,7 +50,7 @@ contract CodArtLearn is
 
     CountersUpgradeable.Counter private _tokenIdCounter;
     CodArtLearInfo private contractInfo;
-    mapping(uint256 => bytes32) private _tokenIdToHash;
+    mapping(uint256 => string) private _tokenIdToHash;
 
     /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() {
@@ -77,8 +77,8 @@ contract CodArtLearn is
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
         _safeMint(to, tokenId);
-        _tokenIdToHash[tokenId] = keccak256(
-            abi.encodePacked(to, block.timestamp, block.difficulty)
+        _tokenIdToHash[tokenId] = toHex(
+            keccak256(abi.encodePacked(to, block.timestamp, block.difficulty))
         );
     }
 
@@ -99,12 +99,6 @@ contract CodArtLearn is
         super._burn(tokenId);
     }
 
-    function tokenIdToHash(
-        uint256 tokenId
-    ) public view returns (string memory) {
-        return bytes32ToLiteralString(_tokenIdToHash[tokenId]);
-    }
-
     function tokenURI(
         uint256 tokenId
     )
@@ -116,7 +110,7 @@ contract CodArtLearn is
         bytes memory metadata = abi.encodePacked(
             '{"name":"',
             contractInfo.name,
-            '", "description":"',
+            '","description":"',
             contractInfo.description,
             '","animation_url":"data:text/html;base64,',
             Base64.encode(
@@ -124,7 +118,7 @@ contract CodArtLearn is
                     html1,
                     contractInfo.libraryURL,
                     html2,
-                    bytes32ToLiteralString(_tokenIdToHash[tokenId]),
+                    _tokenIdToHash[tokenId],
                     html3,
                     contractInfo.code,
                     html4
@@ -152,26 +146,57 @@ contract CodArtLearn is
         return super.supportsInterface(interfaceId);
     }
 
-    function bytes32ToLiteralString(
-        bytes32 data
-    ) public pure returns (string memory result) {
-        bytes memory temp = new bytes(65);
-        uint256 count;
+    function toHex16(bytes16 data) internal pure returns (bytes32 result) {
+        result =
+            (bytes32(data) &
+                0xFFFFFFFFFFFFFFFF000000000000000000000000000000000000000000000000) |
+            ((bytes32(data) &
+                0x0000000000000000FFFFFFFFFFFFFFFF00000000000000000000000000000000) >>
+                64);
+        result =
+            (result &
+                0xFFFFFFFF000000000000000000000000FFFFFFFF000000000000000000000000) |
+            ((result &
+                0x00000000FFFFFFFF000000000000000000000000FFFFFFFF0000000000000000) >>
+                32);
+        result =
+            (result &
+                0xFFFF000000000000FFFF000000000000FFFF000000000000FFFF000000000000) |
+            ((result &
+                0x0000FFFF000000000000FFFF000000000000FFFF000000000000FFFF00000000) >>
+                16);
+        result =
+            (result &
+                0xFF000000FF000000FF000000FF000000FF000000FF000000FF000000FF000000) |
+            ((result &
+                0x00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000) >>
+                8);
+        result =
+            ((result &
+                0xF000F000F000F000F000F000F000F000F000F000F000F000F000F000F000F000) >>
+                4) |
+            ((result &
+                0x0F000F000F000F000F000F000F000F000F000F000F000F000F000F000F000F00) >>
+                8);
+        result = bytes32(
+            0x3030303030303030303030303030303030303030303030303030303030303030 +
+                uint256(result) +
+                (((uint256(result) +
+                    0x0606060606060606060606060606060606060606060606060606060606060606) >>
+                    4) &
+                    0x0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F) *
+                39
+        );
+    }
 
-        for (uint256 i = 0; i < 32; i++) {
-            bytes1 currentByte = bytes1(data << (i * 8));
-
-            uint8 c1 = uint8(bytes1((currentByte << 4) >> 4));
-
-            uint8 c2 = uint8(bytes1((currentByte >> 4)));
-
-            if (c2 >= 0 && c2 <= 9) temp[++count] = bytes1(c2 + 48);
-            else temp[++count] = bytes1(c2 + 87);
-
-            if (c1 >= 0 && c1 <= 9) temp[++count] = bytes1(c1 + 48);
-            else temp[++count] = bytes1(c1 + 87);
-        }
-
-        result = string(temp);
+    function toHex(bytes32 data) public pure returns (string memory) {
+        return
+            string(
+                abi.encodePacked(
+                    "0x",
+                    toHex16(bytes16(data)),
+                    toHex16(bytes16(data << 128))
+                )
+            );
     }
 }
