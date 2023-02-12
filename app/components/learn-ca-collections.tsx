@@ -53,6 +53,7 @@ const LearnCodArtCollections = ({ cACollections }: Props) => {
                 <a
                   href={`https://testnets.opensea.io/assets/goerli/${collection._address}/0`}
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <Image src={"/opensea-logo.png"} alt={collection.info.name} width={25} height={25} />
                 </a>
