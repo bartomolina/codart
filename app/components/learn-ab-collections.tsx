@@ -11,7 +11,7 @@ const LearnArtBlocksCollections = ({ filteredCollections }: Props) => (
       (collection) => (
         <li
           key={collection.id}
-          className="flex space-x-5 overflow-hidden rounded-lg border border-gray-300 shadow hover:-translate-y-1 transform transition"
+          className="flex space-x-5 overflow-hidden rounded-lg border border-gray-300 shadow hover:shadow-xl hover:-translate-y-1 transform transition"
         >
           <Card collection={collection} />
         </li>
