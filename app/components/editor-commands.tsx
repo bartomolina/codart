@@ -9,6 +9,7 @@ import { useNotifications } from "../components/notifications-context";
 import ArtblocksJSON from "../lib/artblocks-contract.json";
 
 type Props = {
+  isAB: boolean,
   collection: IABCollection;
   hash: string;
   updateHash: (hash: string) => {};
@@ -16,7 +17,7 @@ type Props = {
   invocations: number;
   setTokenId: (tokenId: string) => {};
   handleRun: (event: FormEvent) => {};
-  autoRefresh: boolean,
+  autoRefresh: boolean;
   setAutoRefresh: (autoRefresh: boolean) => {};
   library: string;
   setLibrary: (library: string) => {};
@@ -24,6 +25,7 @@ type Props = {
 };
 
 const EditorCommands = ({
+  isAB,
   collection,
   hash,
   updateHash,
@@ -82,29 +84,6 @@ const EditorCommands = ({
                     <option>three</option>
                   </select>
                 </div>
-              </div>
-              <div className="flex text-sm mt-3 space-x-3">
-                <label htmlFor="tokenId" className="flex font-medium text-gray-700 items-center">
-                  TokenID
-                </label>
-                <div>
-                  <input
-                    type="number"
-                    name="tokenId"
-                    id="tokenId"
-                    value={tokenId}
-                    onChange={(event) => setTokenId(event.target.value)}
-                    className="h-7 block w-24 text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                  />
-                </div>
-                <em className="flex items-center">({invocations} Minted)</em>
-                <button
-                  type="button"
-                  onClick={(e) => handleFetchHashFromToken(e)}
-                  className="h-7 p-0 text-sm rounded-lg bg-indigo-600 px-3 text-white shadow-md hover:bg-indigo-500 active:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:ring-offset-2"
-                >
-                  Fetch hash from Token
-                </button>
                 <div className="flex items-center">
                   <input
                     id="autoRefresh"
@@ -120,6 +99,45 @@ const EditorCommands = ({
                   </label>
                 </div>
               </div>
+              {isAB && (
+                <div className="flex text-sm mt-3 space-x-3">
+                  <label htmlFor="tokenId" className="flex font-medium text-gray-700 items-center">
+                    TokenID
+                  </label>
+                  <div>
+                    <input
+                      type="number"
+                      name="tokenId"
+                      id="tokenId"
+                      value={tokenId}
+                      onChange={(event) => setTokenId(event.target.value)}
+                      className="h-7 block w-24 text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                    />
+                  </div>
+                  <em className="flex items-center">({invocations} Minted)</em>
+                  <button
+                    type="button"
+                    onClick={(e) => handleFetchHashFromToken(e)}
+                    className="h-7 p-0 text-sm rounded-lg bg-indigo-600 px-3 text-white shadow-md hover:bg-indigo-500 active:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:ring-offset-2"
+                  >
+                    Fetch hash from Token
+                  </button>
+                  <div className="flex items-center">
+                    <input
+                      id="autoRefresh"
+                      aria-describedby="autoRefresh"
+                      name="autoRefresh"
+                      type="checkbox"
+                      checked={autoRefresh}
+                      onChange={(e) => setAutoRefresh(e.target.checked)}
+                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                    />
+                    <label htmlFor="autoRefresh" className="ml-3 font-medium text-gray-700">
+                      Auto-refresh
+                    </label>
+                  </div>
+                </div>
+              )}
               <div className="flex text-sm mt-3 space-x-3">
                 <label htmlFor="hash" className="flex font-medium text-gray-700 items-center">
                   Hash

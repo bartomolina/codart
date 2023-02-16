@@ -16,18 +16,20 @@ import prettier from "prettier/esm/standalone.mjs";
 import parserBabel from "prettier/esm/parser-babel.mjs";
 import EditorCommands from "../../components/editor-commands";
 
+const defaultCode = `function setup() {
+  createCanvas(400, 400);
+}
+
+function draw() {
+  background(220);
+}`;
+
 const CollectionItem = () => {
   const router = useRouter();
   const projectId = router.query.id ? (router.query.id[0] as string) : undefined;
   const [collection, setCollection] = useState<IABCollection | ICACollectionInfo | undefined>();
   const { cACollections, aBCollections } = useArtBlocks();
-  const [code, setCode] = useState(`function setup() {
-    createCanvas(400, 400);
-  }
-  
-  function draw() {
-    background(220);
-  }`);
+  const [code, setCode] = useState(defaultCode);
   const [tokenId, setTokenId] = useState("0");
   const [autoRefresh, setAutoRefresh] = useState(true);
   const [hash, setHash] = useState(ethers.utils.hexlify(ethers.utils.randomBytes(32)));
@@ -64,16 +66,17 @@ const CollectionItem = () => {
   };
 
   useEffect(() => {
+    setCollection(undefined);
+    let formattedCode = defaultCode;
     if (router.isReady && projectId) {
       let _collection;
-      let formattedCode;
 
       if (isAB && aBCollections.length) {
         _collection = aBCollections.find((c) => c.id === projectId);
         if (_collection) {
           formattedCode = _collection.script;
         }
-        console.log(formattedCode.length)
+        console.log(formattedCode.length);
       } else if (!isAB && cACollections.length) {
         const _cACollection = cACollections.find((c) => c._address === projectId);
         if (_cACollection && _cACollection.info) {
@@ -91,11 +94,10 @@ const CollectionItem = () => {
             plugins: [parserBabel],
           });
         } catch {}
-
-        setCode(formattedCode);
       }
     }
-  }, [router.isReady, cACollections, aBCollections]);
+    setCode(formattedCode);
+  }, [router]);
 
   const updateHash = (_hash: string) => {
     setHash(_hash);
@@ -116,43 +118,46 @@ const CollectionItem = () => {
         </h1>
       </header>
       <div className="bg-gray-100 pb-24">
-        <div className="mx-auto 2xl:max-w-7xl 2xl:px-0 lg:px-8 pb-44 pt-5">
-          <div>
-            <EditorCommands
-              {...{
-                collection,
-                hash,
-                updateHash,
-                tokenId,
-                invocations: collection?.invocations,
-                setTokenId,
-                handleRun,
-                autoRefresh,
-                setAutoRefresh,
-                library,
-                setLibrary,
-                handleCreate,
-              }}
-            />
-          </div>
-          <div className="grid grid-cols-8 gap-5 mt-4">
-            <div className="bg-white rounded col-span-5">
-              <CodeMirror
-                value={code}
-                height="800px"
-                theme={dracula}
-                extensions={[javascript()]}
-                onChange={(code) => setCode(code)}
+        {router.isReady && (!isAB || (isAB && collection)) && (
+          <div className="mx-auto 2xl:max-w-7xl 2xl:px-0 lg:px-8 pb-44 pt-5">
+            <div>
+              <EditorCommands
+                {...{
+                  isAB,
+                  collection,
+                  hash,
+                  updateHash,
+                  tokenId,
+                  invocations: collection?.invocations,
+                  setTokenId,
+                  handleRun,
+                  autoRefresh,
+                  setAutoRefresh,
+                  library,
+                  setLibrary,
+                  handleCreate,
+                }}
               />
             </div>
-            <iframe
-              scrolling="no"
-              style={{ overflow: "hidden" }}
-              className="overflow-hidden w-full h-full col-span-3"
-              id="canvasIframe"
-            />
+            <div className="grid grid-cols-8 gap-5 mt-4">
+              <div className="bg-white rounded col-span-5">
+                <CodeMirror
+                  value={code}
+                  height="800px"
+                  theme={dracula}
+                  extensions={[javascript()]}
+                  onChange={(code) => setCode(code)}
+                />
+              </div>
+              <iframe
+                scrolling="no"
+                style={{ overflow: "hidden" }}
+                className="overflow-hidden w-full h-full col-span-3"
+                id="canvasIframe"
+              />
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </>
   );
