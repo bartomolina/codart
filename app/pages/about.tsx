@@ -273,7 +273,7 @@ const About = () => (
               />
             </div>
             <p>
-              Generally, the script includes a placeholder fot the token Hash (you can search for <em>tokenData</em> in
+              Generally, the script includes a placeholder for the token Hash (you can search for <em>tokenData</em> in
               the script). Also, the <em>projectScriptDetails</em> function returns the library used by the project:
             </p>
             <Image

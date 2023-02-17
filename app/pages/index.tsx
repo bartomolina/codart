@@ -9,8 +9,6 @@ const Home = () => {
   const [scriptFilter, setScriptFilter] = useState("");
   const { aBCollections } = useArtBlocks();
 
-  let scriptTypes;
-
   const filteredCollections = useMemo(() => {
     let filteredCollections = [] as IABCollection[];
     if (collectionStatusFilter === "Completed") {
@@ -29,8 +27,6 @@ const Home = () => {
       }
     }
 
-    scriptTypes = new Set(filteredCollections.map((c) => c.scriptTypeAndVersion));
-
     if (scriptFilter) {
       filteredCollections = filteredCollections.filter(
         (collection) => collection.scriptTypeAndVersion === scriptFilter
@@ -39,6 +35,10 @@ const Home = () => {
 
     return filteredCollections;
   }, [aBCollections, collectionStatusFilter, scriptFilter]);
+
+  const scriptTypes = useMemo(() => {
+    return new Set(filteredCollections.map((c) => c.scriptTypeAndVersion));
+  },[filteredCollections]);
 
   return (
     <>

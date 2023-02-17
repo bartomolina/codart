@@ -41,7 +41,7 @@ const CollectionItem = () => {
   const generateOutput = (_hash) => {
     if (document) {
       const tokenData = `window.tokenData={"tokenId": "${tokenId}", "hash": "${_hash}", "hashes": ["${_hash}"]};`;
-      const wrappedCode = `${libraryScript}<script>${tokenData}${code}</script>`;
+      const wrappedCode = `<html><head>${libraryScript}</head><body><script>${tokenData}${code}</script></body></html>`;
       // @ts-ignore
       document.getElementById("canvasIframe").srcdoc = wrappedCode;
     }
@@ -76,7 +76,9 @@ const CollectionItem = () => {
         if (_collection) {
           formattedCode = _collection.script;
         }
-        console.log(formattedCode.length);
+        if (_collection?.scriptTypeAndVersion === "p5" || _collection?.scriptTypeAndVersion === "three") {
+          setLibrary(_collection?.scriptTypeAndVersion);
+        }
       } else if (!isAB && cACollections.length) {
         const _cACollection = cACollections.find((c) => c._address === projectId);
         if (_cACollection && _cACollection.info) {

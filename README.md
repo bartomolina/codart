@@ -47,7 +47,7 @@ So how can you access the script and the token hash (the random number generated
 
 ![415000195 Script](https://www.codart.io/415000195-script.png)
 
-Generally, the script includes a placeholder fot the token Hash (you can search for tokenData in the script). Also, the projectScriptDetails function returns the library used by the project:
+Generally, the script includes a placeholder for the token Hash (you can search for tokenData in the script). Also, the projectScriptDetails function returns the library used by the project:
 
 ![415000195 Script Type and Version](https://www.codart.io/415000195-scripttype.png)
 
