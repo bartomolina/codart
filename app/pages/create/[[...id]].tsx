@@ -38,9 +38,9 @@ const CollectionItem = () => {
 
   const libraryScript = `<script src="${libraries[library] as string}"></script>`;
 
-  const generateOutput = () => {
+  const generateOutput = (_hash) => {
     if (document) {
-      const tokenData = `window.tokenData={"tokenId": "${tokenId}", "hash": "${hash}", "hashes": ["${hash}"]};`;
+      const tokenData = `window.tokenData={"tokenId": "${tokenId}", "hash": "${_hash}", "hashes": ["${_hash}"]};`;
       const wrappedCode = `${libraryScript}<script>${tokenData}${code}</script>`;
       // @ts-ignore
       document.getElementById("canvasIframe").srcdoc = wrappedCode;
@@ -49,7 +49,7 @@ const CollectionItem = () => {
 
   const handleRun = (event: FormEvent) => {
     event.preventDefault();
-    generateOutput();
+    generateOutput(hash);
   };
 
   const handleCreate = (event: FormEvent) => {
@@ -97,12 +97,12 @@ const CollectionItem = () => {
       }
     }
     setCode(formattedCode);
-  }, [router]);
+  }, [router, cACollections, aBCollections]);
 
   const updateHash = (_hash: string) => {
     setHash(_hash);
     if (autoRefresh) {
-      generateOutput();
+      generateOutput(_hash);
     }
   };
 

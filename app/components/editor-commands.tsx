@@ -118,7 +118,7 @@ const EditorCommands = ({
                   <button
                     type="button"
                     onClick={(e) => handleFetchHashFromToken(e)}
-                    className="h-7 p-0 text-sm rounded-lg bg-indigo-600 px-3 text-white shadow-md hover:bg-indigo-500 active:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:ring-offset-2"
+                    className="h-auto p-0 text-sm rounded-lg bg-indigo-600 px-3 text-white shadow-md hover:bg-indigo-500 active:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:ring-offset-2"
                   >
                     Fetch hash from Token
                   </button>
