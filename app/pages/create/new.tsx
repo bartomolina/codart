@@ -8,7 +8,7 @@ import libraries from "../../lib/utils";
 import LocalCodArtFactoryJSON from "../../lib/localhost-codart-learn-factory-contract.json";
 import GoerliCodArtFactoryJSON from "../../lib/goerli-codart-learn-factory-contract.json";
 import { useNotifications } from "../../components/notifications-context";
-import { useArtBlocks } from "../../components/collections-context";
+import { useCodArt } from "../../components/collections-context";
 
 const Create = () => {
   const router = useRouter();
@@ -27,7 +27,7 @@ const Create = () => {
       : 'function setup(){createCanvas(400,400)}function draw(){background(220)}',
   });
   const { showNotification, showError } = useNotifications();
-  const { fetchCACollections } = useArtBlocks();
+  const { fetchCACollections } = useCodArt();
   const { isConnected } = useAccount();
   const [isLoading, setIsLoading] = useState(false);
   const [isWaitingTx, setIsWaitingTx] = useState(false);

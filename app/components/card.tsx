@@ -20,6 +20,7 @@ const Card = ({ collection }: Props) => {
                 fill
                 className="mx-auto object-contain p-5"
                 src={src}
+                sizes="345px"
                 alt={collection.name as string}
                 onError={() => setSrc("/preview-error.png")}
               />

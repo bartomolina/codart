@@ -1,16 +1,20 @@
 import { IABCollection } from "../../global";
 import { FormEvent, useEffect, useState } from "react";
+import { GetStaticProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
 import { remark } from "remark";
 import html from "remark-html";
-import { useArtBlocks } from "../../components/collections-context";
+import getCollectionsDataFromFS from "../../lib/artblocks-cache";
 
-const CollectionItem = () => {
+type Props = {
+  aBCollections: Array<IABCollection>;
+};
+
+const CollectionItem = ({ aBCollections }: Props) => {
   const router = useRouter();
-  const { aBCollections } = useArtBlocks();
   const projectId = router.query.id as string;
   const [collection, setCollection] = useState<IABCollection>();
   const [src, setSrc] = useState("/preview-error.png");
@@ -97,6 +101,15 @@ const CollectionItem = () => {
       </div>
     </>
   );
+};
+
+export const getServerSideProps: GetStaticProps = async (context) => {
+  const data = await getCollectionsDataFromFS();
+  return {
+    props: {
+      aBCollections: data,
+    },
+  };
 };
 
 export default CollectionItem;

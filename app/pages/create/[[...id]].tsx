@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { IABCollection, ICACollectionInfo } from "../../global";
 import { FormEvent, useEffect, useMemo, useState } from "react";
+import { GetStaticProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { ethers } from "ethers";
@@ -9,11 +10,12 @@ import CodeMirror from "@uiw/react-codemirror";
 import { dracula } from "@uiw/codemirror-theme-dracula";
 import { javascript } from "@codemirror/lang-javascript";
 import libraries from "../../lib/utils";
-import { useArtBlocks } from "../../components/collections-context";
+import { useCodArt } from "../../components/collections-context";
 // @ts-ignore
 import prettier from "prettier/esm/standalone.mjs";
 // @ts-ignore
 import parserBabel from "prettier/esm/parser-babel.mjs";
+import getCollectionsDataFromFS from "../../lib/artblocks-cache";
 import EditorCommands from "../../components/editor-commands";
 
 const defaultCode = `function setup() {
@@ -24,11 +26,15 @@ function draw() {
   background(220);
 }`;
 
-const CollectionItem = () => {
+type Props = {
+  aBCollections: Array<IABCollection>;
+};
+
+const CollectionItem = ({ aBCollections }: Props) => {
   const router = useRouter();
   const projectId = router.query.id ? (router.query.id[0] as string) : undefined;
   const [collection, setCollection] = useState<IABCollection | ICACollectionInfo | undefined>();
-  const { cACollections, aBCollections } = useArtBlocks();
+  const { cACollections } = useCodArt();
   const [code, setCode] = useState(defaultCode);
   const [tokenId, setTokenId] = useState("0");
   const [autoRefresh, setAutoRefresh] = useState(true);
@@ -99,7 +105,7 @@ const CollectionItem = () => {
       }
     }
     setCode(formattedCode);
-  }, [router, cACollections, aBCollections]);
+  }, [router, cACollections, aBCollections, isAB, projectId]);
 
   const updateHash = (_hash: string) => {
     setHash(_hash);
@@ -163,6 +169,15 @@ const CollectionItem = () => {
       </div>
     </>
   );
+};
+
+export const getServerSideProps: GetStaticProps = async (context) => {
+  const data = await getCollectionsDataFromFS();
+  return {
+    props: {
+      aBCollections: data,
+    },
+  };
 };
 
 export default CollectionItem;

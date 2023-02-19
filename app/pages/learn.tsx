@@ -1,18 +1,25 @@
+import { IABCollection } from "../global";
 import { useMemo } from "react";
+import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
-import { useArtBlocks } from "../components/collections-context";
+import getCollectionsDataFromFS from "../lib/artblocks-cache";
+import { useCodArt } from "../components/collections-context";
 import LearnArtBlocksCollections from "../components/learn-ab-collections";
 import LearnCodArtCollections from "../components/learn-ca-collections";
 
-const Learn = () => {
+type Props = {
+  aBCollections: Array<IABCollection>;
+};
+
+const Learn = ({ aBCollections }: Props) => {
   const router = useRouter();
   const minChars = router.query.minChars || 0;
   const maxChars = router.query.maxChars || 0;
   const cACollection = router.query.codart;
-  const { aBCollections, cACollections } = useArtBlocks();
+  const { cACollections } = useCodArt();
 
   const filteredCollections = useMemo(() => {
     return aBCollections.filter((collection) => {
@@ -71,6 +78,16 @@ const Learn = () => {
       </div>
     </>
   );
+};
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  const data = await getCollectionsDataFromFS();
+  return {
+    props: {
+      aBCollections: data,
+    },
+    revalidate: 86400,
+  };
 };
 
 export default Learn;

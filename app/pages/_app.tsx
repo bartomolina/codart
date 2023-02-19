@@ -4,7 +4,7 @@ import type { AppProps } from "next/app";
 import { WagmiConfig } from "wagmi";
 import { ConnectKitProvider } from "connectkit";
 import client from "../lib/wagmi";
-import { ArtblocksProvider } from "../components/collections-context";
+import { CodArtProvider } from "../components/collections-context";
 import { NotificationsProvider } from "../components/notifications-context";
 import Layout from "../components/layout";
 import Notification from "../components/notification";
@@ -17,12 +17,12 @@ const App = ({ Component, pageProps }: AppProps) => (
     <WagmiConfig client={client}>
       <ConnectKitProvider theme="auto" mode="light">
         <NotificationsProvider>
-          <ArtblocksProvider>
+          <CodArtProvider>
             <Layout>
               <Component {...pageProps} />
               <Notification />
             </Layout>
-          </ArtblocksProvider>
+          </CodArtProvider>
         </NotificationsProvider>
       </ConnectKitProvider>
     </WagmiConfig>

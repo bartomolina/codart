@@ -1,13 +1,17 @@
 import { IABCollection } from "../global";
 import { useMemo, useState } from "react";
+import { GetStaticProps } from "next";
 import Head from "next/head";
-import { useArtBlocks } from "../components/collections-context";
+import getCollectionsDataFromFS from "../lib/artblocks-cache";
 import Card from "../components/card";
 
-const Home = () => {
+type Props = {
+  aBCollections: Array<IABCollection>;
+};
+
+const Home = ({ aBCollections }: Props) => {
   const [collectionStatusFilter, setCollectionStatusFilter] = useState("Completed");
   const [scriptFilter, setScriptFilter] = useState("");
-  const { aBCollections } = useArtBlocks();
 
   const filteredCollections = useMemo(() => {
     let filteredCollections = [] as IABCollection[];
@@ -38,7 +42,7 @@ const Home = () => {
 
   const scriptTypes = useMemo(() => {
     return new Set(filteredCollections.map((c) => c.scriptTypeAndVersion));
-  },[filteredCollections]);
+  }, [filteredCollections]);
 
   return (
     <>
@@ -64,18 +68,19 @@ const Home = () => {
           <option>Open</option>
           <option>Upcoming</option>
         </select>
-        <label htmlFor="script" className="sr-only">
-          Status
+        <label htmlFor="library" className="sr-only">
+          Library
         </label>
         <select
-          id="script"
-          name="script"
+          id="library"
+          name="scrlibraryipt"
           className="mt-1 ml-5 rounded-md border border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-base"
           onChange={(event) => setScriptFilter(event.target.value)}
           value={scriptFilter}
         >
-          <option value="">script</option>
-          {scriptTypes && [...scriptTypes].map((scriptType) => <option key={scriptType}>{scriptType}</option>)}
+          <option value="">library</option>
+          {scriptTypes &&
+            [...Array.from(scriptTypes)].map((scriptType) => <option key={scriptType}>{scriptType}</option>)}
         </select>
         <em className="ml-5 text-lg">{filteredCollections.length} Collections</em>
       </div>
@@ -95,6 +100,16 @@ const Home = () => {
       </div>
     </>
   );
+};
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  const data = await getCollectionsDataFromFS();
+  return {
+    props: {
+      aBCollections: data,
+    },
+    revalidate: 86400,
+  };
 };
 
 export default Home;
