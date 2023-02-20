@@ -84,7 +84,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const data = await getCollectionsDataFromFS();
   return {
     props: {
-      aBCollections: data,
+      aBCollections: data ? data : [],
     },
     revalidate: 86400,
   };

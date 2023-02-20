@@ -39,6 +39,7 @@ const fetchABCollections = async (): Promise<Array<IABCollection>> => {
 };
 
 const getCollectionsDataFromFS = async () => {
+  console.log("Fetching Art Blocks collections");
   let aBCollections: Array<IABCollection> = [];
   const refreshCacheSeconds = 86400;
   let refreshCache = false;

@@ -175,7 +175,7 @@ export const getServerSideProps: GetStaticProps = async (context) => {
   const data = await getCollectionsDataFromFS();
   return {
     props: {
-      aBCollections: data,
+      aBCollections: data ? data : [],
     },
   };
 };
