@@ -38,9 +38,14 @@ const fetchABCollections = async (): Promise<Array<IABCollection>> => {
     .then(() => projects);
 };
 
-const getCollectionsDataFromFS = async () => {
-  console.log("Fetching Art Blocks collections");
+export const getCollectionDataFromFS = async (id: string) => {
+  const aBCollections = await getCollectionsDataFromFS();
+  return aBCollections.find((c) => c.id === id);
+};
+
+export const getCollectionsDataFromFS = async () => {
   let aBCollections: Array<IABCollection> = [];
+  console.log("Fetching Art Blocks collections");
   const refreshCacheSeconds = 86400;
   let refreshCache = false;
 
@@ -83,5 +88,3 @@ const getCollectionsDataFromFS = async () => {
   }
   return aBCollections;
 };
-
-export default getCollectionsDataFromFS;

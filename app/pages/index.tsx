@@ -2,7 +2,7 @@ import { IABCollection } from "../global";
 import { useMemo, useState } from "react";
 import { GetStaticProps } from "next";
 import Head from "next/head";
-import getCollectionsDataFromFS from "../lib/artblocks-cache";
+import { getCollectionsDataFromFS } from "../lib/artblocks-cache";
 import Card from "../components/card";
 
 type Props = {
@@ -103,7 +103,7 @@ const Home = ({ aBCollections }: Props) => {
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const data = await getCollectionsDataFromFS();  
+  const data = await getCollectionsDataFromFS();
   return {
     props: {
       aBCollections: data,

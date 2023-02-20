@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { IABCollection, ICACollectionInfo } from "../../global";
 import { FormEvent, useEffect, useMemo, useState } from "react";
-import { GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { ethers } from "ethers";
@@ -15,7 +15,7 @@ import { useCodArt } from "../../components/collections-context";
 import prettier from "prettier/esm/standalone.mjs";
 // @ts-ignore
 import parserBabel from "prettier/esm/parser-babel.mjs";
-import getCollectionsDataFromFS from "../../lib/artblocks-cache";
+import { getCollectionDataFromFS } from "../../lib/artblocks-cache";
 import EditorCommands from "../../components/editor-commands";
 
 const defaultCode = `function setup() {
@@ -27,10 +27,10 @@ function draw() {
 }`;
 
 type Props = {
-  aBCollections: Array<IABCollection>;
+  aBCollection: IABCollection;
 };
 
-const CollectionItem = ({ aBCollections }: Props) => {
+const CollectionItem = ({ aBCollection }: Props) => {
   const router = useRouter();
   const projectId = router.query.id ? (router.query.id[0] as string) : undefined;
   const [collection, setCollection] = useState<IABCollection | ICACollectionInfo | undefined>();
@@ -77,8 +77,8 @@ const CollectionItem = ({ aBCollections }: Props) => {
     if (router.isReady && projectId) {
       let _collection;
 
-      if (isAB && aBCollections.length) {
-        _collection = aBCollections.find((c) => c.id === projectId);
+      if (isAB && aBCollection) {
+        _collection = aBCollection;
         if (_collection) {
           formattedCode = _collection.script;
         }
@@ -105,7 +105,7 @@ const CollectionItem = ({ aBCollections }: Props) => {
       }
     }
     setCode(formattedCode);
-  }, [router, cACollections, aBCollections, isAB, projectId]);
+  }, [router, cACollections, isAB, projectId]);
 
   const updateHash = (_hash: string) => {
     setHash(_hash);
@@ -171,11 +171,11 @@ const CollectionItem = ({ aBCollections }: Props) => {
   );
 };
 
-export const getServerSideProps: GetStaticProps = async (context) => {
-  const data = await getCollectionsDataFromFS();
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const data = await getCollectionDataFromFS(context.query.id[0] as string);
   return {
     props: {
-      aBCollections: data,
+      aBCollection: data,
     },
   };
 };

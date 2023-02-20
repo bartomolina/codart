@@ -1,38 +1,31 @@
 import { IABCollection } from "../../global";
 import { FormEvent, useEffect, useState } from "react";
-import { GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
 import { remark } from "remark";
 import html from "remark-html";
-import getCollectionsDataFromFS from "../../lib/artblocks-cache";
+import { getCollectionDataFromFS } from "../../lib/artblocks-cache";
 
 type Props = {
-  aBCollections: Array<IABCollection>;
+  collection: IABCollection;
 };
 
-const CollectionItem = ({ aBCollections }: Props) => {
-  const router = useRouter();
-  const projectId = router.query.id as string;
-  const [collection, setCollection] = useState<IABCollection>();
+const CollectionItem = ({ collection }: Props) => {
   const [src, setSrc] = useState("/preview-error.png");
   const [description, setDescription] = useState("");
 
   useEffect(() => {
-    if (projectId) {
-      const collection = aBCollections.find((c) => c.id === projectId);
-      if (collection) {
-        setCollection(collection);
-        setSrc(`https://media.artblocks.io/thumb/${collection.projectId}000000.png`);
-        remark()
-          .use(html)
-          .process(collection.description)
-          .then((markdown) => setDescription(markdown.toString()));
-      }
+    if (collection) {
+      setSrc(`https://media.artblocks.io/thumb/${collection.projectId}000000.png`);
+      remark()
+        .use(html)
+        .process(collection.description)
+        .then((markdown) => setDescription(markdown.toString()));
     }
-  }, [aBCollections, projectId]);
+  }, [collection]);
 
   return (
     <>
@@ -103,11 +96,11 @@ const CollectionItem = ({ aBCollections }: Props) => {
   );
 };
 
-export const getServerSideProps: GetStaticProps = async (context) => {
-  const data = await getCollectionsDataFromFS();
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const data = await getCollectionDataFromFS(context.query.id as string);
   return {
     props: {
-      aBCollections: data,
+      collection: data,
     },
   };
 };

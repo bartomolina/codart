@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
-import getCollectionsDataFromFS from "../lib/artblocks-cache";
+import { getCollectionsDataFromFS } from "../lib/artblocks-cache";
 import { useCodArt } from "../components/collections-context";
 import LearnArtBlocksCollections from "../components/learn-ab-collections";
 import LearnCodArtCollections from "../components/learn-ca-collections";
@@ -23,7 +23,11 @@ const Learn = ({ aBCollections }: Props) => {
 
   const filteredCollections = useMemo(() => {
     return aBCollections.filter((collection) => {
-      return collection.scriptLength > minChars && collection.scriptLength <= maxChars && collection.scriptTypeAndVersion === "p5";
+      return (
+        collection.scriptLength > minChars &&
+        collection.scriptLength <= maxChars &&
+        collection.scriptTypeAndVersion === "p5"
+      );
     });
   }, [aBCollections, minChars, maxChars]);
 
