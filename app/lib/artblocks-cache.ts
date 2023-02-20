@@ -39,15 +39,20 @@ const fetchABCollections = async (): Promise<Array<IABCollection>> => {
 };
 
 export const getCollectionDataFromFS = async (id: string) => {
-  const aBCollections = await getCollectionsDataFromFS();
+  const aBCollections = await getCollectionsDataFromFS(false);
   return aBCollections.find((c) => c.id === id);
 };
 
-export const getCollectionsDataFromFS = async () => {
+export const getCollectionsDataFromFS = async (checkCache: boolean = true) => {
   let aBCollections: Array<IABCollection> = [];
   console.log("Fetching Art Blocks collections");
   const refreshCacheSeconds = 86400;
   let refreshCache = false;
+
+  if (!checkCache) {
+    aBCollections = JSON.parse(await readFile(cacheFile, "utf8"));
+    return aBCollections;
+  }
 
   if (fs.existsSync(cacheFile)) {
     const fileStats = fs.statSync(cacheFile);
