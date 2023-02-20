@@ -103,10 +103,10 @@ const Home = ({ aBCollections }: Props) => {
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const data = await getCollectionsDataFromFS();
+  const data = await getCollectionsDataFromFS();  
   return {
     props: {
-      aBCollections: data ? data : [],
+      aBCollections: data,
     },
     revalidate: 86400,
   };

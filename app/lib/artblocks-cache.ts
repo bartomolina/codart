@@ -31,7 +31,7 @@ const fetchABCollections = async (): Promise<Array<IABCollection>> => {
               collection.scriptTypeAndVersion.indexOf("@")
             );
           }
-          collection.scriptLength = collection.script?.length;
+          collection.scriptLength = collection.script?.length || null;
         }
       });
     })
