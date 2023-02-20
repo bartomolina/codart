@@ -39,20 +39,15 @@ const fetchABCollections = async (): Promise<Array<IABCollection>> => {
 };
 
 export const getCollectionDataFromFS = async (id: string) => {
-  const aBCollections = await getCollectionsDataFromFS(false);
+  const aBCollections = (global as any)["aBCollections"] as Array<IABCollection>;
   return aBCollections.find((c) => c.id === id);
 };
 
-export const getCollectionsDataFromFS = async (checkCache: boolean = true) => {
+export const getCollectionsDataFromFS = async () => {
   let aBCollections: Array<IABCollection> = [];
   console.log("Fetching Art Blocks collections");
   const refreshCacheSeconds = 86400;
   let refreshCache = false;
-
-  if (!checkCache) {
-    aBCollections = JSON.parse(await readFile(cacheFile, "utf8"));
-    return aBCollections;
-  }
 
   if (fs.existsSync(cacheFile)) {
     const fileStats = fs.statSync(cacheFile);
@@ -76,10 +71,11 @@ export const getCollectionsDataFromFS = async (checkCache: boolean = true) => {
   }
 
   // Fetch collections from The Graph
-  if (aBCollections.length === 0) {
+  if (aBCollections.length === 0 || refreshCache) {
     try {
       console.time("Caching collections");
       aBCollections = await fetchABCollections();
+      (global as any)["aBCollections"] = aBCollections;
       writeFile(cacheFile, JSON.stringify(aBCollections), "utf8")
         .then(() => {
           console.timeEnd("Caching collections");
@@ -91,5 +87,6 @@ export const getCollectionsDataFromFS = async (checkCache: boolean = true) => {
       console.warn("Error fetching collections and caching data");
     }
   }
+
   return aBCollections;
 };
