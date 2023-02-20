@@ -40,10 +40,7 @@ const fetchABCollections = async (): Promise<Array<IABCollection>> => {
 
 export const getCollectionDataFromFS = async (id: string) => {
   const aBCollections = (global as any)["aBCollections"] as Array<IABCollection>;
-  if (aBCollections) {
-    return aBCollections.find((c) => c.id === id);
-  }
-  return undefined;
+  return aBCollections.find((c) => c.id === id);
 };
 
 export const getCollectionsDataFromFS = async () => {
@@ -78,7 +75,6 @@ export const getCollectionsDataFromFS = async () => {
     try {
       console.time("Caching collections");
       aBCollections = await fetchABCollections();
-      (global as any)["aBCollections"] = aBCollections;
       writeFile(cacheFile, JSON.stringify(aBCollections), "utf8")
         .then(() => {
           console.timeEnd("Caching collections");
@@ -91,5 +87,6 @@ export const getCollectionsDataFromFS = async () => {
     }
   }
 
+  (global as any)["aBCollections"] = aBCollections;
   return aBCollections;
 };

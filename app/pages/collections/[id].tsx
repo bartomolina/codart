@@ -10,7 +10,7 @@ import html from "remark-html";
 import { getCollectionDataFromFS } from "../../lib/artblocks-cache";
 
 type Props = {
-  collection: IABCollection | undefined;
+  collection: IABCollection;
 };
 
 const CollectionItem = ({ collection }: Props) => {
