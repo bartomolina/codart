@@ -10,10 +10,12 @@ import html from "remark-html";
 import { getCollectionDataFromFS } from "../../lib/artblocks-cache";
 
 type Props = {
-  collection: IABCollection;
+  collection: IABCollection | undefined;
 };
 
 const CollectionItem = ({ collection }: Props) => {
+  console.log("Collection: ", collection);
+
   const [src, setSrc] = useState("/preview-error.png");
   const [description, setDescription] = useState("");
 

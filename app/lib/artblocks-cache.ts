@@ -40,7 +40,10 @@ const fetchABCollections = async (): Promise<Array<IABCollection>> => {
 
 export const getCollectionDataFromFS = async (id: string) => {
   const aBCollections = (global as any)["aBCollections"] as Array<IABCollection>;
-  return aBCollections.find((c) => c.id === id);
+  if (aBCollections) {
+    return aBCollections.find((c) => c.id === id);
+  }
+  return undefined;
 };
 
 export const getCollectionsDataFromFS = async () => {
