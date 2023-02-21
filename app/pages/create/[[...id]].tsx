@@ -125,7 +125,7 @@ const CollectionItem = ({ aBCollection }: Props) => {
           {collection?.name ? collection.name : "Create"}
         </h1>
       </header>
-      <div className="bg-gray-100 pb-24">
+      <div className="bg-gray-100 pb-14">
         {router.isReady && (!isAB || (isAB && collection)) && (
           <div className="mx-auto 2xl:max-w-7xl 2xl:px-0 lg:px-8 pb-44 pt-5">
             <div>

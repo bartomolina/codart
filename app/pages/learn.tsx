@@ -71,7 +71,7 @@ const Learn = ({ aBCollections }: Props) => {
           </Link>
         </div>
       </div>
-      <div className="bg-gray-100 pb-24">
+      <div className="bg-gray-100 pb-14">
         <div className="mx-auto max-w-6xl sm:px-6 lg:px-8 py-6">
           {router.query.codart ? (
             <LearnCodArtCollections cACollections={cACollections} />
