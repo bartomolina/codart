@@ -1,21 +1,21 @@
 # About the project
 
-When I fell into the rabbit hole of crypto, one of the things I found more fascinating was NFTs, and especially generative art. I believe that generative art has truly found its place in the blockchain and it's an excellent use case for crypto. I find it remarkable how the space has survived the ups and downs of the markets and how it appears that the space is still as vibrant and moving forward.
+When I fell into the rabbit hole of crypto, one of the things that captivated me were NFTs, and especially generative art. I believe that generative art has truly found its place in the blockchain and it's an excellent use case for crypto. I find it remarkable how the space has survived the ups and downs of the markets and how it appears that the space is still as vibrant and moving forward.
 
 Without doubt, [ArtBlocks](https://www.artblocks.io/) is the reference in the generative art space. They've done an amazing job promoting and curating artists. And without them, most probably it would've taken a few more years for the space to reach to the levels it is right now.
 
-This project is a way to celebrate and appreciate the work that Art Blocks has done in the past years and the artists who published their work through them.
+This project is a way to celebrate and appreciate the work that Art Blocks and the artists who published their work through them have done in the past years.
 
 # Why CodArt.io
 
 If you get interested in generative art (and more specifically Art Blocks) , there's a few sites that will help you navigate the space:
 
 - [Art Blocks](https://www.artblocks.io/): The official Art Blocks [documentation](https://docs.artblocks.io/), their [Youtube](https://www.youtube.com/channel/UCJ3do9nWP6qaJkcbxZaJZ4w) channel and their [GitHub](https://github.com/ArtBlocks) are a great place to start. You can find some great information in the Art Block's [discord](https://t.co/NyvH1S1yvM) too.
-- [Artacle](https://artacle.io/): If you're interested in the trading side and information related to the secondary market.
-- [Gallery](https://gallery.so/): A social network for NFT art that helps you discover net art and see what's trending.
-- [Tender](https://tender.art/): With some great articles and interviews about generative art and NFTs in general.
+- [Artacle](https://artacle.io/): If you're interested in the trading side and everything related to the secondary market.
+- [Gallery](https://gallery.so/): A social network for NFT art, great for discovering new art and see what's trending.
+- [Tender](https://tender.art/): Great articles and interviews about generative art and NFTs in general.
 
-However, given my technical background, I was especially interested in knowing how Art Blocks works behind the scenes, how the Art Blocks contracts are structured, how to access the code behind the collections, and how the art is generated. CodArt allows you to explore the Art Blocks collections, and let you view and play with the code to see how the different outputs are generated.
+However, given my technical background, I was especially interested in knowing how Art Blocks works internally: How the Art Blocks contracts are structured, how to access the code behind the collections, and how the art is generated. CodArt allows you to explore the Art Blocks collections, and let you view and play with the code to see how the different outputs are generated.
 
 # How Art Blocks contracts work
 
@@ -41,7 +41,7 @@ Now, we can head to the [AB Core V3 contract in etherscan](https://etherscan.io/
 
 Both the token metadata and the link to the image are hosted on the Art Blocks servers. Some may argue that Art Blocks could use a decentralized storage like IPFS to store this information, but in reality, and this is something specific for generative art NFTs, even in the case that the Art Blocks servers become unavailable, the code to be able to reproduce the image will be still accessible on-chain. [This is a good post](https://medium.com/the-link-art-blocks/how-on-chain-is-art-blocks-5ccd553dd370) about Art Blocks and decentralization if you're interested in this topic.
 
-So how can you access the script and the token hash (the random number generated at the time of minting the NFT that will produce the unique output)? Back to the AB Core V3 contract in etherscan, we can retrieve the collection script and the token hash with the functions tokenIdToHash and projectScriptByIndex respectively:
+So how can you access the script and the token hash (the random number generated at the time of minting that will produce the unique output)? Back to the AB Core V3 contract in etherscan, we can retrieve the collection script and the token hash with the functions tokenIdToHash and projectScriptByIndex respectively:
 
 ![415000195 Hash](https://www.codart.io/415000195-hash.png)
 

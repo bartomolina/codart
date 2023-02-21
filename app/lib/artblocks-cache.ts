@@ -1,8 +1,13 @@
 import { IABCollection } from "../global";
 import fs from "fs";
 import { resolve } from "path";
+import { PrismaClient } from "@prisma/client";
 import { ArtblocksCollectionsDocument, execute } from "../.graphclient";
-import prisma from "../lib/prisma";
+
+if (!global.prisma) {
+  global.prisma = new PrismaClient();
+}
+const prisma = global.prisma;
 
 const readFile = fs.promises.readFile;
 const writeFile = fs.promises.writeFile;

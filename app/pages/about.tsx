@@ -16,10 +16,10 @@ const About = () => (
           <h2 className="text-2xl font-semibold mt-0 mb-5 text-gray-800">About the project</h2>
           <div className="text-lg font-light text-gray-700 space-y-5">
             <p>
-              When I fell into the rabbit hole of crypto, one of the things I found more fascinating was NFTs, and
-              especially generative art. I believe that generative art has truly found its place in the blockchain and
-              it&apos;s an excellent use case for crypto. I find it remarkable how the space has survived the ups and
-              downs of the markets and how it appears that the space is still as vibrant and moving forward.
+              When I fell into the rabbit hole of crypto, one of the things that captivated me were NFTs, and especially
+              generative art. I believe that generative art has truly found its place in the blockchain and it&apos;s an
+              excellent use case for crypto. I find it remarkable how the space has survived the ups and downs of the
+              markets and how it appears that the space is still as vibrant and moving forward.
             </p>
             <p>
               Without doubt,{" "}
@@ -31,8 +31,8 @@ const About = () => (
               the levels it is right now.
             </p>
             <p>
-              This project is a way to celebrate and appreciate the work that Art Blocks has done in the past years and
-              the artists who published their work through them.
+              This project is a way to celebrate and appreciate the work that Art Blocks and the artists who published
+              their work through them have done in the past years.
             </p>
           </div>
           <h2 className="text-2xl font-semibold mt-10 mb-5 text-gray-800">Why CodArt.io</h2>
@@ -73,24 +73,24 @@ const About = () => (
                 <a href="https://artacle.io/" target="_blank" rel="noopener noreferrer" className="underline">
                   Artacle
                 </a>
-                : If you&apos;re interested in the trading side and information related to the secondary market.
+                : If you&apos;re interested in the trading side and everything related to the secondary market.
               </li>
               <li>
                 <a href="https://gallery.so/" target="_blank" rel="noopener noreferrer" className="underline">
                   Gallery
                 </a>
-                : A social network for NFT art that helps you discover net art and see what&apos;s trending.
+                : A social network for NFT art, great for discovering new art and see what&apos;s trending.
               </li>
               <li>
                 <a href="https://tender.art/" target="_blank" rel="noopener noreferrer" className="underline">
                   Tender
                 </a>
-                : With some great articles and interviews about generative art and NFTs in general.
+                : Great articles and interviews about generative art and NFTs in general.
               </li>
             </ul>
             <p>
-              However, given my technical background, I was especially interested in knowing how Art Blocks works behind
-              the scenes, how the Art Blocks contracts are structured, how to access the code behind the collections,
+              However, given my technical background, I was especially interested in knowing how Art Blocks works
+              internally: How the Art Blocks contracts are structured, how to access the code behind the collections,
               and how the art is generated. CodArt allows you to explore the Art Blocks collections, and let you view
               and play with the code to see how the different outputs are generated.
             </p>
@@ -183,8 +183,8 @@ const About = () => (
               </tbody>
             </table>
             <p>
-              But how are the different collections stored in the same contract? Let&apos;s take the item #195 of Renders
-              Game, one of the latest Art Block collections, as an example. If you open the item in{" "}
+              But how are the different collections stored in the same contract? Let&apos;s take the item #195 of
+              Renders Game, one of the latest Art Block collections, as an example. If you open the item in{" "}
               <a
                 href="https://opensea.io/assets/ethereum/0x99a9b7c1116f9ceeb1652de04d5969cce509b069/415000195"
                 target="_blank"
@@ -252,8 +252,8 @@ const About = () => (
             </p>
             <p>
               So how can you access the script and the token hash (the random number generated at the time of minting
-              the NFT that will produce the unique output)? Back to the AB Core V3 contract in etherscan, we can
-              retrieve the collection script and the token hash with the functions <em>tokenIdToHash</em> and{" "}
+              that will produce the unique output)? Back to the AB Core V3 contract in etherscan, we can retrieve the
+              collection script and the token hash with the functions <em>tokenIdToHash</em> and{" "}
               <em>projectScriptByIndex</em> respectively:
             </p>
             <div className="margin-auto flex">
@@ -284,8 +284,8 @@ const About = () => (
               alt={"415000195 Script Type and Version"}
             />
             <p>
-              And that&apos;s all the information you need to be able to recreate a specific output for a given token ID.
-              With a simple html page, you could import the required library, the script from the collection and the
+              And that&apos;s all the information you need to be able to recreate a specific output for a given token
+              ID. With a simple html page, you could import the required library, the script from the collection and the
               token hash, and generate the output as seen in OpenSea.
             </p>
             <p>It&apos;s worth noting that the majority of the projets use p5.js:</p>
