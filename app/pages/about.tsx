@@ -10,8 +10,8 @@ const About = () => (
     <header className="mx-auto max-w-6xl sm:px-6 lg:px-8 pt-4 pb-8">
       <h1 className="text-5xl font-thin leading-tight tracking-tight text-gray-900">About</h1>
     </header>
-    <div className="bg-gray-100">
-      <div className="mx-auto max-w-6xl sm:px-6 lg:px-8 pb-44 pt-5">
+    <div className="bg-gray-100 pb-14">
+      <div className="mx-auto max-w-6xl sm:px-6 lg:px-8 pb- pt-5">
         <div className="mx-auto w-full rounded-lg bg-white py-8 px-20">
           <h2 className="text-2xl font-semibold mt-0 mb-5 text-gray-800">About the project</h2>
           <div className="text-lg font-light text-gray-700 space-y-5">
