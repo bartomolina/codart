@@ -9,32 +9,30 @@ const writeFile = fs.promises.writeFile;
 
 const cacheFile = resolve("./data/cache");
 
-const storeCollectionInDB = async (collection: IABCollection) => {
-  await prisma.collection.create({
-    data: {
-      projectId: collection.projectId,
-      activatedAt: collection.activatedAt,
-      active: collection.active,
-      artistName: collection.artistName,
-      complete: collection.complete,
-      contractAddress: collection.contractAddress,
-      description: collection.description,
-      id: collection.id,
-      invocations: collection.invocations,
-      license: collection.license,
-      maxInvocations: collection.maxInvocations,
-      mintingDate: collection.mintingDate,
-      name: collection.name,
-      paused: collection.paused,
-      script: collection.script,
-      scriptJSON: collection.scriptJSON,
-      scriptLength: collection.scriptLength,
-      scriptType: collection.scriptType,
-      scriptTypeAndVersion: collection.scriptTypeAndVersion,
-      updatedAt: collection.updatedAt,
-      website: collection.website,
-    },
-  });
+const prepareStoreCollectionInDB = (collection: IABCollection) => {
+  return {
+    projectId: collection.projectId,
+    activatedAt: collection.activatedAt,
+    active: collection.active,
+    artistName: collection.artistName,
+    complete: collection.complete,
+    contractAddress: collection.contractAddress,
+    description: collection.description,
+    id: collection.id,
+    invocations: collection.invocations,
+    license: collection.license,
+    maxInvocations: collection.maxInvocations,
+    mintingDate: collection.mintingDate,
+    name: collection.name,
+    paused: collection.paused,
+    script: collection.script,
+    scriptJSON: collection.scriptJSON,
+    scriptLength: collection.scriptLength,
+    scriptType: collection.scriptType,
+    scriptTypeAndVersion: collection.scriptTypeAndVersion,
+    updatedAt: collection.updatedAt,
+    website: collection.website,
+  };
 };
 
 const fetchABCollections = async (): Promise<Array<IABCollection>> => {
@@ -80,11 +78,10 @@ const fetchABCollections = async (): Promise<Array<IABCollection>> => {
 
       console.log("------------ STORING COLLECTIONS IN DB ------------");
 
-      projects.forEach(async (collection) => {
-        await storeCollectionInDB(collection);
-      });
-
-      console.log("------------ COMPLETED STORING COLLECTIONS IN DB ------------");
+      const data = projects.map((collection) => prepareStoreCollectionInDB(collection));
+      prisma.collection
+        .createMany({ data })
+        .then((result) => console.log("------------ COMPLETED STORING COLLECTIONS IN DB ------------"));
     })
     .then(() => projects);
 };
@@ -102,14 +99,16 @@ export const getCollectionDataFromFS = async (id: string) => {
 export const getCollectionsDataFromFS = async () => {
   let aBCollections: Array<IABCollection> = [];
   console.log("CODART: Fetching Art Blocks collections");
-  const refreshCacheSeconds = 86400;
+  const refreshCacheSeconds = 7 * 24 * 60 * 60;
   let refreshCache = false;
 
   if (fs.existsSync(cacheFile)) {
     const fileStats = fs.statSync(cacheFile);
 
     const secondsSinceLastUpdate = (new Date().getTime() - new Date(fileStats.mtime).getTime()) / 1000;
-    console.log(`CODART: Seconds since cache update: ${secondsSinceLastUpdate}; refreshCacheSeconds: ${refreshCacheSeconds}`);
+    console.log(
+      `CODART: Seconds since cache update: ${secondsSinceLastUpdate}; refreshCacheSeconds: ${refreshCacheSeconds}`
+    );
 
     if (secondsSinceLastUpdate > refreshCacheSeconds) {
       refreshCache = true;
