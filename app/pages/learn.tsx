@@ -26,7 +26,7 @@ const Learn = ({ aBCollections }: Props) => {
       return (
         collection.scriptLength > minChars &&
         collection.scriptLength <= maxChars &&
-        collection.scriptTypeAndVersion === "p5"
+        collection.scriptType === "p5"
       );
     });
   }, [aBCollections, minChars, maxChars]);

@@ -23,4 +23,29 @@ interface ICACollection {
   info: ICACollectionInfo;
 }
 
-type IABCollection = Pick<Project, "contract" | "name" | "website" | "license" | "description" | "script" | "complete" | "active" | "scriptLength" | "scriptTypeAndVersion" | "minterConfiguration" | "id" | "projectId" | "invocations" | "maxInvocations" | "name" | "updatedAt" | "curationStatus" | "artistName" | "scriptJSON">;
+type IABCollection = Pick<
+  Project,
+  | "active"
+  | "activatedAt"
+  | "artistName"
+  | "contract"
+  | "contractAddress"
+  | "complete"
+  | "description"
+  | "id"
+  | "invocations"
+  | "license"
+  | "maxInvocations"
+  | "minterConfiguration"
+  | "mintingDate"
+  | "name"
+  | "paused"
+  | "projectId"
+  | "script"
+  | "scriptJSON"
+  | "scriptTypeAndVersion"
+  | "scriptType"
+  | "scriptLength"
+  | "updatedAt"
+  | "website"
+>;

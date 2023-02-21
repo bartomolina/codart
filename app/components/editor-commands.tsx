@@ -48,10 +48,10 @@ const EditorCommands = ({
     }
     readContract({
       chainId: 1,
-      address: collection.contract.id,
+      address: collection.contractAddress,
       abi: ArtblocksJSON.abi as any,
       functionName: "tokenIdToHash",
-      args: [parseInt(collection.projectId) * 1000000 + parseInt(tokenId)],
+      args: [collection.projectId * 1000000 + parseInt(tokenId)],
     })
       .then((hash: any) => {
         updateHash(hash);

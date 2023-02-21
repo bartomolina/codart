@@ -1805,7 +1805,343 @@ const schemaAST = {
           "kind": "EnumValueDefinition",
           "name": {
             "kind": "Name",
+            "value": "account__id"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
             "value": "project"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__id"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__projectId"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__active"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__additionalPayee"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__additionalPayeePercentage"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__additionalPayeeSecondarySalesAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__additionalPayeeSecondarySalesPercentage"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__artistAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__artistName"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__baseIpfsUri"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__baseUri"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__complete"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__completedAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__curationStatus"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__currencyAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__currencySymbol"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__description"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__dynamic"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__invocations"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__ipfsHash"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__license"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__locked"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__maxInvocations"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__name"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__paused"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__pricePerTokenInWei"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__royaltyPercentage"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__script"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__scriptCount"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__externalAssetDependencyCount"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__externalAssetDependenciesLocked"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__scriptJSON"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__scriptTypeAndVersion"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__aspectRatio"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__useHashString"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__useIpfs"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__website"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__createdAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__updatedAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__activatedAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__scriptUpdatedAt"
           },
           "directives": []
         },
@@ -7491,6 +7827,30 @@ const schemaAST = {
           "kind": "EnumValueDefinition",
           "name": {
             "kind": "Name",
+            "value": "dependencyRegistry__id"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "dependencyRegistry__owner"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "dependencyRegistry__updatedAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
             "value": "nextProjectId"
           },
           "directives": []
@@ -7547,6 +7907,22 @@ const schemaAST = {
           "kind": "EnumValueDefinition",
           "name": {
             "kind": "Name",
+            "value": "minterFilter__id"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "minterFilter__updatedAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
             "value": "preferredIPFSGateway"
           },
           "directives": []
@@ -7580,6 +7956,14 @@ const schemaAST = {
           "name": {
             "kind": "Name",
             "value": "registeredOn"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "registeredOn__id"
           },
           "directives": []
         }
@@ -9354,6 +9738,78 @@ const schemaAST = {
           "kind": "EnumValueDefinition",
           "name": {
             "kind": "Name",
+            "value": "dependency__id"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "dependency__preferredCDN"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "dependency__additionalCDNCount"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "dependency__preferredRepository"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "dependency__additionalRepositoryCount"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "dependency__scriptCount"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "dependency__script"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "dependency__referenceWebsite"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "dependency__updatedAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
             "value": "cdn"
           },
           "directives": []
@@ -10465,6 +10921,78 @@ const schemaAST = {
           "name": {
             "kind": "Name",
             "value": "dependency"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "dependency__id"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "dependency__preferredCDN"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "dependency__additionalCDNCount"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "dependency__preferredRepository"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "dependency__additionalRepositoryCount"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "dependency__scriptCount"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "dependency__script"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "dependency__referenceWebsite"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "dependency__updatedAt"
           },
           "directives": []
         },
@@ -12679,6 +13207,78 @@ const schemaAST = {
           "name": {
             "kind": "Name",
             "value": "dependency"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "dependency__id"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "dependency__preferredCDN"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "dependency__additionalCDNCount"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "dependency__preferredRepository"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "dependency__additionalRepositoryCount"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "dependency__scriptCount"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "dependency__script"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "dependency__referenceWebsite"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "dependency__updatedAt"
           },
           "directives": []
         },
@@ -15162,6 +15762,30 @@ const schemaAST = {
           "kind": "EnumValueDefinition",
           "name": {
             "kind": "Name",
+            "value": "dependencyRegistry__id"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "dependencyRegistry__owner"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "dependencyRegistry__updatedAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
             "value": "updatedAt"
           },
           "directives": []
@@ -17074,6 +17698,166 @@ const schemaAST = {
           "name": {
             "kind": "Name",
             "value": "coreContract"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "coreContract__id"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "coreContract__admin"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "coreContract__type"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "coreContract__renderProviderAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "coreContract__renderProviderPercentage"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "coreContract__renderProviderSecondarySalesAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "coreContract__renderProviderSecondarySalesBPS"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "coreContract__enginePlatformProviderAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "coreContract__enginePlatformProviderPercentage"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "coreContract__enginePlatformProviderSecondarySalesAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "coreContract__enginePlatformProviderSecondarySalesBPS"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "coreContract__randomizerContract"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "coreContract__curationRegistry"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "coreContract__nextProjectId"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "coreContract__createdAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "coreContract__updatedAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "coreContract__preferredIPFSGateway"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "coreContract__preferredArweaveGateway"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "coreContract__newProjectsForbidden"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "coreContract__autoApproveArtistSplitProposals"
           },
           "directives": []
         },
@@ -19158,6 +19942,22 @@ const schemaAST = {
           "kind": "EnumValueDefinition",
           "name": {
             "kind": "Name",
+            "value": "minterFilter__id"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "minterFilter__updatedAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
             "value": "minimumAuctionLengthInSeconds"
           },
           "directives": []
@@ -19191,6 +19991,166 @@ const schemaAST = {
           "name": {
             "kind": "Name",
             "value": "coreContract"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "coreContract__id"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "coreContract__admin"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "coreContract__type"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "coreContract__renderProviderAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "coreContract__renderProviderPercentage"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "coreContract__renderProviderSecondarySalesAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "coreContract__renderProviderSecondarySalesBPS"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "coreContract__enginePlatformProviderAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "coreContract__enginePlatformProviderPercentage"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "coreContract__enginePlatformProviderSecondarySalesAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "coreContract__enginePlatformProviderSecondarySalesBPS"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "coreContract__randomizerContract"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "coreContract__curationRegistry"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "coreContract__nextProjectId"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "coreContract__createdAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "coreContract__updatedAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "coreContract__preferredIPFSGateway"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "coreContract__preferredArweaveGateway"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "coreContract__newProjectsForbidden"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "coreContract__autoApproveArtistSplitProposals"
           },
           "directives": []
         },
@@ -20538,6 +21498,86 @@ const schemaAST = {
           "name": {
             "kind": "Name",
             "value": "sale"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "sale__id"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "sale__txHash"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "sale__exchange"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "sale__saleType"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "sale__blockNumber"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "sale__blockTimestamp"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "sale__summaryTokensSold"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "sale__seller"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "sale__buyer"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "sale__isPrivate"
           },
           "directives": []
         },
@@ -23412,6 +24452,334 @@ const schemaAST = {
           "name": {
             "kind": "Name",
             "value": "project"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__id"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__projectId"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__active"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__additionalPayee"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__additionalPayeePercentage"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__additionalPayeeSecondarySalesAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__additionalPayeeSecondarySalesPercentage"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__artistAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__artistName"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__baseIpfsUri"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__baseUri"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__complete"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__completedAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__curationStatus"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__currencyAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__currencySymbol"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__description"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__dynamic"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__invocations"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__ipfsHash"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__license"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__locked"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__maxInvocations"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__name"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__paused"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__pricePerTokenInWei"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__royaltyPercentage"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__script"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__scriptCount"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__externalAssetDependencyCount"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__externalAssetDependenciesLocked"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__scriptJSON"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__scriptTypeAndVersion"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__aspectRatio"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__useHashString"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__useIpfs"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__website"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__createdAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__updatedAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__activatedAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__scriptUpdatedAt"
           },
           "directives": []
         },
@@ -26372,7 +27740,391 @@ const schemaAST = {
           "kind": "EnumValueDefinition",
           "name": {
             "kind": "Name",
+            "value": "project__id"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__projectId"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__active"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__additionalPayee"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__additionalPayeePercentage"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__additionalPayeeSecondarySalesAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__additionalPayeeSecondarySalesPercentage"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__artistAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__artistName"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__baseIpfsUri"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__baseUri"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__complete"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__completedAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__curationStatus"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__currencyAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__currencySymbol"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__description"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__dynamic"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__invocations"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__ipfsHash"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__license"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__locked"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__maxInvocations"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__name"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__paused"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__pricePerTokenInWei"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__royaltyPercentage"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__script"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__scriptCount"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__externalAssetDependencyCount"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__externalAssetDependenciesLocked"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__scriptJSON"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__scriptTypeAndVersion"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__aspectRatio"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__useHashString"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__useIpfs"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__website"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__createdAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__updatedAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__activatedAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__scriptUpdatedAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
             "value": "minter"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "minter__id"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "minter__type"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "minter__minimumAuctionLengthInSeconds"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "minter__minimumHalfLifeInSeconds"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "minter__maximumHalfLifeInSeconds"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "minter__extraMinterDetails"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "minter__updatedAt"
           },
           "directives": []
         },
@@ -27551,6 +29303,334 @@ const schemaAST = {
           "name": {
             "kind": "Name",
             "value": "project"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__id"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__projectId"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__active"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__additionalPayee"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__additionalPayeePercentage"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__additionalPayeeSecondarySalesAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__additionalPayeeSecondarySalesPercentage"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__artistAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__artistName"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__baseIpfsUri"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__baseUri"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__complete"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__completedAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__curationStatus"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__currencyAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__currencySymbol"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__description"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__dynamic"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__invocations"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__ipfsHash"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__license"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__locked"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__maxInvocations"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__name"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__paused"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__pricePerTokenInWei"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__royaltyPercentage"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__script"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__scriptCount"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__externalAssetDependencyCount"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__externalAssetDependenciesLocked"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__scriptJSON"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__scriptTypeAndVersion"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__aspectRatio"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__useHashString"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__useIpfs"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__website"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__createdAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__updatedAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__activatedAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__scriptUpdatedAt"
           },
           "directives": []
         },
@@ -36676,6 +38756,14 @@ const schemaAST = {
           "kind": "EnumValueDefinition",
           "name": {
             "kind": "Name",
+            "value": "artist__id"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
             "value": "artistAddress"
           },
           "directives": []
@@ -36940,6 +39028,62 @@ const schemaAST = {
           "kind": "EnumValueDefinition",
           "name": {
             "kind": "Name",
+            "value": "proposedArtistAddressesAndSplits__id"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "proposedArtistAddressesAndSplits__artistAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "proposedArtistAddressesAndSplits__additionalPayeePrimarySalesAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "proposedArtistAddressesAndSplits__additionalPayeePrimarySalesPercentage"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "proposedArtistAddressesAndSplits__additionalPayeeSecondarySalesAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "proposedArtistAddressesAndSplits__additionalPayeeSecondarySalesPercentage"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "proposedArtistAddressesAndSplits__createdAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
             "value": "owners"
           },
           "directives": []
@@ -36996,7 +39140,263 @@ const schemaAST = {
           "kind": "EnumValueDefinition",
           "name": {
             "kind": "Name",
+            "value": "contract__id"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__admin"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__type"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__renderProviderAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__renderProviderPercentage"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__renderProviderSecondarySalesAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__renderProviderSecondarySalesBPS"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__enginePlatformProviderAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__enginePlatformProviderPercentage"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__enginePlatformProviderSecondarySalesAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__enginePlatformProviderSecondarySalesBPS"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__randomizerContract"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__curationRegistry"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__nextProjectId"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__createdAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__updatedAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__preferredIPFSGateway"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__preferredArweaveGateway"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__newProjectsForbidden"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__autoApproveArtistSplitProposals"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
             "value": "minterConfiguration"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "minterConfiguration__id"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "minterConfiguration__priceIsConfigured"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "minterConfiguration__currencySymbol"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "minterConfiguration__currencyAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "minterConfiguration__purchaseToDisabled"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "minterConfiguration__basePrice"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "minterConfiguration__startPrice"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "minterConfiguration__halfLifeSeconds"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "minterConfiguration__startTime"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "minterConfiguration__endTime"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "minterConfiguration__extraMinterDetails"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "minterConfiguration__maxInvocations"
           },
           "directives": []
         },
@@ -38684,6 +41084,334 @@ const schemaAST = {
           "name": {
             "kind": "Name",
             "value": "project"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__id"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__projectId"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__active"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__additionalPayee"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__additionalPayeePercentage"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__additionalPayeeSecondarySalesAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__additionalPayeeSecondarySalesPercentage"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__artistAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__artistName"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__baseIpfsUri"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__baseUri"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__complete"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__completedAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__curationStatus"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__currencyAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__currencySymbol"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__description"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__dynamic"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__invocations"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__ipfsHash"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__license"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__locked"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__maxInvocations"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__name"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__paused"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__pricePerTokenInWei"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__royaltyPercentage"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__script"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__scriptCount"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__externalAssetDependencyCount"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__externalAssetDependenciesLocked"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__scriptJSON"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__scriptTypeAndVersion"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__aspectRatio"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__useHashString"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__useIpfs"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__website"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__createdAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__updatedAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__activatedAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__scriptUpdatedAt"
           },
           "directives": []
         },
@@ -45996,6 +48724,334 @@ const schemaAST = {
           "kind": "EnumValueDefinition",
           "name": {
             "kind": "Name",
+            "value": "project__id"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__projectId"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__active"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__additionalPayee"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__additionalPayeePercentage"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__additionalPayeeSecondarySalesAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__additionalPayeeSecondarySalesPercentage"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__artistAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__artistName"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__baseIpfsUri"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__baseUri"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__complete"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__completedAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__curationStatus"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__currencyAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__currencySymbol"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__description"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__dynamic"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__invocations"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__ipfsHash"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__license"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__locked"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__maxInvocations"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__name"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__paused"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__pricePerTokenInWei"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__royaltyPercentage"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__script"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__scriptCount"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__externalAssetDependencyCount"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__externalAssetDependenciesLocked"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__scriptJSON"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__scriptTypeAndVersion"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__aspectRatio"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__useHashString"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__useIpfs"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__website"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__createdAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__updatedAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__activatedAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__scriptUpdatedAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
             "value": "minter"
           },
           "directives": []
@@ -46004,7 +49060,71 @@ const schemaAST = {
           "kind": "EnumValueDefinition",
           "name": {
             "kind": "Name",
+            "value": "minter__id"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "minter__type"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "minter__minimumAuctionLengthInSeconds"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "minter__minimumHalfLifeInSeconds"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "minter__maximumHalfLifeInSeconds"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "minter__extraMinterDetails"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "minter__updatedAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
             "value": "account"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "account__id"
           },
           "directives": []
         },
@@ -48155,6 +51275,334 @@ const schemaAST = {
           "kind": "EnumValueDefinition",
           "name": {
             "kind": "Name",
+            "value": "project__id"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__projectId"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__active"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__additionalPayee"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__additionalPayeePercentage"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__additionalPayeeSecondarySalesAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__additionalPayeeSecondarySalesPercentage"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__artistAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__artistName"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__baseIpfsUri"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__baseUri"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__complete"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__completedAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__curationStatus"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__currencyAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__currencySymbol"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__description"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__dynamic"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__invocations"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__ipfsHash"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__license"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__locked"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__maxInvocations"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__name"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__paused"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__pricePerTokenInWei"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__royaltyPercentage"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__script"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__scriptCount"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__externalAssetDependencyCount"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__externalAssetDependenciesLocked"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__scriptJSON"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__scriptTypeAndVersion"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__aspectRatio"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__useHashString"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__useIpfs"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__website"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__createdAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__updatedAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__activatedAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__scriptUpdatedAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
             "value": "token"
           },
           "directives": []
@@ -48163,7 +51611,159 @@ const schemaAST = {
           "kind": "EnumValueDefinition",
           "name": {
             "kind": "Name",
+            "value": "token__id"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "token__tokenId"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "token__invocation"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "token__hash"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "token__uri"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "token__createdAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "token__updatedAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "token__transactionHash"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "token__nextSaleId"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
             "value": "sale"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "sale__id"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "sale__txHash"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "sale__exchange"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "sale__saleType"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "sale__blockNumber"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "sale__blockTimestamp"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "sale__summaryTokensSold"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "sale__seller"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "sale__buyer"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "sale__isPrivate"
           },
           "directives": []
         }
@@ -58371,6 +61971,166 @@ const schemaAST = {
           "kind": "EnumValueDefinition",
           "name": {
             "kind": "Name",
+            "value": "contract__id"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__admin"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__type"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__renderProviderAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__renderProviderPercentage"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__renderProviderSecondarySalesAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__renderProviderSecondarySalesBPS"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__enginePlatformProviderAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__enginePlatformProviderPercentage"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__enginePlatformProviderSecondarySalesAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__enginePlatformProviderSecondarySalesBPS"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__randomizerContract"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__curationRegistry"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__nextProjectId"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__createdAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__updatedAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__preferredIPFSGateway"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__preferredArweaveGateway"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__newProjectsForbidden"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__autoApproveArtistSplitProposals"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
             "value": "invocation"
           },
           "directives": []
@@ -58395,7 +62155,343 @@ const schemaAST = {
           "kind": "EnumValueDefinition",
           "name": {
             "kind": "Name",
+            "value": "owner__id"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
             "value": "project"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__id"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__projectId"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__active"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__additionalPayee"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__additionalPayeePercentage"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__additionalPayeeSecondarySalesAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__additionalPayeeSecondarySalesPercentage"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__artistAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__artistName"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__baseIpfsUri"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__baseUri"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__complete"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__completedAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__curationStatus"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__currencyAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__currencySymbol"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__description"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__dynamic"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__invocations"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__ipfsHash"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__license"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__locked"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__maxInvocations"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__name"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__paused"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__pricePerTokenInWei"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__royaltyPercentage"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__script"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__scriptCount"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__externalAssetDependencyCount"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__externalAssetDependenciesLocked"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__scriptJSON"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__scriptTypeAndVersion"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__aspectRatio"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__useHashString"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__useIpfs"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__website"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__createdAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__updatedAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__activatedAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "project__scriptUpdatedAt"
           },
           "directives": []
         },
@@ -60085,6 +64181,78 @@ const schemaAST = {
           "kind": "EnumValueDefinition",
           "name": {
             "kind": "Name",
+            "value": "token__id"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "token__tokenId"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "token__invocation"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "token__hash"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "token__uri"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "token__createdAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "token__updatedAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "token__transactionHash"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "token__nextSaleId"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
             "value": "to"
           },
           "directives": []
@@ -61079,7 +65247,175 @@ const schemaAST = {
           "kind": "EnumValueDefinition",
           "name": {
             "kind": "Name",
+            "value": "account__id"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
             "value": "contract"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__id"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__admin"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__type"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__renderProviderAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__renderProviderPercentage"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__renderProviderSecondarySalesAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__renderProviderSecondarySalesBPS"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__enginePlatformProviderAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__enginePlatformProviderPercentage"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__enginePlatformProviderSecondarySalesAddress"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__enginePlatformProviderSecondarySalesBPS"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__randomizerContract"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__curationRegistry"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__nextProjectId"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__createdAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__updatedAt"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__preferredIPFSGateway"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__preferredArweaveGateway"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__newProjectsForbidden"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "contract__autoApproveArtistSplitProposals"
           },
           "directives": []
         }

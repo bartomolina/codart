@@ -82,8 +82,8 @@ const CollectionItem = ({ aBCollection }: Props) => {
         if (_collection) {
           formattedCode = _collection.script;
         }
-        if (_collection?.scriptTypeAndVersion === "p5" || _collection?.scriptTypeAndVersion === "three") {
-          setLibrary(_collection?.scriptTypeAndVersion);
+        if (_collection?.scriptType === "p5" || _collection?.scriptType === "three") {
+          setLibrary(_collection?.scriptType);
         }
       } else if (!isAB && cACollections.length) {
         const _cACollection = cACollections.find((c) => c._address === projectId);
@@ -172,7 +172,10 @@ const CollectionItem = ({ aBCollection }: Props) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const data = await getCollectionDataFromFS(context.query.id[0] as string);
+  let data = [];
+  if (context.query.id) {
+    data = await getCollectionDataFromFS(context.query.id[0] as string);
+  }
   return {
     props: {
       aBCollection: data,

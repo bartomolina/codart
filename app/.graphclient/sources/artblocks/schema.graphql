@@ -100,7 +100,49 @@ input AccountProject_filter {
 enum AccountProject_orderBy {
   id
   account
+  account__id
   project
+  project__id
+  project__projectId
+  project__active
+  project__additionalPayee
+  project__additionalPayeePercentage
+  project__additionalPayeeSecondarySalesAddress
+  project__additionalPayeeSecondarySalesPercentage
+  project__artistAddress
+  project__artistName
+  project__baseIpfsUri
+  project__baseUri
+  project__complete
+  project__completedAt
+  project__curationStatus
+  project__currencyAddress
+  project__currencySymbol
+  project__description
+  project__dynamic
+  project__invocations
+  project__ipfsHash
+  project__license
+  project__locked
+  project__maxInvocations
+  project__name
+  project__paused
+  project__pricePerTokenInWei
+  project__royaltyPercentage
+  project__script
+  project__scriptCount
+  project__externalAssetDependencyCount
+  project__externalAssetDependenciesLocked
+  project__scriptJSON
+  project__scriptTypeAndVersion
+  project__aspectRatio
+  project__useHashString
+  project__useIpfs
+  project__website
+  project__createdAt
+  project__updatedAt
+  project__activatedAt
+  project__scriptUpdatedAt
   count
 }
 
@@ -499,6 +541,9 @@ enum Contract_orderBy {
   randomizerContract
   curationRegistry
   dependencyRegistry
+  dependencyRegistry__id
+  dependencyRegistry__owner
+  dependencyRegistry__updatedAt
   nextProjectId
   projects
   tokens
@@ -506,11 +551,14 @@ enum Contract_orderBy {
   createdAt
   updatedAt
   minterFilter
+  minterFilter__id
+  minterFilter__updatedAt
   preferredIPFSGateway
   preferredArweaveGateway
   newProjectsForbidden
   autoApproveArtistSplitProposals
   registeredOn
+  registeredOn__id
 }
 
 enum CoreType {
@@ -635,6 +683,15 @@ input DependencyAdditionalCDN_filter {
 enum DependencyAdditionalCDN_orderBy {
   id
   dependency
+  dependency__id
+  dependency__preferredCDN
+  dependency__additionalCDNCount
+  dependency__preferredRepository
+  dependency__additionalRepositoryCount
+  dependency__scriptCount
+  dependency__script
+  dependency__referenceWebsite
+  dependency__updatedAt
   cdn
   index
 }
@@ -717,6 +774,15 @@ input DependencyAdditionalRepository_filter {
 enum DependencyAdditionalRepository_orderBy {
   id
   dependency
+  dependency__id
+  dependency__preferredCDN
+  dependency__additionalCDNCount
+  dependency__preferredRepository
+  dependency__additionalRepositoryCount
+  dependency__scriptCount
+  dependency__script
+  dependency__referenceWebsite
+  dependency__updatedAt
   repository
   index
 }
@@ -869,6 +935,15 @@ input DependencyScript_filter {
 enum DependencyScript_orderBy {
   id
   dependency
+  dependency__id
+  dependency__preferredCDN
+  dependency__additionalCDNCount
+  dependency__preferredRepository
+  dependency__additionalRepositoryCount
+  dependency__scriptCount
+  dependency__script
+  dependency__referenceWebsite
+  dependency__updatedAt
   index
   script
   address
@@ -1038,6 +1113,9 @@ enum Dependency_orderBy {
   script
   referenceWebsite
   dependencyRegistry
+  dependencyRegistry__id
+  dependencyRegistry__owner
+  dependencyRegistry__updatedAt
   updatedAt
 }
 
@@ -1178,6 +1256,26 @@ input MinterFilter_filter {
 enum MinterFilter_orderBy {
   id
   coreContract
+  coreContract__id
+  coreContract__admin
+  coreContract__type
+  coreContract__renderProviderAddress
+  coreContract__renderProviderPercentage
+  coreContract__renderProviderSecondarySalesAddress
+  coreContract__renderProviderSecondarySalesBPS
+  coreContract__enginePlatformProviderAddress
+  coreContract__enginePlatformProviderPercentage
+  coreContract__enginePlatformProviderSecondarySalesAddress
+  coreContract__enginePlatformProviderSecondarySalesBPS
+  coreContract__randomizerContract
+  coreContract__curationRegistry
+  coreContract__nextProjectId
+  coreContract__createdAt
+  coreContract__updatedAt
+  coreContract__preferredIPFSGateway
+  coreContract__preferredArweaveGateway
+  coreContract__newProjectsForbidden
+  coreContract__autoApproveArtistSplitProposals
   minterAllowlist
   associatedMinters
   updatedAt
@@ -1317,11 +1415,33 @@ enum Minter_orderBy {
   id
   type
   minterFilter
+  minterFilter__id
+  minterFilter__updatedAt
   minimumAuctionLengthInSeconds
   minimumHalfLifeInSeconds
   maximumHalfLifeInSeconds
   extraMinterDetails
   coreContract
+  coreContract__id
+  coreContract__admin
+  coreContract__type
+  coreContract__renderProviderAddress
+  coreContract__renderProviderPercentage
+  coreContract__renderProviderSecondarySalesAddress
+  coreContract__renderProviderSecondarySalesBPS
+  coreContract__enginePlatformProviderAddress
+  coreContract__enginePlatformProviderPercentage
+  coreContract__enginePlatformProviderSecondarySalesAddress
+  coreContract__enginePlatformProviderSecondarySalesBPS
+  coreContract__randomizerContract
+  coreContract__curationRegistry
+  coreContract__nextProjectId
+  coreContract__createdAt
+  coreContract__updatedAt
+  coreContract__preferredIPFSGateway
+  coreContract__preferredArweaveGateway
+  coreContract__newProjectsForbidden
+  coreContract__autoApproveArtistSplitProposals
   receipts
   updatedAt
 }
@@ -1430,6 +1550,16 @@ enum Payment_orderBy {
   paymentToken
   price
   sale
+  sale__id
+  sale__txHash
+  sale__exchange
+  sale__saleType
+  sale__blockNumber
+  sale__blockTimestamp
+  sale__summaryTokensSold
+  sale__seller
+  sale__buyer
+  sale__isPrivate
   recipient
 }
 
@@ -1635,6 +1765,47 @@ input ProjectExternalAssetDependency_filter {
 enum ProjectExternalAssetDependency_orderBy {
   id
   project
+  project__id
+  project__projectId
+  project__active
+  project__additionalPayee
+  project__additionalPayeePercentage
+  project__additionalPayeeSecondarySalesAddress
+  project__additionalPayeeSecondarySalesPercentage
+  project__artistAddress
+  project__artistName
+  project__baseIpfsUri
+  project__baseUri
+  project__complete
+  project__completedAt
+  project__curationStatus
+  project__currencyAddress
+  project__currencySymbol
+  project__description
+  project__dynamic
+  project__invocations
+  project__ipfsHash
+  project__license
+  project__locked
+  project__maxInvocations
+  project__name
+  project__paused
+  project__pricePerTokenInWei
+  project__royaltyPercentage
+  project__script
+  project__scriptCount
+  project__externalAssetDependencyCount
+  project__externalAssetDependenciesLocked
+  project__scriptJSON
+  project__scriptTypeAndVersion
+  project__aspectRatio
+  project__useHashString
+  project__useIpfs
+  project__website
+  project__createdAt
+  project__updatedAt
+  project__activatedAt
+  project__scriptUpdatedAt
   dependencyType
   cid
   index
@@ -1841,7 +2012,55 @@ input ProjectMinterConfiguration_filter {
 enum ProjectMinterConfiguration_orderBy {
   id
   project
+  project__id
+  project__projectId
+  project__active
+  project__additionalPayee
+  project__additionalPayeePercentage
+  project__additionalPayeeSecondarySalesAddress
+  project__additionalPayeeSecondarySalesPercentage
+  project__artistAddress
+  project__artistName
+  project__baseIpfsUri
+  project__baseUri
+  project__complete
+  project__completedAt
+  project__curationStatus
+  project__currencyAddress
+  project__currencySymbol
+  project__description
+  project__dynamic
+  project__invocations
+  project__ipfsHash
+  project__license
+  project__locked
+  project__maxInvocations
+  project__name
+  project__paused
+  project__pricePerTokenInWei
+  project__royaltyPercentage
+  project__script
+  project__scriptCount
+  project__externalAssetDependencyCount
+  project__externalAssetDependenciesLocked
+  project__scriptJSON
+  project__scriptTypeAndVersion
+  project__aspectRatio
+  project__useHashString
+  project__useIpfs
+  project__website
+  project__createdAt
+  project__updatedAt
+  project__activatedAt
+  project__scriptUpdatedAt
   minter
+  minter__id
+  minter__type
+  minter__minimumAuctionLengthInSeconds
+  minter__minimumHalfLifeInSeconds
+  minter__maximumHalfLifeInSeconds
+  minter__extraMinterDetails
+  minter__updatedAt
   priceIsConfigured
   currencySymbol
   currencyAddress
@@ -1930,6 +2149,47 @@ enum ProjectScript_orderBy {
   id
   index
   project
+  project__id
+  project__projectId
+  project__active
+  project__additionalPayee
+  project__additionalPayeePercentage
+  project__additionalPayeeSecondarySalesAddress
+  project__additionalPayeeSecondarySalesPercentage
+  project__artistAddress
+  project__artistName
+  project__baseIpfsUri
+  project__baseUri
+  project__complete
+  project__completedAt
+  project__curationStatus
+  project__currencyAddress
+  project__currencySymbol
+  project__description
+  project__dynamic
+  project__invocations
+  project__ipfsHash
+  project__license
+  project__locked
+  project__maxInvocations
+  project__name
+  project__paused
+  project__pricePerTokenInWei
+  project__royaltyPercentage
+  project__script
+  project__scriptCount
+  project__externalAssetDependencyCount
+  project__externalAssetDependenciesLocked
+  project__scriptJSON
+  project__scriptTypeAndVersion
+  project__aspectRatio
+  project__useHashString
+  project__useIpfs
+  project__website
+  project__createdAt
+  project__updatedAt
+  project__activatedAt
+  project__scriptUpdatedAt
   script
 }
 
@@ -2511,6 +2771,7 @@ enum Project_orderBy {
   additionalPayeeSecondarySalesAddress
   additionalPayeeSecondarySalesPercentage
   artist
+  artist__id
   artistAddress
   artistName
   baseIpfsUri
@@ -2544,6 +2805,13 @@ enum Project_orderBy {
   useIpfs
   website
   proposedArtistAddressesAndSplits
+  proposedArtistAddressesAndSplits__id
+  proposedArtistAddressesAndSplits__artistAddress
+  proposedArtistAddressesAndSplits__additionalPayeePrimarySalesAddress
+  proposedArtistAddressesAndSplits__additionalPayeePrimarySalesPercentage
+  proposedArtistAddressesAndSplits__additionalPayeeSecondarySalesAddress
+  proposedArtistAddressesAndSplits__additionalPayeeSecondarySalesPercentage
+  proposedArtistAddressesAndSplits__createdAt
   owners
   receipts
   createdAt
@@ -2551,7 +2819,39 @@ enum Project_orderBy {
   activatedAt
   scriptUpdatedAt
   contract
+  contract__id
+  contract__admin
+  contract__type
+  contract__renderProviderAddress
+  contract__renderProviderPercentage
+  contract__renderProviderSecondarySalesAddress
+  contract__renderProviderSecondarySalesBPS
+  contract__enginePlatformProviderAddress
+  contract__enginePlatformProviderPercentage
+  contract__enginePlatformProviderSecondarySalesAddress
+  contract__enginePlatformProviderSecondarySalesBPS
+  contract__randomizerContract
+  contract__curationRegistry
+  contract__nextProjectId
+  contract__createdAt
+  contract__updatedAt
+  contract__preferredIPFSGateway
+  contract__preferredArweaveGateway
+  contract__newProjectsForbidden
+  contract__autoApproveArtistSplitProposals
   minterConfiguration
+  minterConfiguration__id
+  minterConfiguration__priceIsConfigured
+  minterConfiguration__currencySymbol
+  minterConfiguration__currencyAddress
+  minterConfiguration__purchaseToDisabled
+  minterConfiguration__basePrice
+  minterConfiguration__startPrice
+  minterConfiguration__halfLifeSeconds
+  minterConfiguration__startTime
+  minterConfiguration__endTime
+  minterConfiguration__extraMinterDetails
+  minterConfiguration__maxInvocations
   saleLookupTables
   externalAssetDependencies
 }
@@ -2672,6 +2972,47 @@ enum ProposedArtistAddressesAndSplit_orderBy {
   additionalPayeeSecondarySalesAddress
   additionalPayeeSecondarySalesPercentage
   project
+  project__id
+  project__projectId
+  project__active
+  project__additionalPayee
+  project__additionalPayeePercentage
+  project__additionalPayeeSecondarySalesAddress
+  project__additionalPayeeSecondarySalesPercentage
+  project__artistAddress
+  project__artistName
+  project__baseIpfsUri
+  project__baseUri
+  project__complete
+  project__completedAt
+  project__curationStatus
+  project__currencyAddress
+  project__currencySymbol
+  project__description
+  project__dynamic
+  project__invocations
+  project__ipfsHash
+  project__license
+  project__locked
+  project__maxInvocations
+  project__name
+  project__paused
+  project__pricePerTokenInWei
+  project__royaltyPercentage
+  project__script
+  project__scriptCount
+  project__externalAssetDependencyCount
+  project__externalAssetDependenciesLocked
+  project__scriptJSON
+  project__scriptTypeAndVersion
+  project__aspectRatio
+  project__useHashString
+  project__useIpfs
+  project__website
+  project__createdAt
+  project__updatedAt
+  project__activatedAt
+  project__scriptUpdatedAt
   createdAt
 }
 
@@ -3401,8 +3742,57 @@ input Receipt_filter {
 enum Receipt_orderBy {
   id
   project
+  project__id
+  project__projectId
+  project__active
+  project__additionalPayee
+  project__additionalPayeePercentage
+  project__additionalPayeeSecondarySalesAddress
+  project__additionalPayeeSecondarySalesPercentage
+  project__artistAddress
+  project__artistName
+  project__baseIpfsUri
+  project__baseUri
+  project__complete
+  project__completedAt
+  project__curationStatus
+  project__currencyAddress
+  project__currencySymbol
+  project__description
+  project__dynamic
+  project__invocations
+  project__ipfsHash
+  project__license
+  project__locked
+  project__maxInvocations
+  project__name
+  project__paused
+  project__pricePerTokenInWei
+  project__royaltyPercentage
+  project__script
+  project__scriptCount
+  project__externalAssetDependencyCount
+  project__externalAssetDependenciesLocked
+  project__scriptJSON
+  project__scriptTypeAndVersion
+  project__aspectRatio
+  project__useHashString
+  project__useIpfs
+  project__website
+  project__createdAt
+  project__updatedAt
+  project__activatedAt
+  project__scriptUpdatedAt
   minter
+  minter__id
+  minter__type
+  minter__minimumAuctionLengthInSeconds
+  minter__minimumHalfLifeInSeconds
+  minter__maximumHalfLifeInSeconds
+  minter__extraMinterDetails
+  minter__updatedAt
   account
+  account__id
   netPosted
   numPurchased
   updatedAt
@@ -3553,8 +3943,68 @@ enum SaleLookupTable_orderBy {
   blockNumber
   timestamp
   project
+  project__id
+  project__projectId
+  project__active
+  project__additionalPayee
+  project__additionalPayeePercentage
+  project__additionalPayeeSecondarySalesAddress
+  project__additionalPayeeSecondarySalesPercentage
+  project__artistAddress
+  project__artistName
+  project__baseIpfsUri
+  project__baseUri
+  project__complete
+  project__completedAt
+  project__curationStatus
+  project__currencyAddress
+  project__currencySymbol
+  project__description
+  project__dynamic
+  project__invocations
+  project__ipfsHash
+  project__license
+  project__locked
+  project__maxInvocations
+  project__name
+  project__paused
+  project__pricePerTokenInWei
+  project__royaltyPercentage
+  project__script
+  project__scriptCount
+  project__externalAssetDependencyCount
+  project__externalAssetDependenciesLocked
+  project__scriptJSON
+  project__scriptTypeAndVersion
+  project__aspectRatio
+  project__useHashString
+  project__useIpfs
+  project__website
+  project__createdAt
+  project__updatedAt
+  project__activatedAt
+  project__scriptUpdatedAt
   token
+  token__id
+  token__tokenId
+  token__invocation
+  token__hash
+  token__uri
+  token__createdAt
+  token__updatedAt
+  token__transactionHash
+  token__nextSaleId
   sale
+  sale__id
+  sale__txHash
+  sale__exchange
+  sale__saleType
+  sale__blockNumber
+  sale__blockTimestamp
+  sale__summaryTokensSold
+  sale__seller
+  sale__buyer
+  sale__isPrivate
 }
 
 enum SaleType {
@@ -4466,10 +4916,72 @@ enum Token_orderBy {
   id
   tokenId
   contract
+  contract__id
+  contract__admin
+  contract__type
+  contract__renderProviderAddress
+  contract__renderProviderPercentage
+  contract__renderProviderSecondarySalesAddress
+  contract__renderProviderSecondarySalesBPS
+  contract__enginePlatformProviderAddress
+  contract__enginePlatformProviderPercentage
+  contract__enginePlatformProviderSecondarySalesAddress
+  contract__enginePlatformProviderSecondarySalesBPS
+  contract__randomizerContract
+  contract__curationRegistry
+  contract__nextProjectId
+  contract__createdAt
+  contract__updatedAt
+  contract__preferredIPFSGateway
+  contract__preferredArweaveGateway
+  contract__newProjectsForbidden
+  contract__autoApproveArtistSplitProposals
   invocation
   hash
   owner
+  owner__id
   project
+  project__id
+  project__projectId
+  project__active
+  project__additionalPayee
+  project__additionalPayeePercentage
+  project__additionalPayeeSecondarySalesAddress
+  project__additionalPayeeSecondarySalesPercentage
+  project__artistAddress
+  project__artistName
+  project__baseIpfsUri
+  project__baseUri
+  project__complete
+  project__completedAt
+  project__curationStatus
+  project__currencyAddress
+  project__currencySymbol
+  project__description
+  project__dynamic
+  project__invocations
+  project__ipfsHash
+  project__license
+  project__locked
+  project__maxInvocations
+  project__name
+  project__paused
+  project__pricePerTokenInWei
+  project__royaltyPercentage
+  project__script
+  project__scriptCount
+  project__externalAssetDependencyCount
+  project__externalAssetDependenciesLocked
+  project__scriptJSON
+  project__scriptTypeAndVersion
+  project__aspectRatio
+  project__useHashString
+  project__useIpfs
+  project__website
+  project__createdAt
+  project__updatedAt
+  project__activatedAt
+  project__scriptUpdatedAt
   uri
   createdAt
   updatedAt
@@ -4585,6 +5097,15 @@ input Transfer_filter {
 enum Transfer_orderBy {
   id
   token
+  token__id
+  token__tokenId
+  token__invocation
+  token__hash
+  token__uri
+  token__createdAt
+  token__updatedAt
+  token__transactionHash
+  token__nextSaleId
   to
   from
   transactionHash
@@ -4659,7 +5180,28 @@ input Whitelisting_filter {
 enum Whitelisting_orderBy {
   id
   account
+  account__id
   contract
+  contract__id
+  contract__admin
+  contract__type
+  contract__renderProviderAddress
+  contract__renderProviderPercentage
+  contract__renderProviderSecondarySalesAddress
+  contract__renderProviderSecondarySalesBPS
+  contract__enginePlatformProviderAddress
+  contract__enginePlatformProviderPercentage
+  contract__enginePlatformProviderSecondarySalesAddress
+  contract__enginePlatformProviderSecondarySalesBPS
+  contract__randomizerContract
+  contract__curationRegistry
+  contract__nextProjectId
+  contract__createdAt
+  contract__updatedAt
+  contract__preferredIPFSGateway
+  contract__preferredArweaveGateway
+  contract__newProjectsForbidden
+  contract__autoApproveArtistSplitProposals
 }
 
 type _Block_ {

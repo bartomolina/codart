@@ -1,0 +1,39 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// dotenv -e .env.local -- npx prisma db push
+// dotenv -e .env.local -- npx prisma generate
+// dotenv -e .env.local -- npx prisma studio
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Collection {
+  projectId             Int  @id
+  activatedAt           Int?
+  active                Boolean
+  artistName            String?
+  complete              Boolean
+  contractAddress       String
+  description           String?
+  id                    String
+  invocations           Int?
+  license               String?
+  maxInvocations        Int
+  mintingDate           Int?
+  name                  String
+  paused                Boolean
+  script                String?
+  scriptJSON            String?
+  scriptLength          Int?
+  scriptType            String?
+  scriptTypeAndVersion  String?
+  updatedAt             Int
+  website               String?
+}

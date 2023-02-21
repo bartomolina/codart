@@ -4,11 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 
 type Props = {
-  collection: IABCollection,
+  collection: IABCollection;
 };
 
-const Card = ({ collection }: Props) => {
-  const [src, setSrc] = useState(`https://media.artblocks.io/thumb/${collection.projectId}000000.png`);
+const Card = ({ collection}: Props) => {
+  const [src, setSrc] = useState(`https://media.artblocks.io/thumb/${collection.projectId * 1000000}.png`);
+
+  let date = collection.mintingDate || collection.activatedAt;
 
   return (
     <div className="bg-white w-full">
@@ -39,7 +41,7 @@ const Card = ({ collection }: Props) => {
                   {collection.invocations != collection.maxInvocations && ` / ${collection.maxInvocations}`}
                   {" minted"}
                 </div>
-                {collection.updatedAt && <div>{new Date(collection.updatedAt * 1000).toDateString()}</div>}
+                {date && <div>{new Date(date * 1000).toDateString()}</div>}
               </div>
             </div>
           </div>

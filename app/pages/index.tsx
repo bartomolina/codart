@@ -19,29 +19,36 @@ const Home = ({ aBCollections }: Props) => {
       filteredCollections = aBCollections.filter((collection) => collection.complete);
     } else {
       filteredCollections = aBCollections.filter((collection) => !collection.complete && collection.active);
-      filteredCollections = filteredCollections.sort((a, b) => b.updatedAt - a.updatedAt);
       if (collectionStatusFilter === "Upcoming") {
         filteredCollections = filteredCollections.filter(
-          (collection) => !collection.updatedAt || collection.updatedAt * 1000 > Date.now()
+          (collection) =>
+            collection.mintingDate * 1000 > Date.now() || (!collection.mintingDate && !collection.activatedAt)
         );
       } else if (collectionStatusFilter === "Open") {
         filteredCollections = filteredCollections.filter(
-          (collection) => collection.updatedAt && collection.updatedAt * 1000 <= Date.now()
+          (collection) =>
+            !collection.paused &&
+            (collection.mintingDate * 1000 < Date.now() || (!collection.mintingDate && collection.activatedAt))
+        );
+      } else if (collectionStatusFilter === "Paused") {
+        filteredCollections = filteredCollections.filter(
+          (collection) =>
+            collection.paused &&
+            ((collection.mintingDate && collection.mintingDate * 1000 < Date.now()) ||
+              (collection.activatedAt && collection.activatedAt * 1000 < Date.now()))
         );
       }
     }
 
     if (scriptFilter) {
-      filteredCollections = filteredCollections.filter(
-        (collection) => collection.scriptTypeAndVersion === scriptFilter
-      );
+      filteredCollections = filteredCollections.filter((collection) => collection.scriptType === scriptFilter);
     }
 
     return filteredCollections;
   }, [aBCollections, collectionStatusFilter, scriptFilter]);
 
   const scriptTypes = useMemo(() => {
-    return new Set(filteredCollections.map((c) => c.scriptTypeAndVersion));
+    return new Set(filteredCollections.map((c) => c.scriptType));
   }, [filteredCollections]);
 
   return (
@@ -65,8 +72,9 @@ const Home = ({ aBCollections }: Props) => {
           value={collectionStatusFilter}
         >
           <option>Completed</option>
-          <option>Open</option>
           <option>Upcoming</option>
+          <option>Open</option>
+          <option>Paused</option>
         </select>
         <label htmlFor="library" className="sr-only">
           Library

@@ -14,14 +14,14 @@ type Props = {
 };
 
 const CollectionItem = ({ collection }: Props) => {
-  console.log("Collection: ", collection);
-
-  const [src, setSrc] = useState("/preview-error.png");
+  const [src, setSrc] = useState("");
   const [description, setDescription] = useState("");
+
+  let date = collection.mintingDate || collection.activatedAt;
 
   useEffect(() => {
     if (collection) {
-      setSrc(`https://media.artblocks.io/thumb/${collection.projectId}000000.png`);
+      setSrc(`https://media.artblocks.io/thumb/${collection.projectId * 1000000}.png`);
       remark()
         .use(html)
         .process(collection.description)
@@ -42,7 +42,7 @@ const CollectionItem = ({ collection }: Props) => {
         <div className="mx-auto max-w-6xl sm:px-6 lg:px-8 py-6">
           <div className="grid grid-cols-3 space-x-4">
             <div>
-              {collection && (
+              {collection && src && (
                 <Image
                   width={350}
                   height={350}
@@ -73,10 +73,10 @@ const CollectionItem = ({ collection }: Props) => {
                       {collection?.invocations != collection?.maxInvocations && ` / ${collection?.maxInvocations}`}
                       {" minted"}
                     </div>
-                    {collection?.updatedAt && <div>{new Date(collection?.updatedAt * 1000).toUTCString()}</div>}
+                    {date && <div>{new Date(date * 1000).toUTCString()}</div>}
                   </div>
                   <div className="mt-3 text-gray-500">
-                    <div>{collection?.scriptTypeAndVersion}</div>
+                    <div>{collection?.scriptType}</div>
                     <div>{collection?.license}</div>
                   </div>
                   <div className="mt-4 flex justify-center">
