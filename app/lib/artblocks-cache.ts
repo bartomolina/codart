@@ -16,6 +16,7 @@ const prepareStoreCollectionInDB = (collection: IABCollection) => {
     active: collection.active,
     artistName: collection.artistName,
     complete: collection.complete,
+    completedAt: collection.completedAt,
     contractAddress: collection.contractAddress,
     description: collection.description,
     id: collection.id,
@@ -50,6 +51,7 @@ const fetchABCollections = async (): Promise<Array<IABCollection>> => {
 
         // Parse numbers
         collection.activatedAt = parseInt(collection.activatedAt) || null;
+        collection.completedAt = parseInt(collection.completedAt) || null;
         collection.invocations = parseInt(collection.invocations) || null;
         collection.maxInvocations = parseInt(collection.maxInvocations) || null;
         collection.projectId = parseInt(collection.projectId);
@@ -71,8 +73,8 @@ const fetchABCollections = async (): Promise<Array<IABCollection>> => {
       });
 
       projects = projects.sort((a, b) => {
-        const bDate = b.mintingDate || b.activatedAt;
-        const aDate = a.mintingDate || a.activatedAt;
+        const bDate = b.completedAt || b.mintingDate || b.activatedAt;
+        const aDate = a.completedAt || a.mintingDate || a.activatedAt;
         return bDate - aDate;
       });
 

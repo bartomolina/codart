@@ -18,6 +18,7 @@ query ArtblocksCollections {
       id
     }
     complete
+    completedAt
     description
     id
     invocations

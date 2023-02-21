@@ -6012,7 +6012,7 @@ export type ArtblocksCollectionsQueryVariables = Exact<{ [key: string]: never; }
 
 
 export type ArtblocksCollectionsQuery = { projects: Array<(
-    Pick<Project, 'active' | 'activatedAt' | 'artistName' | 'complete' | 'description' | 'id' | 'invocations' | 'license' | 'maxInvocations' | 'name' | 'paused' | 'projectId' | 'script' | 'scriptJSON' | 'scriptTypeAndVersion' | 'updatedAt' | 'website'>
+    Pick<Project, 'active' | 'activatedAt' | 'artistName' | 'complete' | 'completedAt' | 'description' | 'id' | 'invocations' | 'license' | 'maxInvocations' | 'name' | 'paused' | 'projectId' | 'script' | 'scriptJSON' | 'scriptTypeAndVersion' | 'updatedAt' | 'website'>
     & { contract: Pick<Contract, 'id'>, minterConfiguration?: Maybe<Pick<ProjectMinterConfiguration, 'startTime'>> }
   )> };
 
@@ -6032,6 +6032,7 @@ export const ArtblocksCollectionsDocument = gql`
       id
     }
     complete
+    completedAt
     description
     id
     invocations

@@ -31,6 +31,7 @@ type IABCollection = Pick<
   | "contract"
   | "contractAddress"
   | "complete"
+  | "completedAt"
   | "description"
   | "id"
   | "invocations"

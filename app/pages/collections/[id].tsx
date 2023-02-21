@@ -17,7 +17,7 @@ const CollectionItem = ({ collection }: Props) => {
   const [src, setSrc] = useState("");
   const [description, setDescription] = useState("");
 
-  let date = collection.mintingDate || collection.activatedAt;
+  let date = collection.completedAt || collection.mintingDate || collection.activatedAt;
 
   useEffect(() => {
     if (collection) {

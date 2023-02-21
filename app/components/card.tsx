@@ -10,7 +10,7 @@ type Props = {
 const Card = ({ collection}: Props) => {
   const [src, setSrc] = useState(`https://media.artblocks.io/thumb/${collection.projectId * 1000000}.png`);
 
-  let date = collection.mintingDate || collection.activatedAt;
+  let date = collection.completedAt || collection.mintingDate || collection.activatedAt;
 
   return (
     <div className="bg-white w-full">

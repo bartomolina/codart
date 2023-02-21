@@ -2,6 +2,7 @@ import { IABCollection } from "../global";
 import { useMemo, useState } from "react";
 import { GetStaticProps } from "next";
 import Head from "next/head";
+import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import { getCollectionsDataFromFS } from "../lib/artblocks-cache";
 import Card from "../components/card";
 
@@ -12,6 +13,7 @@ type Props = {
 const Home = ({ aBCollections }: Props) => {
   const [collectionStatusFilter, setCollectionStatusFilter] = useState("Completed");
   const [scriptFilter, setScriptFilter] = useState("");
+  const [searchFilter, setSearchFilter] = useState("");
 
   const filteredCollections = useMemo(() => {
     let filteredCollections = [] as IABCollection[];
@@ -44,8 +46,14 @@ const Home = ({ aBCollections }: Props) => {
       filteredCollections = filteredCollections.filter((collection) => collection.scriptType === scriptFilter);
     }
 
+    if (searchFilter) {
+      filteredCollections = filteredCollections.filter((collection) =>
+        collection.name.toLowerCase().includes(searchFilter.toLowerCase())
+      );
+    }
+
     return filteredCollections;
-  }, [aBCollections, collectionStatusFilter, scriptFilter]);
+  }, [aBCollections, collectionStatusFilter, scriptFilter, searchFilter]);
 
   const scriptTypes = useMemo(() => {
     return new Set(filteredCollections.map((c) => c.scriptType));
@@ -60,37 +68,57 @@ const Home = ({ aBCollections }: Props) => {
       <header className="mx-auto max-w-6xl sm:px-6 lg:px-8 pt-4 pb-8">
         <h1 className="text-5xl font-thin leading-tight tracking-tight text-gray-900">Art Blocks</h1>
       </header>
-      <div className="mx-auto max-w-6xl sm:px-6 lg:px-8 pb-8">
-        <label htmlFor="status" className="sr-only">
-          Status
-        </label>
-        <select
-          id="status"
-          name="status"
-          className="mt-1 rounded-md border border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-base"
-          onChange={(event) => setCollectionStatusFilter(event.target.value)}
-          value={collectionStatusFilter}
-        >
-          <option>Completed</option>
-          <option>Upcoming</option>
-          <option>Open</option>
-          <option>Paused</option>
-        </select>
-        <label htmlFor="library" className="sr-only">
-          Library
-        </label>
-        <select
-          id="library"
-          name="scrlibraryipt"
-          className="mt-1 ml-5 rounded-md border border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-base"
-          onChange={(event) => setScriptFilter(event.target.value)}
-          value={scriptFilter}
-        >
-          <option value="">library</option>
-          {scriptTypes &&
-            [...Array.from(scriptTypes)].map((scriptType) => <option key={scriptType}>{scriptType}</option>)}
-        </select>
-        <em className="ml-5 text-lg">{filteredCollections.length} Collections</em>
+      <div className="mx-auto max-w-6xl sm:px-6 lg:px-8 pb-8 flex justify-between">
+        <div>
+          <label htmlFor="status" className="sr-only">
+            Status
+          </label>
+          <select
+            id="status"
+            name="status"
+            className="rounded-md border border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-base"
+            onChange={(event) => setCollectionStatusFilter(event.target.value)}
+            value={collectionStatusFilter}
+          >
+            <option>Completed</option>
+            <option>Upcoming</option>
+            <option>Open</option>
+            <option>Paused</option>
+          </select>
+          <label htmlFor="library" className="sr-only">
+            Library
+          </label>
+          <select
+            id="library"
+            name="scrlibraryipt"
+            className="ml-5 rounded-md border border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-base"
+            onChange={(event) => setScriptFilter(event.target.value)}
+            value={scriptFilter}
+          >
+            <option value="">library</option>
+            {scriptTypes &&
+              [...Array.from(scriptTypes)].map((scriptType) => <option key={scriptType}>{scriptType}</option>)}
+          </select>
+          <em className="ml-5 text-lg">{filteredCollections.length} Collections</em>
+        </div>
+        <div>
+          <label htmlFor="search" className="sr-only">
+            Search
+          </label>
+          <div className="relative">
+            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+              <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+            </div>
+            <input
+              type="text"
+              id="search"
+              name="search"
+              className="rounded-md border border-gray-300 py-2 pl-10 pr-3 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-base"
+              onChange={(event) => setSearchFilter(event.target.value)}
+              value={searchFilter}
+            />
+          </div>
+        </div>
       </div>
       <div className="bg-gray-100 pb-24">
         <div className="mx-auto max-w-6xl sm:px-6 lg:px-8 py-6">
