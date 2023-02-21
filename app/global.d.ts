@@ -6,6 +6,10 @@ interface Window {
   ethereum: ExternalProvider;
 }
 
+declare global {
+  var prisma: PrismaClient;
+}
+
 interface ICACollectionInfo {
   name: string;
   symbol: string;

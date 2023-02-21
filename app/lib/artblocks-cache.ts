@@ -7,7 +7,6 @@ import { ArtblocksCollectionsDocument, execute } from "../.graphclient";
 if (!global.prisma) {
   global.prisma = new PrismaClient();
 }
-const prisma = global.prisma;
 
 const readFile = fs.promises.readFile;
 const writeFile = fs.promises.writeFile;
@@ -43,7 +42,7 @@ const prepareStoreCollectionInDB = (collection: IABCollection) => {
 
 const fetchABCollections = async (): Promise<Array<IABCollection>> => {
   let projects: Array<IABCollection> = [];
-  await prisma.collection.deleteMany({ where: {} });
+  await global.prisma.collection.deleteMany({ where: {} });
   return execute(ArtblocksCollectionsDocument, {})
     .then((result) => {
       projects = result?.data.projects as IABCollection[];
@@ -86,15 +85,15 @@ const fetchABCollections = async (): Promise<Array<IABCollection>> => {
       console.log("------------ STORING COLLECTIONS IN DB ------------");
 
       const data = projects.map((collection) => prepareStoreCollectionInDB(collection));
-      prisma.collection
+      global.prisma.collection
         .createMany({ data })
-        .then((result) => console.log("------------ COMPLETED STORING COLLECTIONS IN DB ------------"));
+        .then(() => console.log("------------ COMPLETED STORING COLLECTIONS IN DB ------------"));
     })
     .then(() => projects);
 };
 
 export const getCollectionDataFromFS = async (id: string) => {
-  const collection = await prisma.collection.findFirst({
+  const collection = await global.prisma.collection.findFirst({
     where: {
       id,
     },
