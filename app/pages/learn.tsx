@@ -41,7 +41,7 @@ const Learn = ({ aBCollections }: Props) => {
         <h1 className="text-5xl font-thin leading-tight tracking-tight text-gray-900">Learn</h1>
       </header>
       <div className="mx-auto max-w-6xl sm:px-6 lg:px-8 pb-8 text-center">
-        <div className="flex flex-row space-x-8">
+        <div className="flex flex-row justify-around space-x-8">
           <Link
             href={{ pathname: "/learn", query: { minChars: "0", maxChars: "2000" } }}
             className="rounded-lg py-3 px-8 text-white shadow-md bg-gradient-to-r from-yellow-500 to-red-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:ring-offset-2  hover:-translate-y-0.5 transform transition"
