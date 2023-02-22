@@ -1,8 +1,7 @@
 import { IABCollection } from "../../global";
-import { FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
-import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
 import { remark } from "remark";
@@ -99,10 +98,15 @@ const CollectionItem = ({ collection }: Props) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const data = await getCollectionDataFromFS(context.query.id as string);
+  console.log("------------ SSP START ------------");
+  console.time("ssp");
+  // const data = await getCollectionDataFromFS(context.query.id as string);
+  console.timeEnd("ssp");
+  console.log("------------ SSP END ------------");
+
   return {
     props: {
-      collection: data,
+      collection: [],
     },
   };
 };

@@ -93,13 +93,18 @@ const fetchABCollections = async (): Promise<Array<IABCollection>> => {
 };
 
 export const getCollectionDataFromFS = async (id: string) => {
-  const collection = await global.prisma.collection.findFirst({
-    where: {
-      id,
-    },
-  });
+  // console.log("------------ DB READ START ------------");
+  // console.time("db");
+  // const collection = await global.prisma.collection.findFirst({
+  //   where: {
+  //     id,
+  //   },
+  // });
+  // console.timeEnd("db");
+  // console.log("------------ DB READ END ------------");
 
-  return collection;
+  // return collection;
+  return [];
 };
 
 export const getCollectionsDataFromFS = async () => {

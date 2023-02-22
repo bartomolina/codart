@@ -7,6 +7,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 
   return global.prisma.$connect().then(() => {
-    res.status(200).end();
+    return res.status(200).end();
   });
 }
