@@ -8,6 +8,7 @@ interface Window {
 
 declare global {
   var prisma: PrismaClient;
+  var lastWarmUp: number;
 }
 
 interface ICACollectionInfo {
