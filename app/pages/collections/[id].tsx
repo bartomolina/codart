@@ -2,28 +2,14 @@ import { IABCollection } from "../../global";
 import { useEffect, useState } from "react";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
-import { remark } from "remark";
-import html from "remark-html";
 
 type Props = {
   collection: IABCollection;
 };
 
 const CollectionItem = ({ collection }: Props) => {
-  const [src, setSrc] = useState("");
-  const [description, setDescription] = useState("");
 
   let date = collection.completedAt || collection.mintingDate || collection.activatedAt;
-
-  useEffect(() => {
-    if (collection) {
-      setSrc(`https://media.artblocks.io/thumb/${collection.projectId * 1000000}.png`);
-      remark()
-        .use(html)
-        .process(collection.description)
-        .then((markdown) => setDescription(markdown.toString()));
-    }
-  }, [collection]);
 
   return (
     <>
