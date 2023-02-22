@@ -11,7 +11,7 @@ import Layout from "../components/layout";
 import Notification from "../components/notification";
 
 const App = ({ Component, pageProps }: AppProps) => {
-  useSWR("/api/db-connection", fetch);
+  useSWR("/api/warmup", fetch);
   return (
     <>
       <Head>

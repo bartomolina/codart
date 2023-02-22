@@ -1,12 +1,8 @@
 import { IABCollection } from "../global";
 import fs from "fs";
 import { resolve } from "path";
-import { PrismaClient } from "@prisma/client";
+import prisma from "./prisma";
 import { ArtblocksCollectionsDocument, execute } from "../.graphclient";
-
-if (!global.prisma) {
-  global.prisma = new PrismaClient();
-}
 
 const readFile = fs.promises.readFile;
 const writeFile = fs.promises.writeFile;
@@ -42,7 +38,7 @@ const prepareStoreCollectionInDB = (collection: IABCollection) => {
 
 const fetchABCollections = async (): Promise<Array<IABCollection>> => {
   let projects: Array<IABCollection> = [];
-  await global.prisma.collection.deleteMany({ where: {} });
+  await prisma.collection.deleteMany({ where: {} });
   return execute(ArtblocksCollectionsDocument, {})
     .then((result) => {
       projects = result?.data.projects as IABCollection[];
@@ -85,26 +81,11 @@ const fetchABCollections = async (): Promise<Array<IABCollection>> => {
       console.log("------------ STORING COLLECTIONS IN DB ------------");
 
       const data = projects.map((collection) => prepareStoreCollectionInDB(collection));
-      global.prisma.collection
+      prisma.collection
         .createMany({ data })
         .then(() => console.log("------------ COMPLETED STORING COLLECTIONS IN DB ------------"));
     })
     .then(() => projects);
-};
-
-export const getCollectionDataFromFS = async (id: string) => {
-  // console.log("------------ DB READ START ------------");
-  // console.time("db");
-  // const collection = await global.prisma.collection.findFirst({
-  //   where: {
-  //     id,
-  //   },
-  // });
-  // console.timeEnd("db");
-  // console.log("------------ DB READ END ------------");
-
-  // return collection;
-  return [];
 };
 
 export const getCollectionsDataFromFS = async () => {

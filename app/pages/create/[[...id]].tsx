@@ -15,7 +15,7 @@ import { useCodArt } from "../../components/collections-context";
 import prettier from "prettier/esm/standalone.mjs";
 // @ts-ignore
 import parserBabel from "prettier/esm/parser-babel.mjs";
-import { getCollectionDataFromFS } from "../../lib/artblocks-cache";
+import getCollectionDataFromDB from "../../lib/artblocks-db";
 import EditorCommands from "../../components/editor-commands";
 
 const defaultCode = `function setup() {
@@ -174,7 +174,7 @@ const CollectionItem = ({ aBCollection }: Props) => {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   let data = [];
   if (context.query.id) {
-    data = await getCollectionDataFromFS(context.query.id[0] as string);
+    data = await getCollectionDataFromDB(context.query.id[0] as string);
   }
   return {
     props: {
