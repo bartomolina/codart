@@ -7,7 +7,7 @@ type Props = {
   collection: IABCollection;
 };
 
-const Card = ({ collection}: Props) => {
+const Card = ({ collection }: Props) => {
   const [src, setSrc] = useState(`https://media.artblocks.io/thumb/${collection.projectId * 1000000}.png`);
 
   let date = collection.completedAt || collection.mintingDate || collection.activatedAt;
@@ -24,7 +24,13 @@ const Card = ({ collection}: Props) => {
                 src={src}
                 sizes="345px"
                 alt={collection.name as string}
-                onError={() => setSrc("/preview-error.png")}
+                onError={() => {
+                  if (src.includes("/thumb/")) {
+                    setSrc(`https://media.artblocks.io/${collection.projectId * 1000000}.png`);
+                  } else {
+                    setSrc("/preview-error.png");
+                  }
+                }}
               />
             </div>
             <div className="py-7 px-8">
