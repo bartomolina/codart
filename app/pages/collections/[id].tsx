@@ -34,7 +34,7 @@ const CollectionItem = () => {
     }
   }, [collection]);
 
-  return (
+  return collection && (
     <>
       <Head>
         <title>CodArt.io</title>
