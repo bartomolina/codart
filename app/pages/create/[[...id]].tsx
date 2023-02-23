@@ -173,9 +173,6 @@ const CollectionItem = ({ aBCollection }: Props) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   let data = [];
-  if (context.query.id) {
-    data = await getCollectionDataFromDB(context.query.id[0] as string);
-  }
   return {
     props: {
       aBCollection: data,

@@ -37,3 +37,32 @@ query ArtblocksCollections {
     website
   }
 }
+
+query ArtblocksCollection($id: ID!) {
+  project(id: $id) {
+    active
+    activatedAt
+    artistName
+    contract {
+      id
+    }
+    complete
+    completedAt
+    description
+    id
+    invocations
+    license
+    maxInvocations
+    minterConfiguration {
+      startTime
+    }
+    name
+    paused
+    projectId
+    script
+    scriptJSON
+    scriptTypeAndVersion
+    updatedAt
+    website
+  }
+}

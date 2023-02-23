@@ -1,9 +1,10 @@
 import { IABCollection } from "../global";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { GetStaticProps } from "next";
 import Head from "next/head";
+
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
-import { getCollectionsDataFromFS } from "../lib/artblocks-cache";
+import { getABCollections } from "../lib/artblocks";
 import Card from "../components/card";
 
 type Props = {
@@ -11,49 +12,51 @@ type Props = {
 };
 
 const Home = ({ aBCollections }: Props) => {
-  const [collectionStatusFilter, setCollectionStatusFilter] = useState("Completed");
+  const [statusFilter, setStatusFilter] = useState("Completed");
   const [scriptFilter, setScriptFilter] = useState("");
   const [searchFilter, setSearchFilter] = useState("");
 
   const filteredCollections = useMemo(() => {
     let filteredCollections = [] as IABCollection[];
-    if (collectionStatusFilter === "Completed") {
-      filteredCollections = aBCollections.filter((collection) => collection.complete);
-    } else {
-      filteredCollections = aBCollections.filter((collection) => !collection.complete && collection.active);
-      if (collectionStatusFilter === "Upcoming") {
-        filteredCollections = filteredCollections.filter(
-          (collection) =>
-            collection.mintingDate * 1000 > Date.now() || (!collection.mintingDate && !collection.activatedAt)
-        );
-      } else if (collectionStatusFilter === "Open") {
-        filteredCollections = filteredCollections.filter(
-          (collection) =>
-            !collection.paused &&
-            (collection.mintingDate * 1000 < Date.now() || (!collection.mintingDate && collection.activatedAt))
-        );
-      } else if (collectionStatusFilter === "Paused") {
-        filteredCollections = filteredCollections.filter(
-          (collection) =>
-            collection.paused &&
-            ((collection.mintingDate && collection.mintingDate * 1000 < Date.now()) ||
-              (collection.activatedAt && collection.activatedAt * 1000 < Date.now()))
+    if (aBCollections) {
+      if (statusFilter === "Completed") {
+        filteredCollections = aBCollections.filter((collection) => collection.complete);
+      } else {
+        filteredCollections = aBCollections.filter((collection) => !collection.complete && collection.active);
+        if (statusFilter === "Upcoming") {
+          filteredCollections = filteredCollections.filter(
+            (collection) =>
+              collection.mintingDate * 1000 > Date.now() || (!collection.mintingDate && !collection.activatedAt)
+          );
+        } else if (statusFilter === "Open") {
+          filteredCollections = filteredCollections.filter(
+            (collection) =>
+              !collection.paused &&
+              (collection.mintingDate * 1000 < Date.now() || (!collection.mintingDate && collection.activatedAt))
+          );
+        } else if (statusFilter === "Paused") {
+          filteredCollections = filteredCollections.filter(
+            (collection) =>
+              collection.paused &&
+              ((collection.mintingDate && collection.mintingDate * 1000 < Date.now()) ||
+                (collection.activatedAt && collection.activatedAt * 1000 < Date.now()))
+          );
+        }
+      }
+
+      if (scriptFilter) {
+        filteredCollections = filteredCollections.filter((collection) => collection.scriptType === scriptFilter);
+      }
+
+      if (searchFilter) {
+        filteredCollections = filteredCollections.filter((collection) =>
+          collection.name.toLowerCase().includes(searchFilter.toLowerCase())
         );
       }
     }
 
-    if (scriptFilter) {
-      filteredCollections = filteredCollections.filter((collection) => collection.scriptType === scriptFilter);
-    }
-
-    if (searchFilter) {
-      filteredCollections = filteredCollections.filter((collection) =>
-        collection.name.toLowerCase().includes(searchFilter.toLowerCase())
-      );
-    }
-
     return filteredCollections;
-  }, [aBCollections, collectionStatusFilter, scriptFilter, searchFilter]);
+  }, [aBCollections, statusFilter, scriptFilter, searchFilter]);
 
   const scriptTypes = useMemo(() => {
     return new Set(filteredCollections.map((c) => c.scriptType));
@@ -77,8 +80,8 @@ const Home = ({ aBCollections }: Props) => {
             id="status"
             name="status"
             className="rounded-md border border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-base"
-            onChange={(event) => setCollectionStatusFilter(event.target.value)}
-            value={collectionStatusFilter}
+            onChange={(event) => setStatusFilter(event.target.value)}
+            value={statusFilter}
           >
             <option>Completed</option>
             <option>Upcoming</option>
@@ -139,7 +142,7 @@ const Home = ({ aBCollections }: Props) => {
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const data = await getCollectionsDataFromFS();
+  const data = await getABCollections();
   return {
     props: {
       aBCollections: data,

@@ -5970,6 +5970,12 @@ const merger = new(BareMerger as any)({
           return printWithCache(ArtblocksCollectionsDocument);
         },
         location: 'ArtblocksCollectionsDocument.graphql'
+      },{
+        document: ArtblocksCollectionDocument,
+        get rawSDL() {
+          return printWithCache(ArtblocksCollectionDocument);
+        },
+        location: 'ArtblocksCollectionDocument.graphql'
       }
     ];
     },
@@ -6016,6 +6022,16 @@ export type ArtblocksCollectionsQuery = { projects: Array<(
     & { contract: Pick<Contract, 'id'>, minterConfiguration?: Maybe<Pick<ProjectMinterConfiguration, 'startTime'>> }
   )> };
 
+export type ArtblocksCollectionQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type ArtblocksCollectionQuery = { project?: Maybe<(
+    Pick<Project, 'active' | 'activatedAt' | 'artistName' | 'complete' | 'completedAt' | 'description' | 'id' | 'invocations' | 'license' | 'maxInvocations' | 'name' | 'paused' | 'projectId' | 'script' | 'scriptJSON' | 'scriptTypeAndVersion' | 'updatedAt' | 'website'>
+    & { contract: Pick<Contract, 'id'>, minterConfiguration?: Maybe<Pick<ProjectMinterConfiguration, 'startTime'>> }
+  )> };
+
 
 export const ArtblocksCollectionsDocument = gql`
     query ArtblocksCollections {
@@ -6052,6 +6068,37 @@ export const ArtblocksCollectionsDocument = gql`
   }
 }
     ` as unknown as DocumentNode<ArtblocksCollectionsQuery, ArtblocksCollectionsQueryVariables>;
+export const ArtblocksCollectionDocument = gql`
+    query ArtblocksCollection($id: ID!) {
+  project(id: $id) {
+    active
+    activatedAt
+    artistName
+    contract {
+      id
+    }
+    complete
+    completedAt
+    description
+    id
+    invocations
+    license
+    maxInvocations
+    minterConfiguration {
+      startTime
+    }
+    name
+    paused
+    projectId
+    script
+    scriptJSON
+    scriptTypeAndVersion
+    updatedAt
+    website
+  }
+}
+    ` as unknown as DocumentNode<ArtblocksCollectionQuery, ArtblocksCollectionQueryVariables>;
+
 
 
 export type Requester<C = {}, E = unknown> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R> | AsyncIterable<R>
@@ -6059,6 +6106,9 @@ export function getSdk<C, E>(requester: Requester<C, E>) {
   return {
     ArtblocksCollections(variables?: ArtblocksCollectionsQueryVariables, options?: C): Promise<ArtblocksCollectionsQuery> {
       return requester<ArtblocksCollectionsQuery, ArtblocksCollectionsQueryVariables>(ArtblocksCollectionsDocument, variables, options) as Promise<ArtblocksCollectionsQuery>;
+    },
+    ArtblocksCollection(variables: ArtblocksCollectionQueryVariables, options?: C): Promise<ArtblocksCollectionQuery> {
+      return requester<ArtblocksCollectionQuery, ArtblocksCollectionQueryVariables>(ArtblocksCollectionDocument, variables, options) as Promise<ArtblocksCollectionQuery>;
     }
   };
 }

@@ -1,12 +1,12 @@
 import { IABCollection } from "../../global";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
 import { remark } from "remark";
 import html from "remark-html";
-import getCollectionDataFromDB from "../../lib/artblocks-db";
+import { getABCollection } from "../../lib/artblocks";
 
 type Props = {
   collection: IABCollection;
@@ -15,8 +15,12 @@ type Props = {
 const CollectionItem = ({ collection }: Props) => {
   const [src, setSrc] = useState("");
   const [description, setDescription] = useState("");
-
-  let date = collection.completedAt || collection.mintingDate || collection.activatedAt;
+  
+  const date = useMemo(() => {
+    if (collection) {
+      return collection.completedAt || collection.mintingDate || collection.activatedAt;
+    }
+  }, [collection]);
 
   useEffect(() => {
     if (collection) {
@@ -98,7 +102,7 @@ const CollectionItem = ({ collection }: Props) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const data = await getCollectionDataFromDB(context.query.id as string);
+  const data: IABCollection = await getABCollection(context.query.id as string);
 
   return {
     props: {

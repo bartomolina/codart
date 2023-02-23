@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
-import { getCollectionsDataFromFS } from "../lib/artblocks-cache";
+import getABCollections from "../lib/artblocks";
 import { useCodArt } from "../components/collections-context";
 import LearnArtBlocksCollections from "../components/learn-ab-collections";
 import LearnCodArtCollections from "../components/learn-ca-collections";
@@ -85,7 +85,7 @@ const Learn = ({ aBCollections }: Props) => {
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const data = await getCollectionsDataFromFS();
+  const data = await getABCollections();
   return {
     props: {
       aBCollections: data,
