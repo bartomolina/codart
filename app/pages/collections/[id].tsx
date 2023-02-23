@@ -1,21 +1,23 @@
 import { IABCollection } from "../../global";
 import { useEffect, useMemo, useState } from "react";
-import { GetServerSideProps } from "next";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
+import useSWR from "swr";
 import { remark } from "remark";
 import html from "remark-html";
-import { getABCollection } from "../../lib/artblocks";
+import { ArtblocksCollectionDocument, execute } from "../../.graphclient";
 
-type Props = {
-  collection: IABCollection;
-};
+const fetcher = (id: string) =>
+  execute(ArtblocksCollectionDocument, { id }).then((result) => result?.data.project as IABCollection);
 
-const CollectionItem = ({ collection }: Props) => {
+const CollectionItem = () => {
+  const router = useRouter();
+  const { data: collection } = useSWR(router.query.id, fetcher);
   const [src, setSrc] = useState("");
   const [description, setDescription] = useState("");
-  
+
   const date = useMemo(() => {
     if (collection) {
       return collection.completedAt || collection.mintingDate || collection.activatedAt;
@@ -43,12 +45,13 @@ const CollectionItem = ({ collection }: Props) => {
       </header>
       <div className="bg-gray-100 pb-14">
         <div className="mx-auto max-w-6xl sm:px-6 lg:px-8 py-6">
-          <div className="grid grid-cols-3 space-x-4">
+          <div className="grid grid-cols-3 space-x-8">
             <div>
               {collection && src && (
                 <Image
                   width={350}
                   height={350}
+                  className="w-auto h-auto"
                   src={src}
                   alt={collection?.name as string}
                   onError={() => setSrc("/preview-error.png")}
@@ -99,16 +102,6 @@ const CollectionItem = ({ collection }: Props) => {
       </div>
     </>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const data: IABCollection = await getABCollection(context.query.id as string);
-
-  return {
-    props: {
-      collection: data,
-    },
-  };
 };
 
 export default CollectionItem;
