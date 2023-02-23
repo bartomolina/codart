@@ -1,12 +1,33 @@
 import { IABCollection } from "../global";
 import { ArtblocksCollectionsDocument, ArtblocksCollectionDocument, execute } from "../.graphclient";
+import { getScriptType } from "./utils";
 
-export const getABCollection = async (id: string): Promise<IABCollection> => {
-  return execute(ArtblocksCollectionDocument, {id}).then((result) => 
-  {
-    return result?.data.project as IABCollection
+const mutateCollection = (collection: IABCollection) => {
+  // Flatten properties
+  collection.contractAddress = collection.contract?.id || null;
+  collection.mintingDate = collection.minterConfiguration?.startTime || null;
+  collection.scriptLength = collection.script?.length || null;
+
+  // Parse numbers
+  collection.activatedAt = parseInt(collection.activatedAt) || null;
+  collection.completedAt = parseInt(collection.completedAt) || null;
+  collection.invocations = parseInt(collection.invocations) || null;
+  collection.maxInvocations = parseInt(collection.maxInvocations) || null;
+  collection.projectId = parseInt(collection.projectId);
+  collection.mintingDate = parseInt(collection.mintingDate) || null;
+  collection.updatedAt = parseInt(collection.updatedAt) || null;
+
+  // Get script type
+  collection.scriptType = getScriptType(collection);
+};
+
+export const getABCollection = (id: string) => {
+  return execute(ArtblocksCollectionDocument, { id }).then((result) => {
+    let collection = result?.data.project as IABCollection;
+    mutateCollection(collection);
+    return collection;
   });
-}
+};
 
 export const getABCollections = async (): Promise<Array<IABCollection>> => {
   let projects: Array<IABCollection> = [];
@@ -14,35 +35,9 @@ export const getABCollections = async (): Promise<Array<IABCollection>> => {
     .then((result) => {
       projects = result?.data.projects as IABCollection[];
       projects.map((collection) => {
-        // Flatten properties
-        collection.contractAddress = collection.contract?.id || null;
-        collection.mintingDate = collection.minterConfiguration?.startTime || null;
-        collection.scriptLength = collection.script?.length || null;
+        mutateCollection(collection);
         collection.script = null;
         collection.description = null;
-        collection.scriptType = collection.scriptTypeAndVersion;
-
-        // Parse numbers
-        collection.activatedAt = parseInt(collection.activatedAt) || null;
-        collection.completedAt = parseInt(collection.completedAt) || null;
-        collection.invocations = parseInt(collection.invocations) || null;
-        collection.maxInvocations = parseInt(collection.maxInvocations) || null;
-        collection.projectId = parseInt(collection.projectId);
-        collection.mintingDate = parseInt(collection.mintingDate) || null;
-        collection.updatedAt = parseInt(collection.updatedAt) || null;
-
-        if (!collection.scriptType && collection.scriptJSON) {
-          collection.scriptType = JSON.parse(collection.scriptJSON).type;
-        }
-        if (collection.scriptType) {
-          collection.scriptType = collection.scriptType.replace("p5js", "p5");
-          collection.scriptType = collection.scriptType.replace("threejs", "three");
-          collection.scriptType = collection.scriptType.replace("paperjs", "paper");
-          collection.scriptType = collection.scriptType.replace("tonejs", "tone");
-          if (collection.scriptType.indexOf("@") >= 0) {
-            collection.scriptType = collection.scriptType.substr(0, collection.scriptType.indexOf("@"));
-          }
-        }
       });
 
       projects = projects.sort((a, b) => {
@@ -51,5 +46,7 @@ export const getABCollections = async (): Promise<Array<IABCollection>> => {
         return bDate - aDate;
       });
     })
-    .then(() => projects);
+    .then(() => {
+      return projects;
+    });
 };

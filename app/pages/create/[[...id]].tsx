@@ -1,7 +1,5 @@
-// @ts-nocheck
 import { IABCollection, ICACollectionInfo } from "../../global";
 import { FormEvent, useEffect, useMemo, useState } from "react";
-import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { ethers } from "ethers";
@@ -9,42 +7,38 @@ import { minify } from "terser";
 import CodeMirror from "@uiw/react-codemirror";
 import { dracula } from "@uiw/codemirror-theme-dracula";
 import { javascript } from "@codemirror/lang-javascript";
-import libraries from "../../lib/utils";
+import useSWR from "swr";
+import { libraries, defaultCode } from "../../lib/utils";
 import { useCodArt } from "../../components/collections-context";
 // @ts-ignore
 import prettier from "prettier/esm/standalone.mjs";
 // @ts-ignore
 import parserBabel from "prettier/esm/parser-babel.mjs";
-import getCollectionDataFromDB from "../../lib/artblocks-db";
+import { getABCollection } from "../../lib/artblocks";
 import EditorCommands from "../../components/editor-commands";
 
-const defaultCode = `function setup() {
-  createCanvas(400, 400);
-}
-
-function draw() {
-  background(220);
-}`;
-
-type Props = {
-  aBCollection: IABCollection;
-};
-
-const CollectionItem = ({ aBCollection }: Props) => {
+const CollectionItem = () => {
   const router = useRouter();
-  const projectId = router.query.id ? (router.query.id[0] as string) : undefined;
-  const [collection, setCollection] = useState<IABCollection | ICACollectionInfo | undefined>();
   const { cACollections } = useCodArt();
+  const [collection, setCollection] = useState<IABCollection | ICACollectionInfo | undefined>();
   const [code, setCode] = useState(defaultCode);
   const [tokenId, setTokenId] = useState("0");
   const [autoRefresh, setAutoRefresh] = useState(true);
   const [hash, setHash] = useState(ethers.utils.hexlify(ethers.utils.randomBytes(32)));
   const [library, setLibrary] = useState<keyof typeof libraries>("p5");
-  const isAB = projectId?.includes("-");
 
-  const libraryScript = `<script src="${libraries[library] as string}"></script>`;
+  const projectId = useMemo(() => (router.query.id ? (router.query.id[0] as string) : undefined), [router.query.id]);
+  const isAB: boolean = useMemo(() => (projectId?.includes("-") ? true : false), [projectId]);
+  const libraryScript = useMemo(() => `<script src="${libraries[library] as string}"></script>`, [library]);
+  const { data: aBCollection } = useSWR(
+    () => (router.query.id && router.query.id[0] && isAB ? router.query.id[0] : null),
+    getABCollection
+  );
+  const invocations = useMemo(() => {
+    return aBCollection?.invocations;
+  }, [aBCollection]);
 
-  const generateOutput = (_hash) => {
+  const generateOutput = (_hash: string) => {
     if (document) {
       const tokenData = `window.tokenData={"tokenId": "${tokenId}", "hash": "${_hash}", "hashes": ["${_hash}"]};`;
       const wrappedCode = `<html><head>${libraryScript}</head><body><script>${tokenData}${code}</script></body></html>`;
@@ -56,6 +50,13 @@ const CollectionItem = ({ aBCollection }: Props) => {
   const handleRun = (event: FormEvent) => {
     event.preventDefault();
     generateOutput(hash);
+  };
+
+  const updateHash = (_hash: string) => {
+    setHash(_hash);
+    if (autoRefresh) {
+      generateOutput(_hash);
+    }
   };
 
   const handleCreate = (event: FormEvent) => {
@@ -74,18 +75,16 @@ const CollectionItem = ({ aBCollection }: Props) => {
   useEffect(() => {
     setCollection(undefined);
     let formattedCode = defaultCode;
-    if (router.isReady && projectId) {
+    if (projectId) {
       let _collection;
 
       if (isAB && aBCollection) {
         _collection = aBCollection;
-        if (_collection) {
-          formattedCode = _collection.script;
-        }
+        formattedCode = _collection.script;
         if (_collection?.scriptType === "p5" || _collection?.scriptType === "three") {
           setLibrary(_collection?.scriptType);
         }
-      } else if (!isAB && cACollections.length) {
+      } else if (!isAB) {
         const _cACollection = cACollections.find((c) => c._address === projectId);
         if (_cACollection && _cACollection.info) {
           _collection = _cACollection.info;
@@ -94,7 +93,6 @@ const CollectionItem = ({ aBCollection }: Props) => {
       }
       if (_collection) {
         setCollection(_collection);
-        console.log(_collection);
 
         try {
           formattedCode = prettier.format(formattedCode, {
@@ -105,14 +103,7 @@ const CollectionItem = ({ aBCollection }: Props) => {
       }
     }
     setCode(formattedCode);
-  }, [router, cACollections, isAB, projectId]);
-
-  const updateHash = (_hash: string) => {
-    setHash(_hash);
-    if (autoRefresh) {
-      generateOutput(_hash);
-    }
-  };
+  }, [projectId]);
 
   return (
     <>
@@ -136,7 +127,7 @@ const CollectionItem = ({ aBCollection }: Props) => {
                   hash,
                   updateHash,
                   tokenId,
-                  invocations: collection?.invocations,
+                  invocations,
                   setTokenId,
                   handleRun,
                   autoRefresh,
@@ -169,15 +160,6 @@ const CollectionItem = ({ aBCollection }: Props) => {
       </div>
     </>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  let data = [];
-  return {
-    props: {
-      aBCollection: data,
-    },
-  };
 };
 
 export default CollectionItem;

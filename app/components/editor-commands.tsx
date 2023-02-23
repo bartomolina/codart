@@ -1,27 +1,28 @@
-import { IABCollection } from "../global";
-import { FormEvent } from "react";
+import { IABCollection, ICACollection, ICACollectionInfo } from "../global";
+import { Dispatch, FormEvent, SetStateAction } from "react";
 import { readContract } from "@wagmi/core";
 import { ethers } from "ethers";
 import { PlayCircleIcon } from "@heroicons/react/20/solid";
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 import { useNotifications } from "../components/notifications-context";
-import ArtblocksJSON from "../lib/artblocks-contract.json";
+import ArtblocksJSON from "../lib/contracts/artblocks-contract.json";
+import { libraries } from "../lib/utils";
 
 type Props = {
-  isAB: boolean,
-  collection: IABCollection;
+  isAB: boolean;
+  collection: IABCollection | ICACollectionInfo | undefined;
   hash: string;
-  updateHash: (hash: string) => {};
+  updateHash: (hash: string) => void;
   tokenId: string;
   invocations: number;
-  setTokenId: (tokenId: string) => {};
-  handleRun: (event: FormEvent) => {};
+  setTokenId: (tokenId: string) => void;
+  handleRun: (event: FormEvent) => void;
   autoRefresh: boolean;
-  setAutoRefresh: (autoRefresh: boolean) => {};
+  setAutoRefresh: (autoRefresh: boolean) => void;
   library: string;
-  setLibrary: (library: string) => {};
-  handleCreate: (event: FormEvent) => {};
+  setLibrary: Dispatch<SetStateAction<keyof typeof libraries>>;
+  handleCreate: (event: FormEvent) => void;
 };
 
 const EditorCommands = ({
@@ -42,24 +43,28 @@ const EditorCommands = ({
   const { showError } = useNotifications();
 
   const handleFetchHashFromToken = (event: FormEvent) => {
-    if (parseInt(tokenId) + 1 > invocations) {
-      alert("Token ID must be lower than the items minted");
-      return;
-    }
-    readContract({
-      chainId: 1,
-      address: collection.contractAddress,
-      abi: ArtblocksJSON.abi as any,
-      functionName: "tokenIdToHash",
-      args: [collection.projectId * 1000000 + parseInt(tokenId)],
-    })
-      .then((hash: any) => {
-        updateHash(hash);
+    if (collection && isAB) {
+      if (parseInt(tokenId) + 1 > invocations) {
+        alert("Token ID must be lower than the items minted");
+        return;
+      }
+      readContract({
+        chainId: 1,
+        // @ts-ignore
+        address: collection.contractAddress,
+        abi: ArtblocksJSON.abi as any,
+        functionName: "tokenIdToHash",
+        // @ts-ignore
+        args: [collection.projectId * 1000000 + parseInt(tokenId)],
       })
-      .catch((error) => {
-        console.log(error);
-        showError("Error fetching Hash from Token ID", error.message);
-      });
+        .then((hash: any) => {
+          updateHash(hash);
+        })
+        .catch((error) => {
+          console.log(error);
+          showError("Error fetching Hash from Token ID", error.message);
+        });
+    }
   };
 
   return (
@@ -77,7 +82,7 @@ const EditorCommands = ({
                     id="library"
                     name="library"
                     value={library}
-                    onChange={(e) => setLibrary(e.target.value)}
+                    onChange={(e) => setLibrary(e.target.value as keyof typeof libraries)}
                     className="block text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                   >
                     <option>p5</option>

@@ -27,10 +27,10 @@ async function main() {
   const networkName = hre.network.name;
 
   fs.writeFileSync(
-    `./app/lib/${networkName}-codart-learn-factory-contract.json`,
+    `./app/lib/contracts/${networkName}-codart-learn-factory-contract.json`,
     JSON.stringify(CodArtLearnFactoryData)
   );
-  fs.writeFileSync("./app/lib/codart-learn-contract.json", JSON.stringify(CodArtLearnData));
+  fs.writeFileSync("./app/lib/contracts/codart-learn-contract.json", JSON.stringify(CodArtLearnData));
 
   if (networkName === "goerli") {
     console.log("Waiting to verify on Etherscan");

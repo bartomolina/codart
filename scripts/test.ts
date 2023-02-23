@@ -8,7 +8,6 @@ async function main() {
   const createCodArtLearnTx = await codArtLearnFactory.createCodArtLearn("GenArt0", "GA0", 100, 0, "p5", "code");
   const receipt = await createCodArtLearnTx.wait();
   console.log(receipt.events[3].args._instance);
-  // console.log(receipt);
 }
 
 main().catch((error) => {

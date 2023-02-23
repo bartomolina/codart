@@ -1,8 +1,8 @@
 import { ICACollection } from "../global";
 import { createContext, useContext, useEffect, useState } from "react";
 import { readContract } from "@wagmi/core";
-import LocalCodArtFactoryJSON from "../lib/localhost-codart-learn-factory-contract.json";
-import GoerliCodArtFactoryJSON from "../lib/goerli-codart-learn-factory-contract.json";
+import LocalCodArtFactoryJSON from "../lib/contracts/localhost-codart-learn-factory-contract.json";
+import GoerliCodArtFactoryJSON from "../lib/contracts/goerli-codart-learn-factory-contract.json";
 
 const CodArtContext = createContext({
   cACollections: [] as ICACollection[],

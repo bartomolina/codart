@@ -1,8 +1,7 @@
 import { IABCollection } from "../global";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { GetStaticProps } from "next";
 import Head from "next/head";
-
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import { getABCollections } from "../lib/artblocks";
 import Card from "../components/card";
@@ -49,8 +48,10 @@ const Home = ({ aBCollections }: Props) => {
       }
 
       if (searchFilter) {
-        filteredCollections = filteredCollections.filter((collection) =>
-          collection.name.toLowerCase().includes(searchFilter.toLowerCase())
+        filteredCollections = filteredCollections.filter(
+          (collection) =>
+            collection.name.toLowerCase().includes(searchFilter.toLowerCase()) ||
+            collection.artistName.toLowerCase().includes(searchFilter.toLowerCase())
         );
       }
     }
@@ -147,7 +148,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     props: {
       aBCollections: data,
     },
-    revalidate: 86400,
+    revalidate: 7 * 24 * 60 * 60,
   };
 };
 

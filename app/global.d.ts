@@ -6,11 +6,6 @@ interface Window {
   ethereum: ExternalProvider;
 }
 
-declare global {
-  var prisma: PrismaClient;
-  var lastWarmUp: number;
-}
-
 interface ICACollectionInfo {
   name: string;
   symbol: string;
@@ -28,30 +23,4 @@ interface ICACollection {
   info: ICACollectionInfo;
 }
 
-type IABCollection = Pick<
-  Project,
-  | "active"
-  | "activatedAt"
-  | "artistName"
-  | "contract"
-  | "contractAddress"
-  | "complete"
-  | "completedAt"
-  | "description"
-  | "id"
-  | "invocations"
-  | "license"
-  | "maxInvocations"
-  | "minterConfiguration"
-  | "mintingDate"
-  | "name"
-  | "paused"
-  | "projectId"
-  | "script"
-  | "scriptJSON"
-  | "scriptTypeAndVersion"
-  | "scriptType"
-  | "scriptLength"
-  | "updatedAt"
-  | "website"
->;
+type IABCollection = Project;

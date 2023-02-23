@@ -4,9 +4,9 @@ import Head from "next/head";
 import { ethers } from "ethers";
 import { useAccount } from "wagmi";
 import { writeContract, waitForTransaction } from "@wagmi/core";
-import libraries from "../../lib/utils";
-import LocalCodArtFactoryJSON from "../../lib/localhost-codart-learn-factory-contract.json";
-import GoerliCodArtFactoryJSON from "../../lib/goerli-codart-learn-factory-contract.json";
+import { libraries } from "../../lib/utils";
+import LocalCodArtFactoryJSON from "../../lib/contracts/localhost-codart-learn-factory-contract.json";
+import GoerliCodArtFactoryJSON from "../../lib/contracts/goerli-codart-learn-factory-contract.json";
 import { useNotifications } from "../../components/notifications-context";
 import { useCodArt } from "../../components/collections-context";
 
@@ -22,9 +22,7 @@ const Create = () => {
     maxSupply: 0,
     price: 0,
     _library: "p5",
-    code: script
-      ? script
-      : 'function setup(){createCanvas(400,400)}function draw(){background(220)}',
+    code: script ? script : "function setup(){createCanvas(400,400)}function draw(){background(220)}",
   });
   const { showNotification, showError } = useNotifications();
   const { fetchCACollections } = useCodArt();
@@ -89,8 +87,6 @@ const Create = () => {
         setIsLoading(false);
         setIsWaitingTx(false);
         clearForm();
-        // @ts-ignore
-        console.log("Done!");
         fetchCACollections();
         // @ts-ignore
         showNotification("Collection created", tx.transactionHash);
