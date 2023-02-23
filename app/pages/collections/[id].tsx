@@ -44,11 +44,19 @@ const CollectionItem = () => {
           <div className="mx-auto max-w-6xl sm:px-6 lg:px-8 py-6">
             <div className="grid grid-cols-3 space-x-8">
               <div>
+                <div className="flex justify-center">
+                  <Link
+                    href={`/create/${collection.id}`}
+                    className="mt-1.5 w-full text-center rounded-lg border-2 border-black font-semibold bg-white px-3 py-2 text-gray-900 shadow-md hover:bg-gray-50 active:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:ring-offset-2 hover:drop-shadow-xl hover:-translate-y-0.5 active:translate-y-0 transform transition"
+                  >
+                    Open in editor
+                  </Link>
+                </div>
                 {collection && src && (
                   <Image
                     width={350}
                     height={350}
-                    className="w-auto h-auto"
+                    className="mt-4 w-auto h-auto"
                     src={src}
                     alt={collection.name as string}
                     onError={() => {
@@ -87,14 +95,6 @@ const CollectionItem = () => {
                     <div className="mt-3 text-gray-500">
                       <div>{collection.scriptType}</div>
                       <div>{collection.license}</div>
-                    </div>
-                    <div className="mt-4 flex justify-center">
-                      <Link
-                        href={`/create/${collection.id}`}
-                        className="w-full text-center rounded-lg bg-indigo-600 px-3 py-2 text-white shadow-md hover:bg-indigo-500 active:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:ring-offset-2"
-                      >
-                        Open in editor
-                      </Link>
                     </div>
                   </div>
                 </div>

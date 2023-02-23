@@ -89,20 +89,22 @@ const EditorCommands = ({
                     <option>three</option>
                   </select>
                 </div>
-                <div className="flex items-center">
-                  <input
-                    id="autoRefresh"
-                    aria-describedby="autoRefresh"
-                    name="autoRefresh"
-                    type="checkbox"
-                    checked={autoRefresh}
-                    onChange={(e) => setAutoRefresh(e.target.checked)}
-                    className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                  />
-                  <label htmlFor="autoRefresh" className="ml-3 font-medium text-gray-700">
-                    Auto-refresh
-                  </label>
-                </div>
+                {!isAB && (
+                  <div className="flex items-center">
+                    <input
+                      id="autoRefresh"
+                      aria-describedby="autoRefresh"
+                      name="autoRefresh"
+                      type="checkbox"
+                      checked={autoRefresh}
+                      onChange={(e) => setAutoRefresh(e.target.checked)}
+                      className="h-4 w-4 rounded border-gray-300 text-black focus:ring-gray-200"
+                    />
+                    <label htmlFor="autoRefresh" className="ml-3 font-medium text-gray-700">
+                      Auto-refresh
+                    </label>
+                  </div>
+                )}
               </div>
               {isAB && (
                 <div className="flex text-sm mt-3 space-x-3">
@@ -123,7 +125,7 @@ const EditorCommands = ({
                   <button
                     type="button"
                     onClick={(e) => handleFetchHashFromToken(e)}
-                    className="h-auto p-0 text-sm rounded-lg bg-indigo-600 px-3 text-white shadow-md hover:bg-indigo-500 active:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:ring-offset-2"
+                    className="h-auto p-0 text-sm rounded-lg border-2 border-black font-semibold bg-white px-3 text-gray-900 shadow-md hover:bg-gray-50 active:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:ring-offset-2 hover:drop-shadow hover:-translate-y-0.5 active:translate-y-0 transform transition"
                   >
                     Fetch hash from Token
                   </button>
@@ -135,7 +137,7 @@ const EditorCommands = ({
                       type="checkbox"
                       checked={autoRefresh}
                       onChange={(e) => setAutoRefresh(e.target.checked)}
-                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                      className="h-4 w-4 rounded border-gray-300 text-black focus:ring-gray-200"
                     />
                     <label htmlFor="autoRefresh" className="ml-3 font-medium text-gray-700">
                       Auto-refresh
@@ -160,7 +162,7 @@ const EditorCommands = ({
                 <button
                   type="button"
                   onClick={(e) => updateHash(ethers.utils.hexlify(ethers.utils.randomBytes(32)))}
-                  className="h-7 text-sm rounded-lg bg-indigo-600 px-3 text-white shadow-md hover:bg-indigo-500 active:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:ring-offset-2"
+                  className="h-7 text-sm rounded-lg border-2 border-black font-semibold bg-white px-2 text-gray-900 shadow-md hover:bg-gray-50 active:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:ring-offset-2 hover:drop-shadow hover:-translate-y-0.5 active:translate-y-0 transform transition"
                 >
                   <ArrowPathIcon className="inline -mt-1 h-4 w-4" aria-hidden="true" />
                 </button>
@@ -175,7 +177,7 @@ const EditorCommands = ({
             <div className="flex">
               <div className="flex w-36 justify-end">
                 <button type="button" onClick={handleRun}>
-                  <PlayCircleIcon className="h-16 w-16 text-green-400" aria-hidden="true" />
+                  <PlayCircleIcon className="h-16 w-16 text-green-400 hover:-translate-y-0.5 active:translate-y-0 transform transition" aria-hidden="true" />
                 </button>
               </div>
             </div>

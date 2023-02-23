@@ -77,7 +77,7 @@ const CollectionItem = () => {
     let formattedCode = defaultCode;
     if (projectId) {
       let _collection;
-
+      
       if (isAB && aBCollection) {
         _collection = aBCollection;
         formattedCode = _collection.script;
@@ -103,7 +103,7 @@ const CollectionItem = () => {
       }
     }
     setCode(formattedCode);
-  }, [projectId]);
+  }, [projectId, aBCollection]);
 
   return (
     <>
@@ -151,7 +151,7 @@ const CollectionItem = () => {
               <iframe
                 scrolling="no"
                 style={{ overflow: "hidden" }}
-                className="overflow-hidden w-full h-full col-span-3"
+                className="overflow-hidden w-full h-full col-span-3 -mt-2"
                 id="canvasIframe"
               />
             </div>
