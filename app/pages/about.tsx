@@ -13,7 +13,7 @@ const About = () => (
     <div className="bg-gray-100 pb-14">
       <div className="mx-auto max-w-6xl sm:px-6 lg:px-8 pb- pt-5">
         <div className="mx-auto w-full rounded-lg bg-white py-8 px-20">
-          <h2 className="text-2xl font-semibold mt-0 mb-5 text-gray-800">About the project</h2>
+          <h2 id="about" className="text-2xl font-semibold mt-0 mb-5 text-gray-800">About the project</h2>
           <div className="text-lg font-light text-gray-700 space-y-5">
             <p>
               When I fell into the rabbit hole of crypto, one of the things that captivated me were NFTs, and especially
@@ -35,7 +35,7 @@ const About = () => (
               their work through them have done in the past years.
             </p>
           </div>
-          <h2 className="text-2xl font-semibold mt-10 mb-5 text-gray-800">Why CodArt.io</h2>
+          <h2 id="why-codart" className="text-2xl font-semibold mt-10 mb-5 text-gray-800">Why CodArt.io</h2>
           <div className="text-lg font-light text-gray-700 space-y-5">
             <p>
               If you get interested in generative art (and more specifically Art Blocks) , there&apos;s a few sites that
@@ -95,7 +95,7 @@ const About = () => (
               and play with the code to see how the different outputs are generated.
             </p>
           </div>
-          <h2 className="text-2xl font-semibold mt-10 mb-5 text-gray-800">How Art Blocks contracts work</h2>
+          <h2 id="how-art-blocks-work" className="text-2xl font-semibold mt-10 mb-5 text-gray-800">How Art Blocks contracts work</h2>
           <div className="text-lg font-light text-gray-700 space-y-5">
             <p>
               This is just a quick summary on how the collections and tokens are stored in the Art Blocks contracts. For

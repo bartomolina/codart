@@ -7,6 +7,7 @@ import { ArrowPathIcon } from "@heroicons/react/24/outline";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 import { useNotifications } from "../components/notifications-context";
 import ArtblocksJSON from "../lib/contracts/artblocks-contract.json";
+import ArtblocksJSONV0 from "../lib/contracts/artblocks-contract-v0.json";
 import { libraries } from "../lib/utils";
 
 type Props = {
@@ -48,12 +49,14 @@ const EditorCommands = ({
         alert("Token ID must be lower than the items minted");
         return;
       }
+      const functionName = collection.contractAddress === "0x059edd72cd353df5106d2b9cc5ab83a52287ac3a" ? "showTokenHashes" : "tokenIdToHash";
+      const abi: any = collection.contractAddress === "0x059edd72cd353df5106d2b9cc5ab83a52287ac3a" ? ArtblocksJSONV0.abi : ArtblocksJSON.abi;
       readContract({
         chainId: 1,
         // @ts-ignore
         address: collection.contractAddress,
-        abi: ArtblocksJSON.abi as any,
-        functionName: "tokenIdToHash",
+        abi,
+        functionName,
         // @ts-ignore
         args: [collection.projectId * 1000000 + parseInt(tokenId)],
       })
