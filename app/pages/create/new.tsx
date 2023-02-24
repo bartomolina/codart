@@ -113,15 +113,15 @@ const Create = () => {
         <title>Create - CodArt.io</title>
         <meta name="description" content="CodArt" />
       </Head>
-      <header className="mx-auto max-w-6xl sm:px-6 lg:px-8 pt-4 pb-8">
+      <header className="mx-auto max-w-6xl px-6 lg:px-8 pt-4 pb-8">
         <h1 className="text-5xl font-thin leading-tight tracking-tight text-gray-900">Create</h1>
       </header>
       <div className="bg-gray-100">
-        <div className="mx-auto max-w-6xl sm:px-6 lg:px-8 pb-12 pt-5">
+        <div className="mx-auto max-w-6xl px-6 lg:px-8 pb-12 pt-5">
           <form action="#" method="POST">
-            <div className="grid grid-cols-3 ">
-              <div>Collection information</div>
-              <div className="col-span-2">
+            <div className="md:grid md:grid-cols-3 ">
+              <div className="md:mb-0 mb-3 font-semibold">Collection information</div>
+              <div className="md:col-span-2">
                 <div className="overflow-hidden shadow rounded-md">
                   <div className="bg-white px-4 p-6">
                     <div className="grid grid-cols-6 gap-6">
@@ -210,13 +210,13 @@ const Create = () => {
                 </div>
               </div>
             </div>
-            <div className="hidden sm:block" aria-hidden="true">
+            <div className="hidden md:block" aria-hidden="true">
               <div className="py-5">
                 <div className="border-t border-gray-200" />
               </div>
             </div>
-            <div className="grid grid-cols-3 ">
-              <div>Code</div>
+            <div className="md:grid md:grid-cols-3 ">
+              <div className="md:mb-0 my-3 font-semibold">Code</div>
               <div className="col-span-2">
                 <div className="overflow-hidden shadow rounded-md">
                   <div className="bg-white px-4 p-6">
@@ -255,12 +255,12 @@ const Create = () => {
                 </div>
               </div>
             </div>
-            <div className="hidden sm:block" aria-hidden="true">
+            <div className="hidden md:block" aria-hidden="true">
               <div className="py-5">
                 <div className="border-t border-gray-200" />
               </div>
             </div>
-            <div className="flex justify-end">
+            <div className="flex justify-end md:mt-0 mt-5">
               <button
                 type="button"
                 disabled={!isConnected || isLoading}

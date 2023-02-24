@@ -15,7 +15,7 @@ const App = ({ Component, pageProps }: AppProps) => (
       <meta name="viewport" content="width=device-width, initial-scale=1" />
     </Head>
     <WagmiConfig client={client}>
-      <ConnectKitProvider theme="auto" mode="light">
+      <ConnectKitProvider theme="auto" mode="light" options={{ initialChainId: 5 }}>
         <NotificationsProvider>
           <CodArtProvider>
             <Layout>

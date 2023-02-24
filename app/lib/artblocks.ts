@@ -33,7 +33,7 @@ export const getABCollections = async (): Promise<Array<IABCollection>> => {
   let projects: Array<IABCollection> = [];
   return execute(ArtblocksCollectionsDocument, {})
     .then((result) => {
-      projects = result?.data.projects as IABCollection[];
+      projects = result?.data?.projects || [] as IABCollection[];
       projects.map((collection) => {
         mutateCollection(collection);
         collection.script = null;

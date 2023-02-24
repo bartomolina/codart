@@ -75,7 +75,7 @@ const EditorCommands = ({
       <div className="grid grid-cols-8 gap-8">
         <div className="col-span-5">
           <div className="flex justify-between">
-            <div className="flex-row w-full pr-5">
+            <div className="flex-row w-full pr-3">
               <div className="flex text-sm space-x-3">
                 <label htmlFor="tokenId" className="flex font-medium text-gray-700 items-center">
                   Library
@@ -159,7 +159,7 @@ const EditorCommands = ({
                     id="hash"
                     value={hash}
                     onChange={(event) => updateHash(event.target.value)}
-                    className="inline w-full h-7 text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                    className="inline w-full h-7 text-sm font-mono rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                   />
                 </div>
                 <button
@@ -178,7 +178,7 @@ const EditorCommands = ({
               </div>
             </div>
             <div className="flex">
-              <div className="flex w-36 justify-end">
+              <div className="flex w-24 justify-end">
                 <button type="button" onClick={handleRun}>
                   <PlayCircleIcon className="h-16 w-16 text-green-400 hover:-translate-y-0.5 active:translate-y-0 transform transition" aria-hidden="true" />
                 </button>

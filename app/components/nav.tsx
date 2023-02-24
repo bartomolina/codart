@@ -20,10 +20,10 @@ const Nav = () => {
       {({ open }) => (
         <>
           <div className="mx-auto max-w-6xl py-6 px-4 sm:px-6 lg:px-8">
-            <div className="flex h-9 justify-between">
+            <div className="flex justify-between">
               <div className="flex">
                 {/* Home */}
-                <div className="text-2xl mr-5 font-semibold lg:mr-11 md:inline-flex hidden justify-center items-center align-middle">
+                <div className="text-2xl mr-5 font-semibold lg:mr-11 md:inline-flex sm:hidden justify-center items-center align-middle">
                   <Image src={"/codart.png"} alt="CodArt" width={156} height={36} quality={100} />
                 </div>
                 {/* Menu items */}
@@ -42,23 +42,25 @@ const Nav = () => {
                   ))}
                 </div>
               </div>
-              {/* Right menu items */}
-              <div className="hidden sm:ml-6 sm:flex sm:items-center">
-                <ConnectKitButton showBalance={true} />
-              </div>
-              {/* Mobile menu button */}
-              <div className="flex items-center sm:hidden">
-                <Disclosure.Button
-                  type="button"
-                  className="inline-flex p-2 rounded-md bg-white text-gray-500 hover:bg-gray-200 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
-                  <span className="sr-only">Open main menu</span>
-                  {open ? (
-                    <XMarkIcon className="h-6 w-6" aria-hidden="true" />
-                  ) : (
-                    <Bars3Icon className="h-6 w-6" aria-hidden="true" />
-                  )}
-                </Disclosure.Button>
+              <div className="flex">
+                {/* Right menu items */}
+                <div className="ml-6">
+                  <ConnectKitButton showBalance={true} />
+                </div>
+                {/* Mobile menu button */}
+                <div className="items-center sm:hidden ml-3">
+                  <Disclosure.Button
+                    type="button"
+                    className="inline-flex p-2 rounded-md bg-white text-gray-500 hover:bg-gray-200 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  >
+                    <span className="sr-only">Open main menu</span>
+                    {open ? (
+                      <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+                    ) : (
+                      <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+                    )}
+                  </Disclosure.Button>
+                </div>
               </div>
             </div>
           </div>

@@ -7,13 +7,15 @@ const About = () => (
       <title>About - CodArt.io</title>
       <meta name="description" content="CodArt" />
     </Head>
-    <header className="mx-auto max-w-6xl sm:px-6 lg:px-8 pt-4 pb-8">
+    <header className="mx-auto max-w-6xl px-6 lg:px-8 pt-4 pb-8">
       <h1 className="text-5xl font-thin leading-tight tracking-tight text-gray-900">About</h1>
     </header>
     <div className="bg-gray-100 pb-14">
-      <div className="mx-auto max-w-6xl sm:px-6 lg:px-8 pb- pt-5">
-        <div className="mx-auto w-full rounded-lg bg-white py-8 px-20">
-          <h2 id="about" className="text-2xl font-semibold mt-0 mb-5 text-gray-800">About the project</h2>
+      <div className="mx-auto max-w-6xl sm:px-6 lg:px-8 pb- pt-5 ">
+        <div className="mx-auto w-full rounded-lg bg-white py-8 lg:px-20 md:px-10 px-6">
+          <h2 id="about" className="text-2xl font-semibold mt-0 mb-5 text-gray-800">
+            About the project
+          </h2>
           <div className="text-lg font-light text-gray-700 space-y-5">
             <p>
               When I fell into the rabbit hole of crypto, one of the things that captivated me were NFTs, and especially
@@ -31,11 +33,26 @@ const About = () => (
               the levels it is right now.
             </p>
             <p>
-              This project is a way to celebrate and appreciate the work that Art Blocks and the artists who published
-              their work through them have done in the past years.
+              I built this site as a final project for the{" "}
+              <a
+                href="https://www.unic.ac.cy/openmetaverse/mooc-nfts-metaverse/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline"
+              >
+                UNIC NFTs And Metaverse course
+              </a>{" "}
+              and the{" "}
+              <a href="https://university.alchemy.com/" target="_blank" rel="noopener noreferrer" className="underline">
+                Alchemy's Ethereum Bootcamp
+              </a>{" "}
+              and as a way to celebrate and appreciate the work that Art Blocks and the artists who published their work
+              through them have done in the past years.
             </p>
           </div>
-          <h2 id="why-codart" className="text-2xl font-semibold mt-10 mb-5 text-gray-800">Why CodArt.io</h2>
+          <h2 id="why-codart" className="text-2xl font-semibold mt-10 mb-5 text-gray-800">
+            Why CodArt.io
+          </h2>
           <div className="text-lg font-light text-gray-700 space-y-5">
             <p>
               If you get interested in generative art (and more specifically Art Blocks) , there&apos;s a few sites that
@@ -95,7 +112,9 @@ const About = () => (
               and play with the code to see how the different outputs are generated.
             </p>
           </div>
-          <h2 id="how-art-blocks-work" className="text-2xl font-semibold mt-10 mb-5 text-gray-800">How Art Blocks contracts work</h2>
+          <h2 id="how-art-blocks-work" className="text-2xl font-semibold mt-10 mb-5 text-gray-800">
+            How Art Blocks contracts work
+          </h2>
           <div className="text-lg font-light text-gray-700 space-y-5">
             <p>
               This is just a quick summary on how the collections and tokens are stored in the Art Blocks contracts. For
@@ -201,7 +220,7 @@ const About = () => (
             <Image
               width={780}
               height={780}
-              className="mx-auto p-5"
+              className="mx-auto p-5 object-contain"
               src={"/415000195-OpenSea.png"}
               alt={"415000195 OpenSea"}
             />
@@ -219,18 +238,18 @@ const About = () => (
               API pointing to the JSON file holding the token metadata (including the URL to the still image of the
               item), which is what OpenSea uses to display the token information:
             </p>
-            <div className="margin-auto flex">
+            <div className="margin-auto flex flex-wrap">
               <Image
-                width={480}
-                height={480}
-                className="mx-auto p-5"
+                width={400}
+                height={400}
+                className="inline-flex mx-auto p-5 object-contain"
                 src={"/415000195-tokenURI.png"}
                 alt={"415000195 token URI"}
               />
               <Image
-                width={480}
-                height={480}
-                className="mx-auto p-5"
+                width={400}
+                height={400}
+                className="inline-flex mx-auto p-5 object-contain"
                 src={"/415000195-Metadata.png"}
                 alt={"415000195 Metadata"}
               />
@@ -256,18 +275,18 @@ const About = () => (
               collection script and the token hash with the functions <em>tokenIdToHash</em> and{" "}
               <em>projectScriptByIndex</em> respectively:
             </p>
-            <div className="margin-auto flex">
+            <div className="margin-auto flex flex-wrap">
               <Image
-                width={480}
-                height={480}
-                className="mx-auto p-5"
+                width={400}
+                height={400}
+                className="mx-auto p-5 object-contain"
                 src={"/415000195-hash.png"}
                 alt={"415000195 Hash"}
               />
               <Image
-                width={480}
-                height={480}
-                className="mx-auto p-5"
+                width={400}
+                height={400}
+                className="mx-auto p-5 object-contain"
                 src={"/415000195-script.png"}
                 alt={"415000195 Script"}
               />
@@ -277,9 +296,9 @@ const About = () => (
               the script). Also, the <em>projectScriptDetails</em> function returns the library used by the project:
             </p>
             <Image
-              width={480}
-              height={480}
-              className="mx-auto p-5"
+              width={520}
+              height={520}
+              className="mx-auto p-5 object-contain"
               src={"/415000195-scripttype.png"}
               alt={"415000195 Script Type and Version"}
             />
@@ -319,6 +338,19 @@ const About = () => (
                 </tr>
               </tbody>
             </table>
+          </div>
+          <h2 id="codart" className="text-2xl font-semibold mt-10 mb-5 text-gray-800">
+            Codart
+          </h2>
+          <div className="text-lg font-light text-gray-700 space-y-5">
+            <p>
+              CodArt allows you to explore the Art Blocks collections, retrieve and run the scripts associated with the
+              collections and see the different outputs for the tokens minted.
+            </p>
+            <p>
+              With CodArt you can also create and deploy your own generative art collections, either based on an
+              existing collection, or writing your own scripts from scratch.
+            </p>
           </div>
         </div>
       </div>

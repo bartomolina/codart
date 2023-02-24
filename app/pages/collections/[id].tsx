@@ -37,11 +37,11 @@ const CollectionItem = () => {
           <title>CodArt.io</title>
           <meta name="description" content="CodArt" />
         </Head>
-        <header className="mx-auto max-w-6xl sm:px-6 lg:px-8 pt-4 pb-8">
+        <header className="mx-auto max-w-6xl px-6 lg:px-8 pt-4 pb-8">
           <h1 className="text-5xl font-thin leading-tight tracking-tight text-gray-900">{collection.name}</h1>
         </header>
         <div className="bg-gray-100 pb-14">
-          <div className="mx-auto max-w-6xl sm:px-6 lg:px-8 py-6">
+          <div className="mx-auto max-w-6xl px-6 lg:px-8 py-6">
             <div className="grid grid-cols-3 space-x-8">
               <div>
                 <div className="flex justify-center">
@@ -69,8 +69,8 @@ const CollectionItem = () => {
                   />
                 )}
                 <div className="mx-0.5 mt-3 divide-y-2">
-                  <div className="mb-4">
-                    <div className="flex justify-between items-baseline space-x-2 font-semibold text-2xl text-gray-900 mr-4">
+                  <div className="my-6">
+                    <div className="flex flex-wrap justify-between items-baseline space-x-2 font-semibold text-2xl text-gray-900 mr-4">
                       <div>by {collection.artistName}</div>
                       <div>#{collection.projectId}</div>
                     </div>
@@ -78,12 +78,12 @@ const CollectionItem = () => {
                       href={collection.website}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="hover:underline text-gray-500"
+                      className="hover:underline text-gray-500 break-words"
                     >
                       {collection.website}
                     </a>
                   </div>
-                  <div className="pt-4">
+                  <div className="pt-6">
                     <div className="text-gray-500">
                       <div>
                         {collection.invocations}
@@ -99,7 +99,7 @@ const CollectionItem = () => {
                   </div>
                 </div>
               </div>
-              <div className="col-span-2 markdown text-lg" dangerouslySetInnerHTML={{ __html: description }} />
+              <div className="col-span-2 markdown text-lg overflow-x-auto" dangerouslySetInnerHTML={{ __html: description }} />
             </div>
           </div>
         </div>

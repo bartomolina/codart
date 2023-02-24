@@ -69,11 +69,11 @@ const Home = ({ aBCollections }: Props) => {
         <title>CodArt.io</title>
         <meta name="description" content="CodArt" />
       </Head>
-      <header className="mx-auto max-w-6xl sm:px-6 lg:px-8 pt-4 pb-8">
+      <header className="mx-auto max-w-6xl px-6 lg:px-8 pt-4 pb-8">
         <h1 className="text-5xl font-thin leading-tight tracking-tight text-gray-900">Art Blocks</h1>
       </header>
-      <div className="mx-auto max-w-6xl sm:px-6 lg:px-8 pb-8 flex justify-between">
-        <div>
+      <div className="-mt-4 mx-auto max-w-6xl px-6 lg:px-8 pb-8 flex flex-wrap justify-between">
+        <div className="mt-4">
           <label htmlFor="status" className="sr-only">
             Status
           </label>
@@ -103,9 +103,9 @@ const Home = ({ aBCollections }: Props) => {
             {scriptTypes &&
               [...Array.from(scriptTypes)].map((scriptType) => <option key={scriptType}>{scriptType}</option>)}
           </select>
-          <em className="ml-5 text-lg">{filteredCollections.length} Collections</em>
+          <em className="ml-5 text-lg">{filteredCollections.length}</em><em className="text-lg sm:inline hidden"> Collections</em>
         </div>
-        <div>
+        <div className="mt-4">
           <label htmlFor="search" className="sr-only">
             Search
           </label>
@@ -128,12 +128,7 @@ const Home = ({ aBCollections }: Props) => {
         <div className="mx-auto max-w-6xl sm:px-6 lg:px-8 py-6">
           <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
             {filteredCollections.map((collection) => (
-              <li
-                key={collection.id}
-                className="flex space-x-5 overflow-hidden rounded-lg border border-gray-300 shadow hover:shadow-xl hover:-translate-y-1 transform transition"
-              >
-                <Card collection={collection} />
-              </li>
+              <Card key={collection.id} collection={collection} />
             ))}
           </ul>
         </div>

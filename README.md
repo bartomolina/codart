@@ -4,7 +4,7 @@ When I fell into the rabbit hole of crypto, one of the things that captivated me
 
 Without doubt, [ArtBlocks](https://www.artblocks.io/) is the reference in the generative art space. They've done an amazing job promoting and curating artists. And without them, most probably it would've taken a few more years for the space to reach to the levels it is right now.
 
-This project is a way to celebrate and appreciate the work that Art Blocks and the artists who published their work through them have done in the past years.
+I built this site as a final project for the [UNIC NFTs And Metaverse course](https://www.unic.ac.cy/openmetaverse/mooc-nfts-metaverse/) and the [Alchemy's Ethereum Bootcamp](https://university.alchemy.com/) and as a way to celebrate and appreciate the work that Art Blocks and the artists who published their work through them have done in the past years.
 
 # Why CodArt.io
 
@@ -64,11 +64,46 @@ It's worth noting that the majority of the projets use p5.js:
 
 # CodArt
 
+CodArt allows you to explore the Art Blocks collections, retrieve and run the scripts associated with the collections and see the different outputs for the tokens minted.
+
+With CodArt you can also create and deploy your own generative art collections, either based on an existing collection, or writing your own scripts from scratch.
+
 ## Project structure
+
+The project is divided in two parts:
+
+1. The project's root is based on the [Hardhat](https://hardhat.org/) starter template. The smart contracts are located under the **/contracts** folder.
+2. The **/app** folder contains the DApp, based on [Next.js](https://nextjs.org/) and [Tailwind CSS](https://tailwindcss.com/).
 
 ## Running locally
 
+You can run the project locally by following these steps:
+
+1. Clone the repo:
+```
+git clone https://github.com/bartomolina/codart.git
+```
+2. Install dependencies (both in the root folder and the apps folder):
+```
+npm i
+```
+3. Set your local envirnoment variables on the **.env** and **/app/.env.local** files. Use the **.evn.example** and **/app/.env.local.example** files as a guide.
+4. Start a hardhat node, run the scripts to deploy the smart contracts and load the mock data:
+```
+npx hardhat node
+npx hardhat run scripts/deploy.ts
+```
+5. Start the DApp under the **/app** folder:
+```
+npm run dev
+```
+
 # TODO
+
+- [ ] Allow minting CodArt projects
+- [ ] Extend preview to other libraries (currently only working with p5 / three)
+- [ ] CodArt certificates
+- [ ] Deploy to mainnet
 
 # License
 

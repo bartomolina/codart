@@ -41,7 +41,7 @@ const CollectionItem = () => {
   const generateOutput = (_hash: string) => {
     if (document) {
       const tokenData = `window.tokenData={"tokenId": "${tokenId}", "hash": "${_hash}", "hashes": ["${_hash}"]};`;
-      const wrappedCode = `<html><head>${libraryScript}</head><body><script>${tokenData}${code}</script></body></html>`;
+      const wrappedCode = `<html><head>${libraryScript}</head><body style="margin: 0px"><script>${tokenData}${code}</script></body></html>`;
       // @ts-ignore
       document.getElementById("canvasIframe").srcdoc = wrappedCode;
     }
@@ -151,7 +151,7 @@ const CollectionItem = () => {
               <iframe
                 scrolling="no"
                 style={{ overflow: "hidden" }}
-                className="overflow-hidden w-full h-full col-span-3 -mt-2"
+                className="overflow-hidden w-full h-full col-span-3"
                 id="canvasIframe"
               />
             </div>
