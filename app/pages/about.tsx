@@ -44,7 +44,7 @@ const About = () => (
               </a>{" "}
               and the{" "}
               <a href="https://university.alchemy.com/" target="_blank" rel="noopener noreferrer" className="underline">
-                Alchemy's Ethereum Bootcamp
+                Alchemy&apos;s Ethereum Bootcamp
               </a>{" "}
               and as a way to celebrate and appreciate the work that Art Blocks and the artists who published their work
               through them have done in the past years.
