@@ -5,8 +5,8 @@ import { ethers } from "ethers";
 import { useAccount } from "wagmi";
 import { writeContract, waitForTransaction } from "@wagmi/core";
 import { libraries } from "../../lib/utils";
-import LocalCodArtFactoryJSON from "../../lib/contracts/localhost-codart-learn-factory-contract.json";
-import GoerliCodArtFactoryJSON from "../../lib/contracts/goerli-codart-learn-factory-contract.json";
+import LocalCodArtFactoryJSON from "../../lib/contracts/localhost-codart-factory-contract.json";
+import GoerliCodArtFactoryJSON from "../../lib/contracts/goerli-codart-factory-contract.json";
 import { useNotifications } from "../../components/notifications-context";
 import { useCodArt } from "../../components/collections-context";
 

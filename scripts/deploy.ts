@@ -7,37 +7,43 @@ const delay = (ms) => {
 };
 
 async function main() {
-  const CodArtLearnFactory = await ethers.getContractFactory("CodArtLearnFactory");
+  const CodArtFactory = await ethers.getContractFactory("CodArtFactory");
   const CodArtLearn = await ethers.getContractFactory("CodArtLearn");
+  const CodArtCertificate = await ethers.getContractFactory("CodArtCertificate");
 
-  const codArtLearnFactory = await CodArtLearnFactory.deploy();
-  await codArtLearnFactory.deployed();
+  const codArtFactory = await CodArtFactory.deploy();
+  await codArtFactory.deployed();
 
-  console.log(`CodArtLearnFactory deployed to ${codArtLearnFactory.address}`);
+  console.log(`CodArtFactory deployed to ${codArtFactory.address}`);
 
-  const CodArtLearnFactoryData = {
-    address: codArtLearnFactory.address,
-    abi: codArtLearnFactory.interface.format("json"),
+  const CodArtFactoryData = {
+    address: codArtFactory.address,
+    abi: codArtFactory.interface.format("json"),
   };
 
   const CodArtLearnData = {
     abi: CodArtLearn.interface.format("json"),
   };
 
+  const CodArtCertificateData = {
+    abi: CodArtCertificate.interface.format("json"),
+  };
+
   const networkName = hre.network.name;
 
   fs.writeFileSync(
-    `./app/lib/contracts/${networkName}-codart-learn-factory-contract.json`,
-    JSON.stringify(CodArtLearnFactoryData)
+    `./app/lib/contracts/${networkName}-codart-factory-contract.json`,
+    JSON.stringify(CodArtFactoryData)
   );
   fs.writeFileSync("./app/lib/contracts/codart-learn-contract.json", JSON.stringify(CodArtLearnData));
+  fs.writeFileSync("./app/lib/contracts/codart-certificate-contract.json", JSON.stringify(CodArtCertificateData));
 
   if (networkName === "goerli") {
     console.log("Waiting to verify on Etherscan");
     await delay(30000);
 
     await hre.run("verify:verify", {
-      address: codArtLearnFactory.address,
+      address: codArtFactory.address,
     });
   }
 }

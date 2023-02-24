@@ -4,6 +4,7 @@ pragma solidity 0.8.17;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/proxy/Clones.sol";
 import "./CodArtLearn.sol";
+import "./CodArtCertificate.sol";
 
 //  _                _                        _ _                   _   _
 // | |              | |                      | (_)                 | | | |
@@ -13,18 +14,21 @@ import "./CodArtLearn.sol";
 // |_.__/ \__,_|_|   \__\___/|_| |_| |_|\___/|_|_|_| |_|\__,_(_)___|\__|_| |_|
 //
 
-contract CodArtLearnFactory is Ownable {
+contract CodArtFactory is Ownable {
     address codArtLearnAddress;
+    address codArtCertificateAddress;
     CodArtLearnInstance[] public codArtLearnInstances;
+    CodArtCertificateInstance[] public codArtCertificateInstances;
 
     constructor() {
         codArtLearnAddress = address(new CodArtLearn());
+        codArtCertificateAddress = address(new CodArtCertificate());
     }
 
     event NewCodArtLearnInstance(address indexed _instance);
 
     function createCodArtLearn(
-        CodArtLearInfo calldata contractInfo
+        CodArtLearnInfo calldata contractInfo
     ) public returns (address clone) {
         clone = Clones.clone(codArtLearnAddress);
 
@@ -37,7 +41,26 @@ contract CodArtLearnFactory is Ownable {
         emit NewCodArtLearnInstance(clone);
     }
 
-    function getInstances() external view returns (CodArtLearnInstance[] memory) {
+    event NewCodArtCertificateInstance(address indexed _instance);
+
+    function createCodArtCertificate(
+        CodArtCertificateInfo calldata contractInfo
+    ) public returns (address clone) {
+        clone = Clones.clone(codArtCertificateAddress);
+
+        CodArtCertificateInstance memory newCodArtCertificate = CodArtCertificateInstance(
+            clone,
+            contractInfo
+        );
+        codArtCertificateInstances.push(newCodArtCertificate);
+        CodArtCertificate(clone).initialize(msg.sender, contractInfo);
+        emit NewCodArtCertificateInstance(clone);
+    }
+
+    function getLearnInstances() external view returns (CodArtLearnInstance[] memory) {
         return codArtLearnInstances;
+    }
+    function getCertificateInstances() external view returns (CodArtCertificateInstance[] memory) {
+        return codArtCertificateInstances;
     }
 }

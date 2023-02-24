@@ -17,7 +17,7 @@ import "@openzeppelin/contracts/utils/Base64.sol";
 // |_.__/ \__,_|_|   \__\___/|_| |_| |_|\___/|_|_|_| |_|\__,_(_)___|\__|_| |_|
 //
 
-struct CodArtLearnInfo {
+struct CodArtCertificateInfo {
     string name;
     string symbol;
     string artist;
@@ -29,12 +29,12 @@ struct CodArtLearnInfo {
     string code;
 }
 
-struct CodArtLearnInstance {
+struct CodArtCertificateInstance {
     address _address;
-    CodArtLearnInfo info;
+    CodArtCertificateInfo info;
 }
 
-contract CodArtLearn is
+contract CodArtCertificate is
     Initializable,
     ERC721Upgradeable,
     ERC721EnumerableUpgradeable,
@@ -43,13 +43,15 @@ contract CodArtLearn is
 {
     string html1 = '<html><head><script src="';
     string html2 = '"></script><script>tokenData={hash: "';
-    string html3 = '"};';
-    string html4 = "</script></head><body><main></main></body></html>";
+    string html3 = '",minter: "';
+    string html4 = '"};';
+    string html5 = "</script></head><body><main></main></body></html>";
     using CountersUpgradeable for CountersUpgradeable.Counter;
 
     CountersUpgradeable.Counter private _tokenIdCounter;
-    CodArtLearnInfo private contractInfo;
+    CodArtCertificateInfo private contractInfo;
     mapping(uint256 => string) private _tokenIdToHash;
+    mapping(uint256 => string) private _tokenIdToMinter;
 
     /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() {
@@ -58,7 +60,7 @@ contract CodArtLearn is
 
     function initialize(
         address _owner,
-        CodArtLearnInfo calldata _contractInfo
+        CodArtCertificateInfo calldata _contractInfo
     ) public initializer {
         contractInfo = _contractInfo;
         __ERC721_init(contractInfo.name, contractInfo.symbol);
@@ -66,20 +68,22 @@ contract CodArtLearn is
         __ERC721URIStorage_init();
         __Ownable_init();
         transferOwnership(_owner);
-        safeMint(_owner);
+        safeMint(_owner, "Owner");
     }
 
-    function safeMint(address to) public payable {
+    function safeMint(address to, string memory minter) public payable {
         if (contractInfo.maxSupply > 0) {
             require(totalSupply() < contractInfo.maxSupply);
         }
         require(msg.value == contractInfo.price);
+        require(bytes(minter).length > 2);
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
         _safeMint(to, tokenId);
         _tokenIdToHash[tokenId] = toHex(
             keccak256(abi.encodePacked(to, block.timestamp, block.difficulty))
         );
+        _tokenIdToMinter[tokenId] = minter;
     }
 
     // The following functions are overrides required by Solidity.
@@ -97,6 +101,17 @@ contract CodArtLearn is
         uint256 tokenId
     ) internal override(ERC721Upgradeable, ERC721URIStorageUpgradeable) {
         super._burn(tokenId);
+    }
+
+    function approve(address to, uint256 tokenId) public virtual override(ERC721Upgradeable, IERC721Upgradeable) {
+        revert("disabled");
+    }
+
+    function setApprovalForAll(
+        address operator,
+        bool approved
+    ) public virtual override(ERC721Upgradeable, IERC721Upgradeable) {
+        revert("disabled");
     }
 
     function tokenURI(
@@ -120,8 +135,10 @@ contract CodArtLearn is
                     html2,
                     _tokenIdToHash[tokenId],
                     html3,
+                    _tokenIdToMinter[tokenId],
+                    html4,
                     contractInfo.code,
-                    html4
+                    html5
                 )
             ),
             '"}'
