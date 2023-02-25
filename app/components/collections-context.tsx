@@ -5,16 +5,14 @@ import LocalCodArtFactoryJSON from "../lib/contracts/localhost-codart-factory-co
 import GoerliCodArtFactoryJSON from "../lib/contracts/goerli-codart-factory-contract.json";
 
 const CodArtContext = createContext({
-  cALearnCollections: [] as ICACollection[],
-  cACertificateCollections: [] as ICACollection[],
+  cACollections: [] as ICACollection[],
   fetchCACollections: () => {},
 });
 
 export const useCodArt = () => useContext(CodArtContext);
 
 export const CodArtProvider = ({ children }: React.PropsWithChildren) => {
-  const [cALearnCollections, setCALearnCollections] = useState([] as ICACollection[]);
-  const [cACertificateCollections, setCACertificateCollections] = useState([] as ICACollection[]);
+  const [cACollections, setCACollections] = useState([] as ICACollection[]);
 
   let CodArtFactoryJSON = LocalCodArtFactoryJSON;
   if (process.env.NEXT_PUBLIC_NETWORK?.toLowerCase() == "goerli") {
@@ -43,13 +41,29 @@ export const CodArtProvider = ({ children }: React.PropsWithChildren) => {
   };
 
   const fetchCACollections = () => {
-    getCACollectionsByType("getLearnInstances").then((collections) => setCALearnCollections(collections));
-    getCACollectionsByType("getCertificateInstances").then((collections) => setCACertificateCollections(collections));
+    let _CACollections = [] as ICACollection[];
+    getCACollectionsByType("getLearnInstances")
+      .then((collections) => {
+        console.log("Learn: ", collections);
+        collections.map((c) => (c.type = "Learn"));
+        _CACollections = collections;
+      })
+      .then(() => {
+        return getCACollectionsByType("getCertificateInstances").then((collections) => {
+          console.log("Certificates: ", collections);
+          collections.map((c) => (c.type = "Certificate"));
+          _CACollections = _CACollections.concat(collections);
+        });
+      })
+      .then(() => {
+        setCACollections(_CACollections);
+        console.log("CA: ", _CACollections);
+      });
   };
 
   useEffect(() => {
     fetchCACollections();
   }, []);
 
-  return <CodArtContext.Provider value={{ cALearnCollections, cACertificateCollections, fetchCACollections }}>{children}</CodArtContext.Provider>;
+  return <CodArtContext.Provider value={{ cACollections, fetchCACollections }}>{children}</CodArtContext.Provider>;
 };

@@ -16,9 +16,10 @@ type Props = {
 
 const Learn = ({ aBCollections }: Props) => {
   const router = useRouter();
-  const { cALearnCollections, cACertificateCollections } = useCodArt();
+  const { cACollections } = useCodArt();
   const minChars = router.query.minChars || 0;
   const maxChars = router.query.maxChars || 0;
+  console.log(cACollections);
 
   const filteredCollections = useMemo(() => {
     return aBCollections.filter((collection) => {
@@ -94,9 +95,9 @@ const Learn = ({ aBCollections }: Props) => {
         <div className="mx-auto max-w-6xl sm:px-6 lg:px-8 py-6">
           {router.query.codart ? (
             router.query.codart === "learn" ? (
-              <LearnCodArtCollections cACollections={cALearnCollections} />
+              <LearnCodArtCollections cACollections={cACollections.filter(c => c.type === "Learn")} />
             ) : (
-              <LearnCodArtCollections cACollections={cACertificateCollections} />
+              <LearnCodArtCollections cACollections={cACollections.filter(c => c.type === "Certificate")} />
             )
           ) : (
             <LearnArtBlocksCollections filteredCollections={filteredCollections} />

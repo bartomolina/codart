@@ -103,7 +103,7 @@ const Home = ({ aBCollections }: Props) => {
             {scriptTypes &&
               [...Array.from(scriptTypes)].map((scriptType) => <option key={scriptType}>{scriptType}</option>)}
           </select>
-          <em className="ml-5 text-lg">{filteredCollections.length}</em><em className="text-lg sm:inline hidden"> Collections</em>
+          <em className="ml-5 text-lg sm:inline hidden">{`${filteredCollections.length} Collections`}</em>
         </div>
         <div className="mt-4">
           <label htmlFor="search" className="sr-only">

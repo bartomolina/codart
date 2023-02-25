@@ -23,7 +23,7 @@ const Nav = () => {
             <div className="flex justify-between">
               <div className="flex">
                 {/* Home */}
-                <div className="text-2xl mr-5 font-semibold lg:mr-11 md:inline-flex sm:hidden justify-center items-center align-middle">
+                <div className="text-2xl mr-5 font-semibold lg:mr-11 md:inline-flex inline-flex sm:hidden justify-center items-center align-middle">
                   <Image src={"/codart.png"} alt="CodArt" width={156} height={36} quality={100} />
                 </div>
                 {/* Menu items */}

@@ -19,7 +19,7 @@ import EditorCommands from "../../components/editor-commands";
 
 const CollectionItem = () => {
   const router = useRouter();
-  const { cACertificateCollections } = useCodArt();
+  const { cACollections } = useCodArt();
   const [collection, setCollection] = useState<IABCollection | ICACollectionInfo | undefined>();
   const [code, setCode] = useState(defaultCode);
   const [tokenId, setTokenId] = useState("0");
@@ -77,7 +77,7 @@ const CollectionItem = () => {
     let formattedCode = defaultCode;
     if (projectId) {
       let _collection;
-      
+
       if (isAB && aBCollection) {
         _collection = aBCollection;
         formattedCode = _collection.script;
@@ -85,7 +85,7 @@ const CollectionItem = () => {
           setLibrary(_collection?.scriptType);
         }
       } else if (!isAB) {
-        const _cACollection = cACertificateCollections.find((c) => c._address === projectId);
+        const _cACollection = cACollections.find((c) => c._address === projectId);
         if (_cACollection && _cACollection.info) {
           _collection = _cACollection.info;
           formattedCode = _collection.code;
@@ -111,7 +111,7 @@ const CollectionItem = () => {
         <title>CodArt.io</title>
         <meta name="description" content="CodArt" />
       </Head>
-      <header className="mx-auto max-w-6xl sm:px-6 lg:px-8 pt-4 pb-8">
+      <header className="mx-auto max-w-6xl px-6 lg:px-8 pt-4 pb-8">
         <h1 className="text-5xl font-thin leading-tight tracking-tight text-gray-900">
           {collection?.name ? collection.name : "Create"}
         </h1>

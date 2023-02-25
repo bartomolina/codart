@@ -20,6 +20,7 @@ interface ICACollectionInfo {
 
 interface ICACollection {
   _address: string;
+  type: "Learn" | "Certificate";
   info: ICACollectionInfo;
 }
 

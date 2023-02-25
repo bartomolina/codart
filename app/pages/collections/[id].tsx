@@ -70,7 +70,7 @@ const CollectionItem = () => {
                 )}
                 <div className="mx-0.5 mt-3 divide-y-2">
                   <div className="my-6">
-                    <div className="flex flex-wrap justify-between items-baseline space-x-2 font-semibold text-2xl text-gray-900 mr-4">
+                    <div className="flex flex-wrap justify-between items-baseline space-x-2 font-semibold sm:text-2xl text-lg break-all text-gray-900 mr-4">
                       <div>by {collection.artistName}</div>
                       <div>#{collection.projectId}</div>
                     </div>
