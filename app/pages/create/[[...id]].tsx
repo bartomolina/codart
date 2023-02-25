@@ -19,7 +19,7 @@ import EditorCommands from "../../components/editor-commands";
 
 const CollectionItem = () => {
   const router = useRouter();
-  const { cACollections } = useCodArt();
+  const { cACertificateCollections } = useCodArt();
   const [collection, setCollection] = useState<IABCollection | ICACollectionInfo | undefined>();
   const [code, setCode] = useState(defaultCode);
   const [tokenId, setTokenId] = useState("0");
@@ -85,7 +85,7 @@ const CollectionItem = () => {
           setLibrary(_collection?.scriptType);
         }
       } else if (!isAB) {
-        const _cACollection = cACollections.find((c) => c._address === projectId);
+        const _cACollection = cACertificateCollections.find((c) => c._address === projectId);
         if (_cACollection && _cACollection.info) {
           _collection = _cACollection.info;
           formattedCode = _collection.code;

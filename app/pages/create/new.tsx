@@ -15,9 +15,10 @@ const Create = () => {
   const script = router.query.script as string;
   const [hasMounted, setHasMounted] = useState(false);
   const [formData, setFormData] = useState({
+    contractType: "Certificate",
     name: "GenArt0",
     symbol: "GA0",
-    description: "Basic shapes",
+    description: "Generative Art",
     artist: "bartomolina.eth",
     maxSupply: 0,
     price: 0,
@@ -44,6 +45,7 @@ const Create = () => {
 
   const clearForm = () => {
     setFormData({
+      contractType: "Certificate",
       name: "",
       symbol: "",
       description: "",
@@ -63,7 +65,7 @@ const Create = () => {
       address: CodArtFactoryJSON.address,
       // @ts-ignore
       abi: CodArtFactoryJSON.abi,
-      functionName: "createCodArtLearn",
+      functionName: formData.contractType === "Learn" ? "createCodArtLearn" : "createCodArtCertificate",
       args: [
         {
           name: formData.name,
@@ -125,6 +127,22 @@ const Create = () => {
                 <div className="overflow-hidden shadow rounded-md">
                   <div className="bg-white px-4 p-6">
                     <div className="grid grid-cols-6 gap-6">
+                      <div className="col-span-6">
+                        <label htmlFor="contractType" className="block text-sm font-medium text-gray-700">
+                          Type
+                        </label>
+                        <select
+                          id="contractType"
+                          name="contractType"
+                          value={formData.contractType}
+                          // @ts-ignore
+                          onChange={handleFormChange}
+                          className="mt-1 block w-32 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        >
+                          <option>Certificate</option>
+                          <option>Learn</option>
+                        </select>
+                      </div>
                       <div className="col-span-3">
                         <label htmlFor="name" className="block text-sm font-medium text-gray-700">
                           Name

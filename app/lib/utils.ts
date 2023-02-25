@@ -50,5 +50,5 @@ function draw() {
   quad(120, 400, 160, 320, 360, 320, 400, 400);
   
   fill(0);
-  text("MINTED BY: [PLACEHOLDER]", 0, 425)
+  text("MINTED BY: " + tokenData.minter, 0, 425)
 }`;

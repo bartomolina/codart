@@ -17,6 +17,11 @@ import "@openzeppelin/contracts/utils/Base64.sol";
 // |_.__/ \__,_|_|   \__\___/|_| |_| |_|\___/|_|_|_| |_|\__,_(_)___|\__|_| |_|
 //
 
+string constant learn_html1 = '<html><head><script src="';
+string constant learn_html2 = '"></script><script>tokenData={hash: "';
+string constant learn_html3 = '"};';
+string constant learn_html4 = "</script></head><body><main></main></body></html>";
+
 struct CodArtLearnInfo {
     string name;
     string symbol;
@@ -41,10 +46,6 @@ contract CodArtLearn is
     ERC721URIStorageUpgradeable,
     OwnableUpgradeable
 {
-    string html1 = '<html><head><script src="';
-    string html2 = '"></script><script>tokenData={hash: "';
-    string html3 = '"};';
-    string html4 = "</script></head><body><main></main></body></html>";
     using CountersUpgradeable for CountersUpgradeable.Counter;
 
     CountersUpgradeable.Counter private _tokenIdCounter;
@@ -115,13 +116,13 @@ contract CodArtLearn is
             '","animation_url":"data:text/html;base64,',
             Base64.encode(
                 abi.encodePacked(
-                    html1,
+                    learn_html1,
                     contractInfo.libraryURL,
-                    html2,
+                    learn_html2,
                     _tokenIdToHash[tokenId],
-                    html3,
+                    learn_html3,
                     contractInfo.code,
-                    html4
+                    learn_html4
                 )
             ),
             '"}'

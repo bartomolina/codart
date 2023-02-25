@@ -17,6 +17,12 @@ import "@openzeppelin/contracts/utils/Base64.sol";
 // |_.__/ \__,_|_|   \__\___/|_| |_| |_|\___/|_|_|_| |_|\__,_(_)___|\__|_| |_|
 //
 
+string constant cert_html1 = '<html><head><script src="';
+string constant cert_html2 = '"></script><script>tokenData={hash: "';
+string constant cert_html3 = '",minter: "';
+string constant cert_html4 = '"};';
+string constant cert_html5 = "</script></head><body><main></main></body></html>";
+
 struct CodArtCertificateInfo {
     string name;
     string symbol;
@@ -41,11 +47,6 @@ contract CodArtCertificate is
     ERC721URIStorageUpgradeable,
     OwnableUpgradeable
 {
-    string html1 = '<html><head><script src="';
-    string html2 = '"></script><script>tokenData={hash: "';
-    string html3 = '",minter: "';
-    string html4 = '"};';
-    string html5 = "</script></head><body><main></main></body></html>";
     using CountersUpgradeable for CountersUpgradeable.Counter;
 
     CountersUpgradeable.Counter private _tokenIdCounter;
@@ -103,7 +104,10 @@ contract CodArtCertificate is
         super._burn(tokenId);
     }
 
-    function approve(address to, uint256 tokenId) public virtual override(ERC721Upgradeable, IERC721Upgradeable) {
+    function approve(
+        address to,
+        uint256 tokenId
+    ) public virtual override(ERC721Upgradeable, IERC721Upgradeable) {
         revert("disabled");
     }
 
@@ -130,15 +134,15 @@ contract CodArtCertificate is
             '","animation_url":"data:text/html;base64,',
             Base64.encode(
                 abi.encodePacked(
-                    html1,
+                    cert_html1,
                     contractInfo.libraryURL,
-                    html2,
+                    cert_html2,
                     _tokenIdToHash[tokenId],
-                    html3,
+                    cert_html3,
                     _tokenIdToMinter[tokenId],
-                    html4,
+                    cert_html4,
                     contractInfo.code,
-                    html5
+                    cert_html5
                 )
             ),
             '"}'
