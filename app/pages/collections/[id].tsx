@@ -34,7 +34,7 @@ const CollectionItem = () => {
     collection && (
       <>
         <Head>
-          <title>CodArt.io</title>
+          <title>{collection.name} - CodArt.io</title>
           <meta name="description" content="CodArt" />
         </Head>
         <header className="mx-auto max-w-6xl px-6 lg:px-8 pt-4 pb-8">

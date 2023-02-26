@@ -28,6 +28,7 @@ struct CodArtCertificateInfo {
     string symbol;
     string artist;
     string description;
+    string defaultImage;
     uint256 maxSupply;
     uint256 price;
     string _library;
@@ -69,10 +70,9 @@ contract CodArtCertificate is
         __ERC721URIStorage_init();
         __Ownable_init();
         transferOwnership(_owner);
-        safeMint(_owner, "Owner");
     }
 
-    function safeMint(address to, string memory minter) public payable {
+    function safeMint(string memory minter) public payable {
         if (contractInfo.maxSupply > 0) {
             require(totalSupply() < contractInfo.maxSupply);
         }
@@ -80,9 +80,9 @@ contract CodArtCertificate is
         require(bytes(minter).length > 2);
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
-        _safeMint(to, tokenId);
+        _safeMint(msg.sender, tokenId);
         _tokenIdToHash[tokenId] = toHex(
-            keccak256(abi.encodePacked(to, block.timestamp, block.difficulty))
+            keccak256(abi.encodePacked(msg.sender, block.timestamp, block.difficulty))
         );
         _tokenIdToMinter[tokenId] = minter;
     }
@@ -128,9 +128,13 @@ contract CodArtCertificate is
     {
         bytes memory metadata = abi.encodePacked(
             '{"name":"',
-            contractInfo.name,
+            contractInfo.symbol,
+            " - ",
+            _tokenIdToMinter[tokenId],
             '","description":"',
             contractInfo.description,
+            " - Minted by: ",
+            _tokenIdToMinter[tokenId],
             '","animation_url":"data:text/html;base64,',
             Base64.encode(
                 abi.encodePacked(
@@ -145,6 +149,8 @@ contract CodArtCertificate is
                     cert_html5
                 )
             ),
+            '","image":"',
+            contractInfo.defaultImage,
             '"}'
         );
         return

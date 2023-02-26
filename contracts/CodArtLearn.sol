@@ -27,6 +27,7 @@ struct CodArtLearnInfo {
     string symbol;
     string artist;
     string description;
+    string defaultImage;
     uint256 maxSupply;
     uint256 price;
     string _library;
@@ -67,19 +68,18 @@ contract CodArtLearn is
         __ERC721URIStorage_init();
         __Ownable_init();
         transferOwnership(_owner);
-        safeMint(_owner);
     }
 
-    function safeMint(address to) public payable {
+    function safeMint() public payable {
         if (contractInfo.maxSupply > 0) {
             require(totalSupply() < contractInfo.maxSupply);
         }
         require(msg.value == contractInfo.price);
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
-        _safeMint(to, tokenId);
+        _safeMint(msg.sender, tokenId);
         _tokenIdToHash[tokenId] = toHex(
-            keccak256(abi.encodePacked(to, block.timestamp, block.difficulty))
+            keccak256(abi.encodePacked(msg.sender, block.timestamp, block.difficulty))
         );
     }
 
@@ -125,6 +125,8 @@ contract CodArtLearn is
                     learn_html4
                 )
             ),
+            '","image":"',
+            contractInfo.defaultImage,
             '"}'
         );
         return

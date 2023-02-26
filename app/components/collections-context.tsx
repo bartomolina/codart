@@ -19,7 +19,7 @@ export const CodArtProvider = ({ children }: React.PropsWithChildren) => {
     CodArtFactoryJSON = GoerliCodArtFactoryJSON;
   }
 
-  const getCACollectionsByType = async (type: string) => {
+  const getCACollectionsByType = async (type: string, propertyType: string) => {
     let _CACollections = [] as ICACollection[];
     return readContract({
       chainId: 5,
@@ -30,9 +30,11 @@ export const CodArtProvider = ({ children }: React.PropsWithChildren) => {
       // Transform returned array from ethers into an objects array
       data.map((collection: any) => {
         let _collection = {} as any;
-        for (var key in collection) {
-          if (isNaN(key as any)) _collection[key] = collection[key];
+        for (var key in collection.info) {
+          if (isNaN(key as any)) _collection[key] = collection.info[key];
         }
+        _collection["_address"] = collection["_address"];
+        _collection["type"] = propertyType;
         _CACollections = [..._CACollections, _collection];
       });
 
@@ -42,22 +44,17 @@ export const CodArtProvider = ({ children }: React.PropsWithChildren) => {
 
   const fetchCACollections = () => {
     let _CACollections = [] as ICACollection[];
-    getCACollectionsByType("getLearnInstances")
+    getCACollectionsByType("getLearnInstances", "Learn")
       .then((collections) => {
-        console.log("Learn: ", collections);
-        collections.map((c) => (c.type = "Learn"));
         _CACollections = collections;
       })
       .then(() => {
-        return getCACollectionsByType("getCertificateInstances").then((collections) => {
-          console.log("Certificates: ", collections);
-          collections.map((c) => (c.type = "Certificate"));
+        return getCACollectionsByType("getCertificateInstances", "Certificate").then((collections) => {
           _CACollections = _CACollections.concat(collections);
         });
       })
       .then(() => {
         setCACollections(_CACollections);
-        console.log("CA: ", _CACollections);
       });
   };
 

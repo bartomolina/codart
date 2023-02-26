@@ -17,7 +17,7 @@ async function main() {
     code: "code",
   });
   const receiptLearn = await createCodArtLearnTx.wait();
-  console.log(receiptLearn.events[4].args._instance);
+  console.log(receiptLearn.events[3].args._instance);
 
   const createCodArtCertificateTx = await codArtFactory.createCodArtCertificate({
     name: "Certificate",
@@ -25,13 +25,13 @@ async function main() {
     artist: "bartomolina.eth",
     description: "Generative Art",
     maxSupply: 100,
-    price: 0,
+    price: 100000000000000,
     _library: "p5",
     libraryURL: "https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.min.js",
     code: "code",
   });
   const receiptCertificate = await createCodArtCertificateTx.wait();
-  console.log(receiptCertificate.events[4].args._instance);
+  console.log(receiptCertificate.events[3].args._instance);
 }
 
 main().catch((error) => {

@@ -8,6 +8,8 @@ const Notification = () => {
   const { notification, show, setShow } = useNotifications();
   const isError = notification.type === "error";
 
+  const url = notification.url || `https://goerli.etherscan.io/tx/${notification.txId}`
+
   return (
     <>
       <div
@@ -42,12 +44,12 @@ const Notification = () => {
                         <span>{notification.error}</span>
                       ) : (
                         <a
-                          href={`https://goerli.etherscan.io/tx/${notification.txId}`}
+                          href={url}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="hover:underline"
                         >
-                          View transaction
+                          {notification.message}
                         </a>
                       )}
                     </p>

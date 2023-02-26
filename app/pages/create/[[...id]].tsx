@@ -1,4 +1,4 @@
-import { IABCollection, ICACollectionInfo } from "../../global";
+import { IABCollection, ICACollection } from "../../global";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -20,10 +20,11 @@ import EditorCommands from "../../components/editor-commands";
 const CollectionItem = () => {
   const router = useRouter();
   const { cACollections } = useCodArt();
-  const [collection, setCollection] = useState<IABCollection | ICACollectionInfo | undefined>();
+  const [collection, setCollection] = useState<IABCollection | ICACollection | undefined>();
   const [code, setCode] = useState(defaultCode);
   const [tokenId, setTokenId] = useState("0");
   const [autoRefresh, setAutoRefresh] = useState(true);
+  const [minter, setMinter] = useState("Owner");
   const [hash, setHash] = useState(ethers.utils.hexlify(ethers.utils.randomBytes(32)));
   const [library, setLibrary] = useState<keyof typeof libraries>("p5");
 
@@ -40,7 +41,7 @@ const CollectionItem = () => {
 
   const generateOutput = (_hash: string) => {
     if (document) {
-      const tokenData = `window.tokenData={"tokenId": "${tokenId}", "hash": "${_hash}", "hashes": ["${_hash}"]};`;
+      const tokenData = `window.tokenData={"tokenId": "${tokenId}", "hash": "${_hash}", "hashes": ["${_hash}"], "minter": "${minter}"};`;
       const wrappedCode = `<html><head>${libraryScript}</head><body style="margin: 0px"><script>${tokenData}${code}</script></body></html>`;
       // @ts-ignore
       document.getElementById("canvasIframe").srcdoc = wrappedCode;
@@ -86,8 +87,8 @@ const CollectionItem = () => {
         }
       } else if (!isAB) {
         const _cACollection = cACollections.find((c) => c._address === projectId);
-        if (_cACollection && _cACollection.info) {
-          _collection = _cACollection.info;
+        if (_cACollection) {
+          _collection = _cACollection;
           formattedCode = _collection.code;
         }
       }
@@ -103,12 +104,12 @@ const CollectionItem = () => {
       }
     }
     setCode(formattedCode);
-  }, [projectId, aBCollection]);
+  }, [projectId, aBCollection, cACollections]);
 
   return (
     <>
       <Head>
-        <title>CodArt.io</title>
+        <title>Editor - CodArt.io</title>
         <meta name="description" content="CodArt" />
       </Head>
       <header className="mx-auto max-w-6xl px-6 lg:px-8 pt-4 pb-8">
@@ -126,6 +127,8 @@ const CollectionItem = () => {
                   collection,
                   hash,
                   updateHash,
+                  minter,
+                  setMinter,
                   tokenId,
                   invocations,
                   setTokenId,

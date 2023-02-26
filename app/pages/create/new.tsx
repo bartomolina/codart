@@ -15,11 +15,12 @@ const Create = () => {
   const script = router.query.script as string;
   const [hasMounted, setHasMounted] = useState(false);
   const [formData, setFormData] = useState({
-    contractType: "Certificate",
-    name: "GenArt0",
-    symbol: "GA0",
-    description: "Generative Art",
-    artist: "bartomolina.eth",
+    contractType: "Learn",
+    name: "",
+    symbol: "",
+    description: "",
+    artist: "",
+    defaultImage: "",
     maxSupply: 0,
     price: 0,
     _library: "p5",
@@ -45,11 +46,12 @@ const Create = () => {
 
   const clearForm = () => {
     setFormData({
-      contractType: "Certificate",
+      contractType: "Learn",
       name: "",
       symbol: "",
       description: "",
       artist: "",
+      defaultImage: "",
       maxSupply: 0,
       price: 0,
       _library: "p5",
@@ -72,6 +74,7 @@ const Create = () => {
           symbol: formData.symbol,
           description: formData.description,
           artist: formData.artist,
+          defaultImage: formData.defaultImage,
           maxSupply: formData.maxSupply,
           price: ethers.utils.parseEther(formData.price.toString()),
           _library: formData._library,
@@ -139,8 +142,8 @@ const Create = () => {
                           onChange={handleFormChange}
                           className="mt-1 block w-32 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         >
-                          <option>Certificate</option>
                           <option>Learn</option>
+                          <option>Certificate</option>
                         </select>
                       </div>
                       <div className="col-span-3">
@@ -183,6 +186,19 @@ const Create = () => {
                         />
                       </div>
                       <div className="col-span-6">
+                        <label htmlFor="defaultImage" className="block text-sm font-medium text-gray-700">
+                          Default collection image (URL / IPFS)
+                        </label>
+                        <input
+                          type="text"
+                          id="defaultImage"
+                          name="defaultImage"
+                          value={formData.defaultImage}
+                          onChange={handleFormChange}
+                          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        />
+                      </div>
+                      <div className="col-span-6">
                         <label htmlFor="description" className="block text-sm font-medium text-gray-700">
                           Description
                         </label>
@@ -197,13 +213,13 @@ const Create = () => {
                         />
                       </div>
                       <div className="col-span-3">
-                        <label htmlFor="supply" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="maxSupply" className="block text-sm font-medium text-gray-700">
                           Max. Supply
                         </label>
                         <input
                           type="number"
-                          id="supply"
-                          name="supply"
+                          id="maxSupply"
+                          name="maxSupply"
                           value={formData.maxSupply}
                           onChange={handleFormChange}
                           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"

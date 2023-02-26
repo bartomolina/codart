@@ -6,22 +6,19 @@ interface Window {
   ethereum: ExternalProvider;
 }
 
-interface ICACollectionInfo {
+interface ICACollection {
+  _address: string;
+  type: "Learn" | "Certificate";
   name: string;
   symbol: string;
   artist: string;
   description: string;
+  defaultImage: string;
   maxSupply: BigNumber;
   price: BigNumber;
   _library: string;
   libraryURL: string;
   code: string;
-}
-
-interface ICACollection {
-  _address: string;
-  type: "Learn" | "Certificate";
-  info: ICACollectionInfo;
 }
 
 type IABCollection = Project;
