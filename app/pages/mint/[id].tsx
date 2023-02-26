@@ -68,6 +68,7 @@ const Mint = () => {
           showNotification(
             "Minting completed",
             tx.hash,
+            // @ts-ignore
             `https://testnets.opensea.io/assets/goerli/${collection._address}/${parseInt(tx.logs[0].topics[3], 16)}`,
             "View in OpenSea (you may get a 404, refresh after a few seconds)"
           );
