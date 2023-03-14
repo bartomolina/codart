@@ -7,6 +7,7 @@ import { minify } from "terser";
 import CodeMirror from "@uiw/react-codemirror";
 import { dracula } from "@uiw/codemirror-theme-dracula";
 import { javascript } from "@codemirror/lang-javascript";
+import { EditorView } from "@codemirror/view";
 import useSWR from "swr";
 import { libraries, defaultCode } from "../../lib/utils";
 import { useCodArt } from "../../components/collections-context";
@@ -22,6 +23,7 @@ const CollectionItem = () => {
   const { cACollections } = useCodArt();
   const [collection, setCollection] = useState<IABCollection | ICACollection | undefined>();
   const [code, setCode] = useState(defaultCode);
+  const [wordWrap, setWordWrap] = useState(true);
   const [tokenId, setTokenId] = useState("0");
   const [autoRefresh, setAutoRefresh] = useState(true);
   const [minter, setMinter] = useState("Owner");
@@ -42,7 +44,9 @@ const CollectionItem = () => {
   const generateOutput = (_hash: string) => {
     if (document) {
       const tokenData = `window.tokenData={"tokenId": "${tokenId}", "hash": "${_hash}", "hashes": ["${_hash}"], "minter": "${minter}"};`;
-      const wrappedCode = `<html><head>${libraryScript}</head><body style="margin: 0px">${code.includes("createCanvas") ? "" : "<canvas />"}<script>${tokenData}${code}</script></body></html>`;
+      const wrappedCode = `<html><head>${libraryScript}</head><body style="margin: 0px">${
+        code.includes("createCanvas") ? "" : "<canvas />"
+      }<script>${tokenData}${code}</script></body></html>`;
       // @ts-ignore
       document.getElementById("canvasIframe").srcdoc = wrappedCode;
     }
@@ -135,6 +139,8 @@ const CollectionItem = () => {
                   handleRun,
                   autoRefresh,
                   setAutoRefresh,
+                  wordWrap,
+                  setWordWrap,
                   library,
                   setLibrary,
                   handleCreate,
@@ -147,7 +153,7 @@ const CollectionItem = () => {
                   value={code}
                   height="800px"
                   theme={dracula}
-                  extensions={[javascript()]}
+                  extensions={[...(wordWrap ? [EditorView.lineWrapping] : []), javascript()]}
                   onChange={(code) => setCode(code)}
                 />
               </div>

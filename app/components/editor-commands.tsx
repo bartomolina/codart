@@ -24,6 +24,8 @@ type Props = {
   handleRun: (event: FormEvent) => void;
   autoRefresh: boolean;
   setAutoRefresh: (autoRefresh: boolean) => void;
+  wordWrap: boolean;
+  setWordWrap: (wordWrap: boolean) => void;
   library: string;
   setLibrary: Dispatch<SetStateAction<keyof typeof libraries>>;
   handleCreate: (event: FormEvent) => void;
@@ -42,6 +44,8 @@ const EditorCommands = ({
   handleRun,
   autoRefresh,
   setAutoRefresh,
+  wordWrap,
+  setWordWrap,
   library,
   setLibrary,
   handleCreate,
@@ -181,10 +185,26 @@ const EditorCommands = ({
                 </div>
               )}
               <div className="flex text-sm mt-3 justify-between">
-                <button type="button" onClick={(event) => handleCreate(event)} className="text-sm hover:underline">
-                  Create new collection
-                  <ArrowTopRightOnSquareIcon className="inline ml-1 h-3 w-3" aria-hidden="true" />
-                </button>
+                <div className="flex">
+                  <button type="button" onClick={(event) => handleCreate(event)} className="text-sm hover:underline">
+                    Create new collection
+                    <ArrowTopRightOnSquareIcon className="inline ml-1 h-3 w-3" aria-hidden="true" />
+                  </button>
+                  <div className="ml-5 flex items-center">
+                    <input
+                      id="wordWrap"
+                      aria-describedby="wordWrap"
+                      name="wordWrap"
+                      type="checkbox"
+                      checked={wordWrap}
+                      onChange={(e) => setWordWrap(e.target.checked)}
+                      className="h-4 w-4 rounded border-gray-300 text-black focus:ring-gray-200"
+                    />
+                    <label htmlFor="wordWrap" className="ml-3 font-medium text-gray-700">
+                      Word-wrap
+                    </label>
+                  </div>
+                </div>
                 {!isAB && collection && (
                   <Link
                     href={`/mint/${collection?._address}`}
