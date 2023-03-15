@@ -49,7 +49,7 @@ const Learn = ({ aBCollections }: Props) => {
             </Link>
             <Link
               href={{ pathname: "/learn", query: { minChars: "2000", maxChars: "3000" } }}
-              className="py-2 px-4 rounded shadow-md text-white bg-gradient-to-r from-blue-500 to-green-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:ring-offset-2 hover:drop-shadow-xl hover:-translate-y-0.5 transform transition"
+              className="py-2 px-4 rounded shadow-md text-white bg-gradient-to-r from-red-500 to-blue-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:ring-offset-2 hover:drop-shadow-xl hover:-translate-y-0.5 transform transition"
             >
               <span className="block font-bold text-lg">AB p5 Level 2</span>
               <span className="block text-sm">&lt; 3,000 chars</span>
@@ -93,57 +93,6 @@ const Learn = ({ aBCollections }: Props) => {
             </Link>
           </div>
         </div>
-        {/* <div className="flex flex-row justify-around md:space-x-8 space-x-1">
-          <Link
-            href={{ pathname: "/learn", query: { minChars: "0", maxChars: "2000" } }}
-            className="rounded-lg py-3 px-4 md:px-14 text-white shadow-md bg-gradient-to-r from-yellow-500 to-red-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:ring-offset-2 hover:drop-shadow-xl hover:-translate-y-0.5 transform transition"
-          >
-            <span className="block font-bold text-lg">Level 1</span>
-            <span className="block text-sm">&lt; 2,000</span>
-          </Link>
-          <Link
-            href={{ pathname: "/learn", query: { minChars: "2000", maxChars: "3000" } }}
-            className="rounded-lg py-3 px-4 md:px-14 text-white shadow-md bg-gradient-to-r from-red-500 to-blue-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:ring-offset-2 hover:drop-shadow-xl hover:-translate-y-0.5 transform transition"
-          >
-            <span className="block font-bold text-lg">Level 2</span>
-            <span className="block text-sm">&lt; 3,000</span>
-          </Link>
-          <Link
-            href={{ pathname: "/learn", query: { minChars: "3000", maxChars: "4000" } }}
-            className="rounded-lg py-3 px-4 md:px-14 text-white shadow-md bg-gradient-to-r from-blue-500 to-green-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:ring-offset-2 hover:drop-shadow-xl hover:-translate-y-0.5 transform transition"
-          >
-            <span className="block font-bold text-lg">Level 3</span>
-            <span className="block text-sm">&lt; 4,000</span>
-          </Link>
-          <Link
-            href={{ pathname: "/learn", query: { codart: "learn" } }}
-            className="rounded-lg py-5 px-4 md:px-5 text-white shadow-md bg-gradient-to-r from-gray-400 to-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:ring-offset-2 hover:drop-shadow-xl hover:-translate-y-0.5 transform transition"
-          >
-            <Image
-              className="bg-white object-contain"
-              src={"/codart.png"}
-              alt="CodArt"
-              width={130}
-              height={15}
-              quality={100}
-            />
-            <span className="block text-sm text-black font-semibold">learn</span>
-          </Link>
-          <Link
-            href={{ pathname: "/learn", query: { codart: "certificates" } }}
-            className="rounded-lg py-5 px-4 md:px-5 text-white shadow-md bg-gradient-to-r from-gray-400 to-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:ring-offset-2 hover:drop-shadow-xl hover:-translate-y-0.5 transform transition"
-          >
-            <Image
-              className="bg-white object-contain"
-              src={"/codart.png"}
-              alt="CodArt"
-              width={130}
-              height={15}
-              quality={100}
-            />
-            <span className="block text-sm text-black font-semibold">certificates</span>
-          </Link>
-        </div> */}
       </div>
       <div className="bg-gray-100 pb-14">
         <div className="mx-auto max-w-6xl sm:px-6 lg:px-8 py-6">
