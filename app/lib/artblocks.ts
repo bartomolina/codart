@@ -1,11 +1,15 @@
 import { IABCollection } from "../global";
-import { ArtblocksCollectionsDocument, ArtblocksCollectionDocument, execute } from "../.graphclient";
+import {
+  ArtblocksCollectionsDocument,
+  ArtblocksCollectionDocument,
+  execute,
+} from "../.graphclient";
 import { getScriptType } from "./utils";
 
 const mutateCollection = (collection: IABCollection) => {
   // Flatten properties
   collection.contractAddress = collection.contract?.id || null;
-  collection.mintingDate = collection.minterConfiguration?.startTime || null;
+  collection.mintingDate = null;
   collection.scriptLength = collection.script?.length || null;
 
   // Parse numbers
@@ -33,7 +37,7 @@ export const getABCollections = async (): Promise<Array<IABCollection>> => {
   let projects: Array<IABCollection> = [];
   return execute(ArtblocksCollectionsDocument, {})
     .then((result) => {
-      projects = result?.data?.projects || [] as IABCollection[];
+      projects = result?.data?.projects || ([] as IABCollection[]);
       projects.map((collection) => {
         mutateCollection(collection);
         collection.script = null;

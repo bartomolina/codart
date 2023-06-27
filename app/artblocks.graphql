@@ -24,9 +24,6 @@ query ArtblocksCollections {
     invocations
     license
     maxInvocations
-    minterConfiguration {
-      startTime
-    }
     name
     paused
     projectId
@@ -53,9 +50,6 @@ query ArtblocksCollection($id: ID!) {
     invocations
     license
     maxInvocations
-    minterConfiguration {
-      startTime
-    }
     name
     paused
     projectId

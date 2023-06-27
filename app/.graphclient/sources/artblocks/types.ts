@@ -19,6 +19,7 @@ export type Scalars = {
   BigDecimal: any;
   BigInt: any;
   Bytes: any;
+  Int8: any;
 };
 
 export type Account = {
@@ -169,7 +170,6 @@ export type AccountProject_orderBy =
   | 'project__baseUri'
   | 'project__complete'
   | 'project__completedAt'
-  | 'project__curationStatus'
   | 'project__currencyAddress'
   | 'project__currencySymbol'
   | 'project__description'
@@ -259,7 +259,7 @@ export type Contract = {
   enginePlatformProviderSecondarySalesAddress?: Maybe<Scalars['Bytes']>;
   /** Basis points of secondary sales allocated to the platform, only for V3_Engine contracts */
   enginePlatformProviderSecondarySalesBPS?: Maybe<Scalars['BigInt']>;
-  /** List of contracts that are allowed to mint */
+  /** List of contracts that are allowed to mint, equal to the single minterFilter address for V3 contracts */
   mintWhitelisted: Array<Scalars['Bytes']>;
   /** Randomizer contract used to generate token hashes */
   randomizerContract?: Maybe<Scalars['Bytes']>;
@@ -276,7 +276,7 @@ export type Contract = {
   whitelisted?: Maybe<Array<Whitelisting>>;
   createdAt: Scalars['BigInt'];
   updatedAt: Scalars['BigInt'];
-  /** Associated minter filter (if being indexed) - not always indexed for Engine contracts */
+  /** Associated minter filter contract, if any */
   minterFilter?: Maybe<MinterFilter>;
   preferredIPFSGateway?: Maybe<Scalars['String']>;
   preferredArweaveGateway?: Maybe<Scalars['String']>;
@@ -284,8 +284,8 @@ export type Contract = {
   newProjectsForbidden: Scalars['Boolean'];
   /** Automatically approve all artist split proposals (used on V3 Engine contracts) */
   autoApproveArtistSplitProposals?: Maybe<Scalars['Boolean']>;
-  /** Latest engine registry that this contract is registered with, if any (used for indexing purposes) */
-  registeredOn?: Maybe<EngineRegistry>;
+  /** Latest core registry that this contract is registered with, if any (used for indexing purposes) */
+  registeredOn?: Maybe<CoreRegistry>;
 };
 
 
@@ -573,7 +573,7 @@ export type Contract_filter = {
   registeredOn_ends_with_nocase?: InputMaybe<Scalars['String']>;
   registeredOn_not_ends_with?: InputMaybe<Scalars['String']>;
   registeredOn_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
-  registeredOn_?: InputMaybe<EngineRegistry_filter>;
+  registeredOn_?: InputMaybe<CoreRegistry_filter>;
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
   and?: InputMaybe<Array<InputMaybe<Contract_filter>>>;
@@ -615,6 +615,47 @@ export type Contract_orderBy =
   | 'registeredOn'
   | 'registeredOn__id';
 
+export type CoreRegistry = {
+  /**
+   * Unique identifier made up of the Core Registry's contract address (legacy name was Engine Registry).
+   * Note: For legacy MinterFilters, this is a dummy ID, equal to the address of the single core contract
+   * associated with the minter filter.
+   *
+   */
+  id: Scalars['ID'];
+  /** All core contracts that are registered on this CoreRegistry, when this is most recent Core Registry to add the contract */
+  registeredContracts?: Maybe<Array<Contract>>;
+};
+
+
+export type CoreRegistryregisteredContractsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Contract_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Contract_filter>;
+};
+
+export type CoreRegistry_filter = {
+  id?: InputMaybe<Scalars['ID']>;
+  id_not?: InputMaybe<Scalars['ID']>;
+  id_gt?: InputMaybe<Scalars['ID']>;
+  id_lt?: InputMaybe<Scalars['ID']>;
+  id_gte?: InputMaybe<Scalars['ID']>;
+  id_lte?: InputMaybe<Scalars['ID']>;
+  id_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  registeredContracts_?: InputMaybe<Contract_filter>;
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<CoreRegistry_filter>>>;
+  or?: InputMaybe<Array<InputMaybe<CoreRegistry_filter>>>;
+};
+
+export type CoreRegistry_orderBy =
+  | 'id'
+  | 'registeredContracts';
+
 export type CoreType =
   /** First Art Blocks flagship core */
   | 'GenArt721CoreV0'
@@ -625,7 +666,9 @@ export type CoreType =
   /** Third Art Blocks flagship core */
   | 'GenArt721CoreV3'
   /** V3 Derivative - Art Blocks Engine core */
-  | 'GenArt721CoreV3_Engine';
+  | 'GenArt721CoreV3_Engine'
+  /** V3 Derivative - Art Blocks Engine Flex core */
+  | 'GenArt721CoreV3_Engine_Flex';
 
 export type Dependency = {
   /** Unique identifier made up of dependency name and version separated by an @ symbol (e.g. p5js@1.0.0) */
@@ -1210,42 +1253,6 @@ export type Dependency_orderBy =
   | 'dependencyRegistry__updatedAt'
   | 'updatedAt';
 
-export type EngineRegistry = {
-  /** Unique identifier made up of the Engine Registry's contract address */
-  id: Scalars['ID'];
-  /** Core contracts that are registered on this Engine Registry, when this is most recent Engine Registry to add the contract */
-  registeredContracts?: Maybe<Array<Contract>>;
-};
-
-
-export type EngineRegistryregisteredContractsArgs = {
-  skip?: InputMaybe<Scalars['Int']>;
-  first?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Contract_orderBy>;
-  orderDirection?: InputMaybe<OrderDirection>;
-  where?: InputMaybe<Contract_filter>;
-};
-
-export type EngineRegistry_filter = {
-  id?: InputMaybe<Scalars['ID']>;
-  id_not?: InputMaybe<Scalars['ID']>;
-  id_gt?: InputMaybe<Scalars['ID']>;
-  id_lt?: InputMaybe<Scalars['ID']>;
-  id_gte?: InputMaybe<Scalars['ID']>;
-  id_lte?: InputMaybe<Scalars['ID']>;
-  id_in?: InputMaybe<Array<Scalars['ID']>>;
-  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
-  registeredContracts_?: InputMaybe<Contract_filter>;
-  /** Filter for the block changed event. */
-  _change_block?: InputMaybe<BlockChangedFilter>;
-  and?: InputMaybe<Array<InputMaybe<EngineRegistry_filter>>>;
-  or?: InputMaybe<Array<InputMaybe<EngineRegistry_filter>>>;
-};
-
-export type EngineRegistry_orderBy =
-  | 'id'
-  | 'registeredContracts';
-
 export type Exchange =
   /** Opensea V1 */
   | 'OS_V1'
@@ -1263,15 +1270,10 @@ export type Minter = {
   type: Scalars['String'];
   /** Associated Minter Filter */
   minterFilter: MinterFilter;
-  /** Minimum allowed auction length in seconds (linear Dutch auction minters) */
-  minimumAuctionLengthInSeconds?: Maybe<Scalars['BigInt']>;
-  /** Minimum allowed half life in seconds (exponential Dutch auction minters) */
-  minimumHalfLifeInSeconds?: Maybe<Scalars['BigInt']>;
-  /** Maximum allowed half life in seconds (exponential Dutch auction minters) */
-  maximumHalfLifeInSeconds?: Maybe<Scalars['BigInt']>;
+  /** Boolean representing if the Mitner is globally allowed on its associated minter filter */
+  isGloballyAllowlistedOnMinterFilter: Scalars['Boolean'];
   /** Configuration details used by specific minters (json string) */
   extraMinterDetails: Scalars['String'];
-  coreContract: Contract;
   /** Receipts for this minter, only for minters with settlement */
   receipts?: Maybe<Array<Receipt>>;
   updatedAt: Scalars['BigInt'];
@@ -1289,17 +1291,29 @@ export type MinterreceiptsArgs = {
 export type MinterFilter = {
   /** Unique identifier made up of minter filter contract address */
   id: Scalars['ID'];
-  /** Associated core contract */
-  coreContract: Contract;
-  /** Minters allowlisted on MinterFilter */
-  minterAllowlist: Array<Minter>;
-  /** Minters associated with MinterFilter */
-  associatedMinters: Array<Minter>;
+  /** Minters allowlisted globally on this MinterFilter */
+  minterGlobalAllowlist: Array<Minter>;
+  /**
+   * Minters allowlisted at a contract-level on this MinterFilter. In general, this allows a core contract to
+   * extend the global minter allowlist to allow minters that are not globally allowlisted.
+   * Note: only used for MinterFilterV2+
+   *
+   */
+  minterFilterContractAllowlists: Array<MinterFilterContractAllowlist>;
+  /** Known minters that are tied to this MinterFilter, but are not necessarily approved on this MinterFilter */
+  knownMinters: Array<Minter>;
+  /**
+   * Core contract registry used by this MinterFilter.
+   * Note that for MinterFilterV0 & MinterFilterV1, a dummy CoreRegistry is created in the subgraph that
+   * contains a single allowlisted core contract.
+   *
+   */
+  coreRegistry: CoreRegistry;
   updatedAt: Scalars['BigInt'];
 };
 
 
-export type MinterFilterminterAllowlistArgs = {
+export type MinterFilterminterGlobalAllowlistArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Minter_orderBy>;
@@ -1308,13 +1322,144 @@ export type MinterFilterminterAllowlistArgs = {
 };
 
 
-export type MinterFilterassociatedMintersArgs = {
+export type MinterFilterminterFilterContractAllowlistsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<MinterFilterContractAllowlist_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<MinterFilterContractAllowlist_filter>;
+};
+
+
+export type MinterFilterknownMintersArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Minter_orderBy>;
   orderDirection?: InputMaybe<OrderDirection>;
   where?: InputMaybe<Minter_filter>;
 };
+
+export type MinterFilterContractAllowlist = {
+  /** Unique identifier made up of {minter filter contract address}-{core contract address} */
+  id: Scalars['ID'];
+  /** MinterFilter contract */
+  minterFilter: MinterFilter;
+  /** Core contract */
+  contract: Contract;
+  /** Minter contract addresses allowed at the contract level (extending global MinterFilter allowlist) */
+  minterContractAllowlist: Array<Minter>;
+  updatedAt: Scalars['BigInt'];
+};
+
+
+export type MinterFilterContractAllowlistminterContractAllowlistArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Minter_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Minter_filter>;
+};
+
+export type MinterFilterContractAllowlist_filter = {
+  id?: InputMaybe<Scalars['ID']>;
+  id_not?: InputMaybe<Scalars['ID']>;
+  id_gt?: InputMaybe<Scalars['ID']>;
+  id_lt?: InputMaybe<Scalars['ID']>;
+  id_gte?: InputMaybe<Scalars['ID']>;
+  id_lte?: InputMaybe<Scalars['ID']>;
+  id_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  minterFilter?: InputMaybe<Scalars['String']>;
+  minterFilter_not?: InputMaybe<Scalars['String']>;
+  minterFilter_gt?: InputMaybe<Scalars['String']>;
+  minterFilter_lt?: InputMaybe<Scalars['String']>;
+  minterFilter_gte?: InputMaybe<Scalars['String']>;
+  minterFilter_lte?: InputMaybe<Scalars['String']>;
+  minterFilter_in?: InputMaybe<Array<Scalars['String']>>;
+  minterFilter_not_in?: InputMaybe<Array<Scalars['String']>>;
+  minterFilter_contains?: InputMaybe<Scalars['String']>;
+  minterFilter_contains_nocase?: InputMaybe<Scalars['String']>;
+  minterFilter_not_contains?: InputMaybe<Scalars['String']>;
+  minterFilter_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  minterFilter_starts_with?: InputMaybe<Scalars['String']>;
+  minterFilter_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  minterFilter_not_starts_with?: InputMaybe<Scalars['String']>;
+  minterFilter_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  minterFilter_ends_with?: InputMaybe<Scalars['String']>;
+  minterFilter_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  minterFilter_not_ends_with?: InputMaybe<Scalars['String']>;
+  minterFilter_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  minterFilter_?: InputMaybe<MinterFilter_filter>;
+  contract?: InputMaybe<Scalars['String']>;
+  contract_not?: InputMaybe<Scalars['String']>;
+  contract_gt?: InputMaybe<Scalars['String']>;
+  contract_lt?: InputMaybe<Scalars['String']>;
+  contract_gte?: InputMaybe<Scalars['String']>;
+  contract_lte?: InputMaybe<Scalars['String']>;
+  contract_in?: InputMaybe<Array<Scalars['String']>>;
+  contract_not_in?: InputMaybe<Array<Scalars['String']>>;
+  contract_contains?: InputMaybe<Scalars['String']>;
+  contract_contains_nocase?: InputMaybe<Scalars['String']>;
+  contract_not_contains?: InputMaybe<Scalars['String']>;
+  contract_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  contract_starts_with?: InputMaybe<Scalars['String']>;
+  contract_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  contract_not_starts_with?: InputMaybe<Scalars['String']>;
+  contract_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  contract_ends_with?: InputMaybe<Scalars['String']>;
+  contract_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  contract_not_ends_with?: InputMaybe<Scalars['String']>;
+  contract_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  contract_?: InputMaybe<Contract_filter>;
+  minterContractAllowlist?: InputMaybe<Array<Scalars['String']>>;
+  minterContractAllowlist_not?: InputMaybe<Array<Scalars['String']>>;
+  minterContractAllowlist_contains?: InputMaybe<Array<Scalars['String']>>;
+  minterContractAllowlist_contains_nocase?: InputMaybe<Array<Scalars['String']>>;
+  minterContractAllowlist_not_contains?: InputMaybe<Array<Scalars['String']>>;
+  minterContractAllowlist_not_contains_nocase?: InputMaybe<Array<Scalars['String']>>;
+  minterContractAllowlist_?: InputMaybe<Minter_filter>;
+  updatedAt?: InputMaybe<Scalars['BigInt']>;
+  updatedAt_not?: InputMaybe<Scalars['BigInt']>;
+  updatedAt_gt?: InputMaybe<Scalars['BigInt']>;
+  updatedAt_lt?: InputMaybe<Scalars['BigInt']>;
+  updatedAt_gte?: InputMaybe<Scalars['BigInt']>;
+  updatedAt_lte?: InputMaybe<Scalars['BigInt']>;
+  updatedAt_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  updatedAt_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<MinterFilterContractAllowlist_filter>>>;
+  or?: InputMaybe<Array<InputMaybe<MinterFilterContractAllowlist_filter>>>;
+};
+
+export type MinterFilterContractAllowlist_orderBy =
+  | 'id'
+  | 'minterFilter'
+  | 'minterFilter__id'
+  | 'minterFilter__updatedAt'
+  | 'contract'
+  | 'contract__id'
+  | 'contract__admin'
+  | 'contract__type'
+  | 'contract__renderProviderAddress'
+  | 'contract__renderProviderPercentage'
+  | 'contract__renderProviderSecondarySalesAddress'
+  | 'contract__renderProviderSecondarySalesBPS'
+  | 'contract__enginePlatformProviderAddress'
+  | 'contract__enginePlatformProviderPercentage'
+  | 'contract__enginePlatformProviderSecondarySalesAddress'
+  | 'contract__enginePlatformProviderSecondarySalesBPS'
+  | 'contract__randomizerContract'
+  | 'contract__curationRegistry'
+  | 'contract__nextProjectId'
+  | 'contract__createdAt'
+  | 'contract__updatedAt'
+  | 'contract__preferredIPFSGateway'
+  | 'contract__preferredArweaveGateway'
+  | 'contract__newProjectsForbidden'
+  | 'contract__autoApproveArtistSplitProposals'
+  | 'minterContractAllowlist'
+  | 'updatedAt';
 
 export type MinterFilter_filter = {
   id?: InputMaybe<Scalars['ID']>;
@@ -1325,35 +1470,36 @@ export type MinterFilter_filter = {
   id_lte?: InputMaybe<Scalars['ID']>;
   id_in?: InputMaybe<Array<Scalars['ID']>>;
   id_not_in?: InputMaybe<Array<Scalars['ID']>>;
-  coreContract?: InputMaybe<Scalars['String']>;
-  coreContract_not?: InputMaybe<Scalars['String']>;
-  coreContract_gt?: InputMaybe<Scalars['String']>;
-  coreContract_lt?: InputMaybe<Scalars['String']>;
-  coreContract_gte?: InputMaybe<Scalars['String']>;
-  coreContract_lte?: InputMaybe<Scalars['String']>;
-  coreContract_in?: InputMaybe<Array<Scalars['String']>>;
-  coreContract_not_in?: InputMaybe<Array<Scalars['String']>>;
-  coreContract_contains?: InputMaybe<Scalars['String']>;
-  coreContract_contains_nocase?: InputMaybe<Scalars['String']>;
-  coreContract_not_contains?: InputMaybe<Scalars['String']>;
-  coreContract_not_contains_nocase?: InputMaybe<Scalars['String']>;
-  coreContract_starts_with?: InputMaybe<Scalars['String']>;
-  coreContract_starts_with_nocase?: InputMaybe<Scalars['String']>;
-  coreContract_not_starts_with?: InputMaybe<Scalars['String']>;
-  coreContract_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
-  coreContract_ends_with?: InputMaybe<Scalars['String']>;
-  coreContract_ends_with_nocase?: InputMaybe<Scalars['String']>;
-  coreContract_not_ends_with?: InputMaybe<Scalars['String']>;
-  coreContract_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
-  coreContract_?: InputMaybe<Contract_filter>;
-  minterAllowlist?: InputMaybe<Array<Scalars['String']>>;
-  minterAllowlist_not?: InputMaybe<Array<Scalars['String']>>;
-  minterAllowlist_contains?: InputMaybe<Array<Scalars['String']>>;
-  minterAllowlist_contains_nocase?: InputMaybe<Array<Scalars['String']>>;
-  minterAllowlist_not_contains?: InputMaybe<Array<Scalars['String']>>;
-  minterAllowlist_not_contains_nocase?: InputMaybe<Array<Scalars['String']>>;
-  minterAllowlist_?: InputMaybe<Minter_filter>;
-  associatedMinters_?: InputMaybe<Minter_filter>;
+  minterGlobalAllowlist?: InputMaybe<Array<Scalars['String']>>;
+  minterGlobalAllowlist_not?: InputMaybe<Array<Scalars['String']>>;
+  minterGlobalAllowlist_contains?: InputMaybe<Array<Scalars['String']>>;
+  minterGlobalAllowlist_contains_nocase?: InputMaybe<Array<Scalars['String']>>;
+  minterGlobalAllowlist_not_contains?: InputMaybe<Array<Scalars['String']>>;
+  minterGlobalAllowlist_not_contains_nocase?: InputMaybe<Array<Scalars['String']>>;
+  minterGlobalAllowlist_?: InputMaybe<Minter_filter>;
+  minterFilterContractAllowlists_?: InputMaybe<MinterFilterContractAllowlist_filter>;
+  knownMinters_?: InputMaybe<Minter_filter>;
+  coreRegistry?: InputMaybe<Scalars['String']>;
+  coreRegistry_not?: InputMaybe<Scalars['String']>;
+  coreRegistry_gt?: InputMaybe<Scalars['String']>;
+  coreRegistry_lt?: InputMaybe<Scalars['String']>;
+  coreRegistry_gte?: InputMaybe<Scalars['String']>;
+  coreRegistry_lte?: InputMaybe<Scalars['String']>;
+  coreRegistry_in?: InputMaybe<Array<Scalars['String']>>;
+  coreRegistry_not_in?: InputMaybe<Array<Scalars['String']>>;
+  coreRegistry_contains?: InputMaybe<Scalars['String']>;
+  coreRegistry_contains_nocase?: InputMaybe<Scalars['String']>;
+  coreRegistry_not_contains?: InputMaybe<Scalars['String']>;
+  coreRegistry_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  coreRegistry_starts_with?: InputMaybe<Scalars['String']>;
+  coreRegistry_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  coreRegistry_not_starts_with?: InputMaybe<Scalars['String']>;
+  coreRegistry_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  coreRegistry_ends_with?: InputMaybe<Scalars['String']>;
+  coreRegistry_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  coreRegistry_not_ends_with?: InputMaybe<Scalars['String']>;
+  coreRegistry_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  coreRegistry_?: InputMaybe<CoreRegistry_filter>;
   updatedAt?: InputMaybe<Scalars['BigInt']>;
   updatedAt_not?: InputMaybe<Scalars['BigInt']>;
   updatedAt_gt?: InputMaybe<Scalars['BigInt']>;
@@ -1370,29 +1516,11 @@ export type MinterFilter_filter = {
 
 export type MinterFilter_orderBy =
   | 'id'
-  | 'coreContract'
-  | 'coreContract__id'
-  | 'coreContract__admin'
-  | 'coreContract__type'
-  | 'coreContract__renderProviderAddress'
-  | 'coreContract__renderProviderPercentage'
-  | 'coreContract__renderProviderSecondarySalesAddress'
-  | 'coreContract__renderProviderSecondarySalesBPS'
-  | 'coreContract__enginePlatformProviderAddress'
-  | 'coreContract__enginePlatformProviderPercentage'
-  | 'coreContract__enginePlatformProviderSecondarySalesAddress'
-  | 'coreContract__enginePlatformProviderSecondarySalesBPS'
-  | 'coreContract__randomizerContract'
-  | 'coreContract__curationRegistry'
-  | 'coreContract__nextProjectId'
-  | 'coreContract__createdAt'
-  | 'coreContract__updatedAt'
-  | 'coreContract__preferredIPFSGateway'
-  | 'coreContract__preferredArweaveGateway'
-  | 'coreContract__newProjectsForbidden'
-  | 'coreContract__autoApproveArtistSplitProposals'
-  | 'minterAllowlist'
-  | 'associatedMinters'
+  | 'minterGlobalAllowlist'
+  | 'minterFilterContractAllowlists'
+  | 'knownMinters'
+  | 'coreRegistry'
+  | 'coreRegistry__id'
   | 'updatedAt';
 
 export type Minter_filter = {
@@ -1445,30 +1573,10 @@ export type Minter_filter = {
   minterFilter_not_ends_with?: InputMaybe<Scalars['String']>;
   minterFilter_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
   minterFilter_?: InputMaybe<MinterFilter_filter>;
-  minimumAuctionLengthInSeconds?: InputMaybe<Scalars['BigInt']>;
-  minimumAuctionLengthInSeconds_not?: InputMaybe<Scalars['BigInt']>;
-  minimumAuctionLengthInSeconds_gt?: InputMaybe<Scalars['BigInt']>;
-  minimumAuctionLengthInSeconds_lt?: InputMaybe<Scalars['BigInt']>;
-  minimumAuctionLengthInSeconds_gte?: InputMaybe<Scalars['BigInt']>;
-  minimumAuctionLengthInSeconds_lte?: InputMaybe<Scalars['BigInt']>;
-  minimumAuctionLengthInSeconds_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  minimumAuctionLengthInSeconds_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  minimumHalfLifeInSeconds?: InputMaybe<Scalars['BigInt']>;
-  minimumHalfLifeInSeconds_not?: InputMaybe<Scalars['BigInt']>;
-  minimumHalfLifeInSeconds_gt?: InputMaybe<Scalars['BigInt']>;
-  minimumHalfLifeInSeconds_lt?: InputMaybe<Scalars['BigInt']>;
-  minimumHalfLifeInSeconds_gte?: InputMaybe<Scalars['BigInt']>;
-  minimumHalfLifeInSeconds_lte?: InputMaybe<Scalars['BigInt']>;
-  minimumHalfLifeInSeconds_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  minimumHalfLifeInSeconds_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  maximumHalfLifeInSeconds?: InputMaybe<Scalars['BigInt']>;
-  maximumHalfLifeInSeconds_not?: InputMaybe<Scalars['BigInt']>;
-  maximumHalfLifeInSeconds_gt?: InputMaybe<Scalars['BigInt']>;
-  maximumHalfLifeInSeconds_lt?: InputMaybe<Scalars['BigInt']>;
-  maximumHalfLifeInSeconds_gte?: InputMaybe<Scalars['BigInt']>;
-  maximumHalfLifeInSeconds_lte?: InputMaybe<Scalars['BigInt']>;
-  maximumHalfLifeInSeconds_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  maximumHalfLifeInSeconds_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  isGloballyAllowlistedOnMinterFilter?: InputMaybe<Scalars['Boolean']>;
+  isGloballyAllowlistedOnMinterFilter_not?: InputMaybe<Scalars['Boolean']>;
+  isGloballyAllowlistedOnMinterFilter_in?: InputMaybe<Array<Scalars['Boolean']>>;
+  isGloballyAllowlistedOnMinterFilter_not_in?: InputMaybe<Array<Scalars['Boolean']>>;
   extraMinterDetails?: InputMaybe<Scalars['String']>;
   extraMinterDetails_not?: InputMaybe<Scalars['String']>;
   extraMinterDetails_gt?: InputMaybe<Scalars['String']>;
@@ -1489,27 +1597,6 @@ export type Minter_filter = {
   extraMinterDetails_ends_with_nocase?: InputMaybe<Scalars['String']>;
   extraMinterDetails_not_ends_with?: InputMaybe<Scalars['String']>;
   extraMinterDetails_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
-  coreContract?: InputMaybe<Scalars['String']>;
-  coreContract_not?: InputMaybe<Scalars['String']>;
-  coreContract_gt?: InputMaybe<Scalars['String']>;
-  coreContract_lt?: InputMaybe<Scalars['String']>;
-  coreContract_gte?: InputMaybe<Scalars['String']>;
-  coreContract_lte?: InputMaybe<Scalars['String']>;
-  coreContract_in?: InputMaybe<Array<Scalars['String']>>;
-  coreContract_not_in?: InputMaybe<Array<Scalars['String']>>;
-  coreContract_contains?: InputMaybe<Scalars['String']>;
-  coreContract_contains_nocase?: InputMaybe<Scalars['String']>;
-  coreContract_not_contains?: InputMaybe<Scalars['String']>;
-  coreContract_not_contains_nocase?: InputMaybe<Scalars['String']>;
-  coreContract_starts_with?: InputMaybe<Scalars['String']>;
-  coreContract_starts_with_nocase?: InputMaybe<Scalars['String']>;
-  coreContract_not_starts_with?: InputMaybe<Scalars['String']>;
-  coreContract_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
-  coreContract_ends_with?: InputMaybe<Scalars['String']>;
-  coreContract_ends_with_nocase?: InputMaybe<Scalars['String']>;
-  coreContract_not_ends_with?: InputMaybe<Scalars['String']>;
-  coreContract_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
-  coreContract_?: InputMaybe<Contract_filter>;
   receipts_?: InputMaybe<Receipt_filter>;
   updatedAt?: InputMaybe<Scalars['BigInt']>;
   updatedAt_not?: InputMaybe<Scalars['BigInt']>;
@@ -1531,31 +1618,8 @@ export type Minter_orderBy =
   | 'minterFilter'
   | 'minterFilter__id'
   | 'minterFilter__updatedAt'
-  | 'minimumAuctionLengthInSeconds'
-  | 'minimumHalfLifeInSeconds'
-  | 'maximumHalfLifeInSeconds'
+  | 'isGloballyAllowlistedOnMinterFilter'
   | 'extraMinterDetails'
-  | 'coreContract'
-  | 'coreContract__id'
-  | 'coreContract__admin'
-  | 'coreContract__type'
-  | 'coreContract__renderProviderAddress'
-  | 'coreContract__renderProviderPercentage'
-  | 'coreContract__renderProviderSecondarySalesAddress'
-  | 'coreContract__renderProviderSecondarySalesBPS'
-  | 'coreContract__enginePlatformProviderAddress'
-  | 'coreContract__enginePlatformProviderPercentage'
-  | 'coreContract__enginePlatformProviderSecondarySalesAddress'
-  | 'coreContract__enginePlatformProviderSecondarySalesBPS'
-  | 'coreContract__randomizerContract'
-  | 'coreContract__curationRegistry'
-  | 'coreContract__nextProjectId'
-  | 'coreContract__createdAt'
-  | 'coreContract__updatedAt'
-  | 'coreContract__preferredIPFSGateway'
-  | 'coreContract__preferredArweaveGateway'
-  | 'coreContract__newProjectsForbidden'
-  | 'coreContract__autoApproveArtistSplitProposals'
   | 'receipts'
   | 'updatedAt';
 
@@ -1698,8 +1762,6 @@ export type Project = {
   complete: Scalars['Boolean'];
   /** Timestamp at which a project was completed */
   completedAt?: Maybe<Scalars['BigInt']>;
-  /** Curated, playground, factory. A project with no curation status is considered factory */
-  curationStatus?: Maybe<Scalars['String']>;
   /** ERC-20 contract address if the project is purchasable via ERC-20 */
   currencyAddress?: Maybe<Scalars['Bytes']>;
   /** Currency symbol for ERC-20 */
@@ -1827,17 +1889,23 @@ export type ProjectExternalAssetDependency = {
   project: Project;
   /** The dependency type */
   dependencyType: ProjectExternalAssetDependencyType;
-  /** The dependency cid */
+  /** The dependency cid. This will be an empty string assets of type ONCHAIN. */
   cid: Scalars['String'];
   /** The dependency index */
   index: Scalars['BigInt'];
+  /** Address of the bytecode storage contract for this asset if it is of type ONCHAIN */
+  bytecodeAddress?: Maybe<Scalars['Bytes']>;
+  /** The asset data if it is onchain */
+  data?: Maybe<Scalars['String']>;
 };
 
 export type ProjectExternalAssetDependencyType =
   /** Asset hosted on IPFS */
   | 'IPFS'
   /** Asset hosted on Arweave */
-  | 'ARWEAVE';
+  | 'ARWEAVE'
+  /** Asset hosted on chain */
+  | 'ONCHAIN';
 
 export type ProjectExternalAssetDependency_filter = {
   id?: InputMaybe<Scalars['ID']>;
@@ -1901,6 +1969,36 @@ export type ProjectExternalAssetDependency_filter = {
   index_lte?: InputMaybe<Scalars['BigInt']>;
   index_in?: InputMaybe<Array<Scalars['BigInt']>>;
   index_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  bytecodeAddress?: InputMaybe<Scalars['Bytes']>;
+  bytecodeAddress_not?: InputMaybe<Scalars['Bytes']>;
+  bytecodeAddress_gt?: InputMaybe<Scalars['Bytes']>;
+  bytecodeAddress_lt?: InputMaybe<Scalars['Bytes']>;
+  bytecodeAddress_gte?: InputMaybe<Scalars['Bytes']>;
+  bytecodeAddress_lte?: InputMaybe<Scalars['Bytes']>;
+  bytecodeAddress_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  bytecodeAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  bytecodeAddress_contains?: InputMaybe<Scalars['Bytes']>;
+  bytecodeAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
+  data?: InputMaybe<Scalars['String']>;
+  data_not?: InputMaybe<Scalars['String']>;
+  data_gt?: InputMaybe<Scalars['String']>;
+  data_lt?: InputMaybe<Scalars['String']>;
+  data_gte?: InputMaybe<Scalars['String']>;
+  data_lte?: InputMaybe<Scalars['String']>;
+  data_in?: InputMaybe<Array<Scalars['String']>>;
+  data_not_in?: InputMaybe<Array<Scalars['String']>>;
+  data_contains?: InputMaybe<Scalars['String']>;
+  data_contains_nocase?: InputMaybe<Scalars['String']>;
+  data_not_contains?: InputMaybe<Scalars['String']>;
+  data_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  data_starts_with?: InputMaybe<Scalars['String']>;
+  data_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  data_not_starts_with?: InputMaybe<Scalars['String']>;
+  data_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  data_ends_with?: InputMaybe<Scalars['String']>;
+  data_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  data_not_ends_with?: InputMaybe<Scalars['String']>;
+  data_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
   and?: InputMaybe<Array<InputMaybe<ProjectExternalAssetDependency_filter>>>;
@@ -1923,7 +2021,6 @@ export type ProjectExternalAssetDependency_orderBy =
   | 'project__baseUri'
   | 'project__complete'
   | 'project__completedAt'
-  | 'project__curationStatus'
   | 'project__currencyAddress'
   | 'project__currencySymbol'
   | 'project__description'
@@ -1953,10 +2050,12 @@ export type ProjectExternalAssetDependency_orderBy =
   | 'project__scriptUpdatedAt'
   | 'dependencyType'
   | 'cid'
-  | 'index';
+  | 'index'
+  | 'bytecodeAddress'
+  | 'data';
 
 export type ProjectMinterConfiguration = {
-  /** Unique identifier made up of minter contract address-projectId */
+  /** Unique identifier made up of {minter contract address}-{core contract address}-{project number} */
   id: Scalars['ID'];
   /** The associated project */
   project: Project;
@@ -1970,16 +2069,8 @@ export type ProjectMinterConfiguration = {
   currencyAddress: Scalars['Bytes'];
   /** Defines if purchasing token to another is allowed */
   purchaseToDisabled: Scalars['Boolean'];
-  /** price of token or resting price of Duch auction, in wei */
+  /** price, or resting price of Duch auction, or minimum bid price in English auction, in wei */
   basePrice?: Maybe<Scalars['BigInt']>;
-  /** Dutch auction start price, in wei */
-  startPrice?: Maybe<Scalars['BigInt']>;
-  /** Half life for exponential decay Dutch auction, in seconds */
-  halfLifeSeconds?: Maybe<Scalars['BigInt']>;
-  /** Dutch auction start time (unix timestamp) */
-  startTime?: Maybe<Scalars['BigInt']>;
-  /** Linear Dutch auction end time (unix timestamp) */
-  endTime?: Maybe<Scalars['BigInt']>;
   /** Configuration details used by specific minter project configurations (json string) */
   extraMinterDetails: Scalars['String'];
   /** Maximum number of invocations allowed for the project (on the minter). If less than than a project's maximum invocations defined on a core contract, the minter contract will limit this project's maximum invocations */
@@ -2083,38 +2174,6 @@ export type ProjectMinterConfiguration_filter = {
   basePrice_lte?: InputMaybe<Scalars['BigInt']>;
   basePrice_in?: InputMaybe<Array<Scalars['BigInt']>>;
   basePrice_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  startPrice?: InputMaybe<Scalars['BigInt']>;
-  startPrice_not?: InputMaybe<Scalars['BigInt']>;
-  startPrice_gt?: InputMaybe<Scalars['BigInt']>;
-  startPrice_lt?: InputMaybe<Scalars['BigInt']>;
-  startPrice_gte?: InputMaybe<Scalars['BigInt']>;
-  startPrice_lte?: InputMaybe<Scalars['BigInt']>;
-  startPrice_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  startPrice_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  halfLifeSeconds?: InputMaybe<Scalars['BigInt']>;
-  halfLifeSeconds_not?: InputMaybe<Scalars['BigInt']>;
-  halfLifeSeconds_gt?: InputMaybe<Scalars['BigInt']>;
-  halfLifeSeconds_lt?: InputMaybe<Scalars['BigInt']>;
-  halfLifeSeconds_gte?: InputMaybe<Scalars['BigInt']>;
-  halfLifeSeconds_lte?: InputMaybe<Scalars['BigInt']>;
-  halfLifeSeconds_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  halfLifeSeconds_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  startTime?: InputMaybe<Scalars['BigInt']>;
-  startTime_not?: InputMaybe<Scalars['BigInt']>;
-  startTime_gt?: InputMaybe<Scalars['BigInt']>;
-  startTime_lt?: InputMaybe<Scalars['BigInt']>;
-  startTime_gte?: InputMaybe<Scalars['BigInt']>;
-  startTime_lte?: InputMaybe<Scalars['BigInt']>;
-  startTime_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  startTime_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  endTime?: InputMaybe<Scalars['BigInt']>;
-  endTime_not?: InputMaybe<Scalars['BigInt']>;
-  endTime_gt?: InputMaybe<Scalars['BigInt']>;
-  endTime_lt?: InputMaybe<Scalars['BigInt']>;
-  endTime_gte?: InputMaybe<Scalars['BigInt']>;
-  endTime_lte?: InputMaybe<Scalars['BigInt']>;
-  endTime_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  endTime_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   extraMinterDetails?: InputMaybe<Scalars['String']>;
   extraMinterDetails_not?: InputMaybe<Scalars['String']>;
   extraMinterDetails_gt?: InputMaybe<Scalars['String']>;
@@ -2165,7 +2224,6 @@ export type ProjectMinterConfiguration_orderBy =
   | 'project__baseUri'
   | 'project__complete'
   | 'project__completedAt'
-  | 'project__curationStatus'
   | 'project__currencyAddress'
   | 'project__currencySymbol'
   | 'project__description'
@@ -2196,9 +2254,7 @@ export type ProjectMinterConfiguration_orderBy =
   | 'minter'
   | 'minter__id'
   | 'minter__type'
-  | 'minter__minimumAuctionLengthInSeconds'
-  | 'minter__minimumHalfLifeInSeconds'
-  | 'minter__maximumHalfLifeInSeconds'
+  | 'minter__isGloballyAllowlistedOnMinterFilter'
   | 'minter__extraMinterDetails'
   | 'minter__updatedAt'
   | 'priceIsConfigured'
@@ -2206,10 +2262,6 @@ export type ProjectMinterConfiguration_orderBy =
   | 'currencyAddress'
   | 'purchaseToDisabled'
   | 'basePrice'
-  | 'startPrice'
-  | 'halfLifeSeconds'
-  | 'startTime'
-  | 'endTime'
   | 'extraMinterDetails'
   | 'maxInvocations';
 
@@ -2301,7 +2353,6 @@ export type ProjectScript_orderBy =
   | 'project__baseUri'
   | 'project__complete'
   | 'project__completedAt'
-  | 'project__curationStatus'
   | 'project__currencyAddress'
   | 'project__currencySymbol'
   | 'project__description'
@@ -2491,26 +2542,6 @@ export type Project_filter = {
   completedAt_lte?: InputMaybe<Scalars['BigInt']>;
   completedAt_in?: InputMaybe<Array<Scalars['BigInt']>>;
   completedAt_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  curationStatus?: InputMaybe<Scalars['String']>;
-  curationStatus_not?: InputMaybe<Scalars['String']>;
-  curationStatus_gt?: InputMaybe<Scalars['String']>;
-  curationStatus_lt?: InputMaybe<Scalars['String']>;
-  curationStatus_gte?: InputMaybe<Scalars['String']>;
-  curationStatus_lte?: InputMaybe<Scalars['String']>;
-  curationStatus_in?: InputMaybe<Array<Scalars['String']>>;
-  curationStatus_not_in?: InputMaybe<Array<Scalars['String']>>;
-  curationStatus_contains?: InputMaybe<Scalars['String']>;
-  curationStatus_contains_nocase?: InputMaybe<Scalars['String']>;
-  curationStatus_not_contains?: InputMaybe<Scalars['String']>;
-  curationStatus_not_contains_nocase?: InputMaybe<Scalars['String']>;
-  curationStatus_starts_with?: InputMaybe<Scalars['String']>;
-  curationStatus_starts_with_nocase?: InputMaybe<Scalars['String']>;
-  curationStatus_not_starts_with?: InputMaybe<Scalars['String']>;
-  curationStatus_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
-  curationStatus_ends_with?: InputMaybe<Scalars['String']>;
-  curationStatus_ends_with_nocase?: InputMaybe<Scalars['String']>;
-  curationStatus_not_ends_with?: InputMaybe<Scalars['String']>;
-  curationStatus_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
   currencyAddress?: InputMaybe<Scalars['Bytes']>;
   currencyAddress_not?: InputMaybe<Scalars['Bytes']>;
   currencyAddress_gt?: InputMaybe<Scalars['Bytes']>;
@@ -2916,7 +2947,6 @@ export type Project_orderBy =
   | 'baseUri'
   | 'complete'
   | 'completedAt'
-  | 'curationStatus'
   | 'currencyAddress'
   | 'currencySymbol'
   | 'description'
@@ -2984,10 +3014,6 @@ export type Project_orderBy =
   | 'minterConfiguration__currencyAddress'
   | 'minterConfiguration__purchaseToDisabled'
   | 'minterConfiguration__basePrice'
-  | 'minterConfiguration__startPrice'
-  | 'minterConfiguration__halfLifeSeconds'
-  | 'minterConfiguration__startTime'
-  | 'minterConfiguration__endTime'
   | 'minterConfiguration__extraMinterDetails'
   | 'minterConfiguration__maxInvocations'
   | 'saleLookupTables'
@@ -3122,7 +3148,6 @@ export type ProposedArtistAddressesAndSplit_orderBy =
   | 'project__baseUri'
   | 'project__complete'
   | 'project__completedAt'
-  | 'project__curationStatus'
   | 'project__currencyAddress'
   | 'project__currencySymbol'
   | 'project__description'
@@ -3159,8 +3184,8 @@ export type Query = {
   projectScripts: Array<ProjectScript>;
   proposedArtistAddressesAndSplit?: Maybe<ProposedArtistAddressesAndSplit>;
   proposedArtistAddressesAndSplits: Array<ProposedArtistAddressesAndSplit>;
-  engineRegistry?: Maybe<EngineRegistry>;
-  engineRegistries: Array<EngineRegistry>;
+  coreRegistry?: Maybe<CoreRegistry>;
+  coreRegistries: Array<CoreRegistry>;
   contract?: Maybe<Contract>;
   contracts: Array<Contract>;
   whitelisting?: Maybe<Whitelisting>;
@@ -3173,6 +3198,8 @@ export type Query = {
   tokens: Array<Token>;
   minterFilter?: Maybe<MinterFilter>;
   minterFilters: Array<MinterFilter>;
+  minterFilterContractAllowlist?: Maybe<MinterFilterContractAllowlist>;
+  minterFilterContractAllowlists: Array<MinterFilterContractAllowlist>;
   minter?: Maybe<Minter>;
   minters: Array<Minter>;
   projectMinterConfiguration?: Maybe<ProjectMinterConfiguration>;
@@ -3258,19 +3285,19 @@ export type QueryproposedArtistAddressesAndSplitsArgs = {
 };
 
 
-export type QueryengineRegistryArgs = {
+export type QuerycoreRegistryArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
-export type QueryengineRegistriesArgs = {
+export type QuerycoreRegistriesArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<EngineRegistry_orderBy>;
+  orderBy?: InputMaybe<CoreRegistry_orderBy>;
   orderDirection?: InputMaybe<OrderDirection>;
-  where?: InputMaybe<EngineRegistry_filter>;
+  where?: InputMaybe<CoreRegistry_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
@@ -3379,6 +3406,24 @@ export type QueryminterFiltersArgs = {
   orderBy?: InputMaybe<MinterFilter_orderBy>;
   orderDirection?: InputMaybe<OrderDirection>;
   where?: InputMaybe<MinterFilter_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryminterFilterContractAllowlistArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryminterFilterContractAllowlistsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<MinterFilterContractAllowlist_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<MinterFilterContractAllowlist_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
@@ -3623,7 +3668,7 @@ export type Query_metaArgs = {
 };
 
 export type Receipt = {
-  /** Unique identifier made up of minter contract address-projectId-accountAddress */
+  /** Unique identifier made up of {minter contract address}-{core contract address}-{project number}-{account address} */
   id: Scalars['ID'];
   /** The associated project */
   project: Project;
@@ -3756,7 +3801,6 @@ export type Receipt_orderBy =
   | 'project__baseUri'
   | 'project__complete'
   | 'project__completedAt'
-  | 'project__curationStatus'
   | 'project__currencyAddress'
   | 'project__currencySymbol'
   | 'project__description'
@@ -3787,9 +3831,7 @@ export type Receipt_orderBy =
   | 'minter'
   | 'minter__id'
   | 'minter__type'
-  | 'minter__minimumAuctionLengthInSeconds'
-  | 'minter__minimumHalfLifeInSeconds'
-  | 'minter__maximumHalfLifeInSeconds'
+  | 'minter__isGloballyAllowlistedOnMinterFilter'
   | 'minter__extraMinterDetails'
   | 'minter__updatedAt'
   | 'account'
@@ -3970,7 +4012,6 @@ export type SaleLookupTable_orderBy =
   | 'project__baseUri'
   | 'project__complete'
   | 'project__completedAt'
-  | 'project__curationStatus'
   | 'project__currencyAddress'
   | 'project__currencySymbol'
   | 'project__description'
@@ -4140,8 +4181,8 @@ export type Subscription = {
   projectScripts: Array<ProjectScript>;
   proposedArtistAddressesAndSplit?: Maybe<ProposedArtistAddressesAndSplit>;
   proposedArtistAddressesAndSplits: Array<ProposedArtistAddressesAndSplit>;
-  engineRegistry?: Maybe<EngineRegistry>;
-  engineRegistries: Array<EngineRegistry>;
+  coreRegistry?: Maybe<CoreRegistry>;
+  coreRegistries: Array<CoreRegistry>;
   contract?: Maybe<Contract>;
   contracts: Array<Contract>;
   whitelisting?: Maybe<Whitelisting>;
@@ -4154,6 +4195,8 @@ export type Subscription = {
   tokens: Array<Token>;
   minterFilter?: Maybe<MinterFilter>;
   minterFilters: Array<MinterFilter>;
+  minterFilterContractAllowlist?: Maybe<MinterFilterContractAllowlist>;
+  minterFilterContractAllowlists: Array<MinterFilterContractAllowlist>;
   minter?: Maybe<Minter>;
   minters: Array<Minter>;
   projectMinterConfiguration?: Maybe<ProjectMinterConfiguration>;
@@ -4239,19 +4282,19 @@ export type SubscriptionproposedArtistAddressesAndSplitsArgs = {
 };
 
 
-export type SubscriptionengineRegistryArgs = {
+export type SubscriptioncoreRegistryArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
-export type SubscriptionengineRegistriesArgs = {
+export type SubscriptioncoreRegistriesArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<EngineRegistry_orderBy>;
+  orderBy?: InputMaybe<CoreRegistry_orderBy>;
   orderDirection?: InputMaybe<OrderDirection>;
-  where?: InputMaybe<EngineRegistry_filter>;
+  where?: InputMaybe<CoreRegistry_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
@@ -4360,6 +4403,24 @@ export type SubscriptionminterFiltersArgs = {
   orderBy?: InputMaybe<MinterFilter_orderBy>;
   orderDirection?: InputMaybe<OrderDirection>;
   where?: InputMaybe<MinterFilter_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionminterFilterContractAllowlistArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionminterFilterContractAllowlistsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<MinterFilterContractAllowlist_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<MinterFilterContractAllowlist_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
@@ -4850,7 +4911,6 @@ export type Token_orderBy =
   | 'project__baseUri'
   | 'project__complete'
   | 'project__completedAt'
-  | 'project__curationStatus'
   | 'project__currencyAddress'
   | 'project__currencySymbol'
   | 'project__description'
@@ -5142,9 +5202,9 @@ export type _SubgraphErrorPolicy_ =
   /** null **/
   proposedArtistAddressesAndSplits: InContextSdkMethod<Query['proposedArtistAddressesAndSplits'], QueryproposedArtistAddressesAndSplitsArgs, MeshContext>,
   /** null **/
-  engineRegistry: InContextSdkMethod<Query['engineRegistry'], QueryengineRegistryArgs, MeshContext>,
+  coreRegistry: InContextSdkMethod<Query['coreRegistry'], QuerycoreRegistryArgs, MeshContext>,
   /** null **/
-  engineRegistries: InContextSdkMethod<Query['engineRegistries'], QueryengineRegistriesArgs, MeshContext>,
+  coreRegistries: InContextSdkMethod<Query['coreRegistries'], QuerycoreRegistriesArgs, MeshContext>,
   /** null **/
   contract: InContextSdkMethod<Query['contract'], QuerycontractArgs, MeshContext>,
   /** null **/
@@ -5169,6 +5229,10 @@ export type _SubgraphErrorPolicy_ =
   minterFilter: InContextSdkMethod<Query['minterFilter'], QueryminterFilterArgs, MeshContext>,
   /** null **/
   minterFilters: InContextSdkMethod<Query['minterFilters'], QueryminterFiltersArgs, MeshContext>,
+  /** null **/
+  minterFilterContractAllowlist: InContextSdkMethod<Query['minterFilterContractAllowlist'], QueryminterFilterContractAllowlistArgs, MeshContext>,
+  /** null **/
+  minterFilterContractAllowlists: InContextSdkMethod<Query['minterFilterContractAllowlists'], QueryminterFilterContractAllowlistsArgs, MeshContext>,
   /** null **/
   minter: InContextSdkMethod<Query['minter'], QueryminterArgs, MeshContext>,
   /** null **/
@@ -5243,9 +5307,9 @@ export type _SubgraphErrorPolicy_ =
   /** null **/
   proposedArtistAddressesAndSplits: InContextSdkMethod<Subscription['proposedArtistAddressesAndSplits'], SubscriptionproposedArtistAddressesAndSplitsArgs, MeshContext>,
   /** null **/
-  engineRegistry: InContextSdkMethod<Subscription['engineRegistry'], SubscriptionengineRegistryArgs, MeshContext>,
+  coreRegistry: InContextSdkMethod<Subscription['coreRegistry'], SubscriptioncoreRegistryArgs, MeshContext>,
   /** null **/
-  engineRegistries: InContextSdkMethod<Subscription['engineRegistries'], SubscriptionengineRegistriesArgs, MeshContext>,
+  coreRegistries: InContextSdkMethod<Subscription['coreRegistries'], SubscriptioncoreRegistriesArgs, MeshContext>,
   /** null **/
   contract: InContextSdkMethod<Subscription['contract'], SubscriptioncontractArgs, MeshContext>,
   /** null **/
@@ -5270,6 +5334,10 @@ export type _SubgraphErrorPolicy_ =
   minterFilter: InContextSdkMethod<Subscription['minterFilter'], SubscriptionminterFilterArgs, MeshContext>,
   /** null **/
   minterFilters: InContextSdkMethod<Subscription['minterFilters'], SubscriptionminterFiltersArgs, MeshContext>,
+  /** null **/
+  minterFilterContractAllowlist: InContextSdkMethod<Subscription['minterFilterContractAllowlist'], SubscriptionminterFilterContractAllowlistArgs, MeshContext>,
+  /** null **/
+  minterFilterContractAllowlists: InContextSdkMethod<Subscription['minterFilterContractAllowlists'], SubscriptionminterFilterContractAllowlistsArgs, MeshContext>,
   /** null **/
   minter: InContextSdkMethod<Subscription['minter'], SubscriptionminterArgs, MeshContext>,
   /** null **/
